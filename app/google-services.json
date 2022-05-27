@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "161709770010",
+    "project_id": "silong-162ef",
+    "storage_bucket": "silong-162ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161709770010:android:a88bf20fe1f3a3cf3398a3",
+        "android_client_info": {
+          "package_name": "com.silong.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161709770010-bubh54citl3v5u07d9oonulr1ch5ktnc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFxblkS-bj_8e0KXIUO3chzIx1pK0TgWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161709770010-bubh54citl3v5u07d9oonulr1ch5ktnc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
