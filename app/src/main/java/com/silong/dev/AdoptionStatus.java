@@ -1,12 +1,12 @@
 package com.silong.dev;
 
-public enum AdoptionStatus {
-    CANCELLED,
-    DENIED,
-    REQUEST_SENT,
-    AWAITING_APPROVAL,
-    REQUEST_APPROVED,
-    SET_APPOINTMENT,
-    APPOINTMENT_CONFIRMED,
-    ADOPTION_SUCCESSFUL
+public class AdoptionStatus {
+    public static final int CANCELLED = -2;
+    public static final int DENIED = -1 ;
+    public static final int REQUEST_SENT = 0;
+    public static final int AWAITING_APPROVAL = 1;
+    public static final int REQUEST_APPROVED = 2;
+    public static final int SET_APPOINTMENT = 3;
+    public static final int APPOINTMENT_CONFIRMED = 4;
+    public static final int ADOPTION_SUCCESSFUL = 5;
 }
