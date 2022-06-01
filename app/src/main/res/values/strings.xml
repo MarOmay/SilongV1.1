@@ -1,3 +1,79 @@
 <resources>
     <string name="app_name">Silong</string>
+
+    //to reference this, use getResources().getStringArray(name)
+    <string-array name="barangay_3023">
+        <item>Ciudad Real</item>
+        <item>Dulong Bayan</item>
+        <item>Francisco Homes-Guijo</item>
+        <item>Francisco Homes-Mulawin</item>
+        <item>Francisco Homes-Narra</item>
+        <item>Francisco Homes-Yakal</item>
+        <item>Gaya-Gaya</item>
+        <item>Graceville</item>
+        <item>Gumaoc-Central</item>
+        <item>Gumaoc-East</item>
+        <item>Gumaoc-West</item>
+        <item>Kaybanban</item>
+        <item>Kaypian</item>
+        <item>Maharlika</item>
+        <item>Muzon</item>
+        <item>Paradise III</item>
+        <item>Poblacion</item>
+        <item>Poblacion I</item>
+        <item>San Isidro</item>
+        <item>San Manuel</item>
+        <item>San Roque</item>
+        <item>Santo Cristo</item>
+        <item>Tungkong Mangga</item>
+    </string-array>
+    <string-array name="barangay_3024">
+        <item>Minuyan I</item>
+        <item>Minuyan II</item>
+        <item>Minuyan III</item>
+        <item>Minuyan IV</item>
+        <item>Minuyan V</item>
+        <item>Bagong Buhay I</item>
+        <item>Bagong Buhay II</item>
+        <item>Bagong Buhay III</item>
+        <item>San Martin I</item>
+        <item>San Martin II</item>
+        <item>San Martin III</item>
+        <item>San Martin IV</item>
+        <item>Santa Cruz I</item>
+        <item>Santa Cruz II</item>
+        <item>Santa Cruz III</item>
+        <item>Santa Cruz IV</item>
+        <item>Santa Cruz V</item>
+        <item>Fatima I</item>
+        <item>Fatima II</item>
+        <item>Fatima III</item>
+        <item>Fatima IV</item>
+        <item>Fatima V</item>
+        <item>San Pedro</item>
+        <item>Citrus</item>
+        <item>San Rafael I</item>
+        <item>San Rafael II</item>
+        <item>San Rafael III</item>
+        <item>San Rafael IV</item>
+        <item>San Rafael V</item>
+        <item>Assumption</item>
+        <item>Lawang Pari</item>
+        <item>Santo Niño I</item>
+        <item>Santo Niño II</item>
+        <item>St. Martin de Porres</item>
+        <item>Sapang Palay Proper</item>
+        <item>Minuyan Proper</item>
+    </string-array>
+    <string-array name="zipcode">
+        <item>3023</item>
+        <item>3024</item>
+    </string-array>
+    <string-array name="city">
+        <item>San Jose del Monte</item>
+    </string-array>
+    <string-array name="province">
+        <item>Bulacan</item>
+    </string-array>
+
 </resources>
