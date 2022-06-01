@@ -1,0 +1,12 @@
+package com.silong.dev;
+
+public enum AdoptionStatus {
+    CANCELLED,
+    DENIED,
+    REQUEST_SENT,
+    AWAITING_APPROVAL,
+    REQUEST_APPROVED,
+    SET_APPOINTMENT,
+    APPOINTMENT_CONFIRMED,
+    ADOPTION_SUCCESSFUL
+}
