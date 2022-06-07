@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.Object;
 
 public class Pet {
 
@@ -10,6 +10,9 @@ public class Pet {
     private int age;
     private int size;
     private int likes;
+
+    public Pet() {
+    }
 
     public Pet(int id, int status, int type, int gender, String color, int age, int size, int likes) {
         this.id = id;

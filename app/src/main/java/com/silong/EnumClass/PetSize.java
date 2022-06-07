@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.EnumClass;
 
 public class PetSize {
     public static final int SMALL = 1;

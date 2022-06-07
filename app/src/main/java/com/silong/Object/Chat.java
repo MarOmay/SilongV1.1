@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.Object;
 
 public class Chat {
 
@@ -7,6 +7,9 @@ public class Chat {
     private String date;
     private String time;
     private String content;
+
+    public Chat() {
+    }
 
     public Chat(int id, String adminEmail, String date, String time, String content) {
         this.id = id;

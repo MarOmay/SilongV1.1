@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.Operation;
 
 import android.Manifest;
 import android.app.Activity;
@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+
+import com.silong.dev.MainActivity;
 
 public class ImagePicker {
 
@@ -39,10 +41,9 @@ public class ImagePicker {
     private boolean requestPermission(){
         /* Checks the following permissions:
         * - READ_EXTERNAL_STORAGE
-        * - WRITE_INTERNAL_STORAGE
         *
         * Doesn't check the following permissions:
-        *
+        * - WRITE_INTERNAL_STORAGE
         * - MANAGE_ALL_FILES_ACCESS
         *
         * Note: onRequestPermissionsResult must be defined separately in their respective Activities

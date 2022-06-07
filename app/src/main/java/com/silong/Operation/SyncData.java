@@ -1,9 +1,15 @@
-package com.silong.dev;
+package com.silong.Operation;
+
+import android.content.Context;
+
+import java.io.File;
 
 public class SyncData {
 
-    public SyncData(){
+    private final Context context;
 
+    public SyncData(Context context){
+        this.context = context;
     }
 
     public void syncAll(boolean admin){
@@ -18,7 +24,20 @@ public class SyncData {
             //get all
         }
         else {
-            //get pets only
+            File file = new File(context.getFilesDir(),"user.dat");
+
+            //check if user.dat exists to read user info
+            if(file.exists()){
+                try{
+
+                }
+                catch (Exception e){
+
+                }
+            }
+            else {
+                //route user to login screen
+            }
         }
 
         //get all existing, then filter out the existing data to fetch the non-existent only

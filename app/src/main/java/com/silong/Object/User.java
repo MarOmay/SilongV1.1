@@ -1,6 +1,11 @@
-package com.silong.dev;
+package com.silong.Object;
 
 import android.graphics.Bitmap;
+
+import com.silong.Object.Address;
+import com.silong.Object.Adoption;
+import com.silong.Object.Chat;
+import com.silong.Object.Favorite;
 
 public class User {
 
@@ -13,8 +18,8 @@ public class User {
     private boolean accountStatus;
     private int adoptionCounter;
     private Address address;
-    private Adoption [] adoptionHistory;
-    private Chat [] chatHistory;
+    private Adoption[] adoptionHistory;
+    private Chat[] chatHistory;
     private Favorite[] likedPet;
 
     public User(String id, String email, String firstName, String lastName, int gender, Bitmap photo, boolean accountStatus, int adoptionCounter, Address address, Adoption[] adoptionHistory, Chat[] chatHistory, Favorite[] likedPet) {

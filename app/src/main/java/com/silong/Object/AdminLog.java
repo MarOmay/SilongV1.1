@@ -1,4 +1,4 @@
-package com.silong.admin;
+package com.silong.Object;
 
 public class AdminLog {
 

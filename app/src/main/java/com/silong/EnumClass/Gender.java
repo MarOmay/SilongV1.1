@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.EnumClass;
 
 public class Gender {
     public static final int MALE = 0;

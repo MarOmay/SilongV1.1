@@ -1,27 +1,30 @@
-package com.silong.dev;
+package com.silong.Object;
 
 public class Adoption {
 
-    private int id;
+    private int petID;
     private String dateRequested;
     private String appointmentDate;
     private int status;
     private String dateReleased;
 
-    public Adoption(int id, String dateRequested, String appointmentDate, int status, String dateReleased) {
-        this.id = id;
+    public Adoption() {
+    }
+
+    public Adoption(int petID, String dateRequested, String appointmentDate, int status, String dateReleased) {
+        this.petID = petID;
         this.dateRequested = dateRequested;
         this.appointmentDate = appointmentDate;
         this.status = status;
         this.dateReleased = dateReleased;
     }
 
-    public int getId() {
-        return id;
+    public int getPetID() {
+        return petID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPetID(int petID) {
+        this.petID = petID;
     }
 
     public String getDateRequested() {

@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.EnumClass;
 
 public class RequestCode {
     public static final int ADOPTION_REQUEST = 1;

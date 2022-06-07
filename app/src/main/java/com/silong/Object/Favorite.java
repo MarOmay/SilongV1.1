@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.Object;
 
 public class Favorite {
 

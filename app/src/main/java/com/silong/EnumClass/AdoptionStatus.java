@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.EnumClass;
 
 public class AdoptionStatus {
     public static final int CANCELLED = -2;
