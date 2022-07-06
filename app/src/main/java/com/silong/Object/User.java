@@ -2,28 +2,28 @@ package com.silong.Object;
 
 import android.graphics.Bitmap;
 
-import com.silong.Object.Address;
-import com.silong.Object.Adoption;
-import com.silong.Object.Chat;
-import com.silong.Object.Favorite;
+import java.util.ArrayList;
 
 public class User {
 
-    private String id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private int gender;
-    private Bitmap photo;
-    private boolean accountStatus;
-    private int adoptionCounter;
-    private Address address;
-    private Adoption[] adoptionHistory;
-    private Chat[] chatHistory;
-    private Favorite[] likedPet;
+    public String userID;
+    public String email;
+    public String firstName;
+    public String lastName;
+    public int gender;
+    public Bitmap photo;
+    public boolean accountStatus;
+    public int adoptionCounter;
+    public Address address;
+    public ArrayList<Adoption> adoptionHistory;
+    public ArrayList<Chat> chatHistory;
+    public ArrayList<Favorite> likedPet;
 
-    public User(String id, String email, String firstName, String lastName, int gender, Bitmap photo, boolean accountStatus, int adoptionCounter, Address address, Adoption[] adoptionHistory, Chat[] chatHistory, Favorite[] likedPet) {
-        this.id = id;
+    public User() {
+    }
+
+    public User(String userID, String email, String firstName, String lastName, int gender, Bitmap photo, boolean accountStatus, int adoptionCounter, Address address, ArrayList<Adoption> adoptionHistory, ArrayList<Chat> chatHistory, ArrayList<Favorite> likedPet) {
+        this.userID = userID;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,12 +37,12 @@ public class User {
         this.likedPet = likedPet;
     }
 
-    public String getId() {
-        return id;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getEmail() {
@@ -109,27 +109,27 @@ public class User {
         this.address = address;
     }
 
-    public Adoption[] getAdoptionHistory() {
+    public ArrayList<Adoption> getAdoptionHistory() {
         return adoptionHistory;
     }
 
-    public void setAdoptionHistory(Adoption[] adoptionHistory) {
+    public void setAdoptionHistory(ArrayList<Adoption> adoptionHistory) {
         this.adoptionHistory = adoptionHistory;
     }
 
-    public Chat[] getChatHistory() {
+    public ArrayList<Chat> getChatHistory() {
         return chatHistory;
     }
 
-    public void setChatHistory(Chat[] chatHistory) {
+    public void setChatHistory(ArrayList<Chat> chatHistory) {
         this.chatHistory = chatHistory;
     }
 
-    public Favorite[] getLikedPet() {
+    public ArrayList<Favorite> getLikedPet() {
         return likedPet;
     }
 
-    public void setLikedPet(Favorite[] likedPet) {
+    public void setLikedPet(ArrayList<Favorite> likedPet) {
         this.likedPet = likedPet;
     }
 }
