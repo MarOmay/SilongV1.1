@@ -17,6 +17,8 @@ public class Homepage extends AppCompatActivity {
     protected final File PETDATA = new File(getFilesDir(),"pet.dat");
     protected final File FAVORITECONFIG = new File(getFilesDir(),"favorite.config");
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

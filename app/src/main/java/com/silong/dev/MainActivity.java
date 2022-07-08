@@ -40,8 +40,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Test Commit
+        //Routing from this activity to next activity
+        startActivity(new Intent(MainActivity.this, Registration.class));
 
+        //End of routing block
+
+
+        //DO NOT DELETE THE CODES BELOW (ALEX)
         imageView = findViewById(R.id.imageView);
         preview = findViewById(R.id.preview);
 
