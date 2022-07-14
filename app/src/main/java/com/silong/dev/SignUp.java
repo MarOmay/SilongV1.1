@@ -69,6 +69,7 @@ public class SignUp extends AppCompatActivity {
         spinGender.setAdapter(genderAdapter);
         spinGender.setSelection(gen.length-1);
 
+        //Intent to next screen of SignUP
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

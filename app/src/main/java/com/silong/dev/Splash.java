@@ -16,6 +16,7 @@ public class Splash extends AppCompatActivity {
         getSupportActionBar().hide();
         overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
 
+        //For delaying, wala naman na sigurong papakilamanan dito ano? hahahaha
         h.postDelayed(new Runnable() {
             @Override
             public void run() {

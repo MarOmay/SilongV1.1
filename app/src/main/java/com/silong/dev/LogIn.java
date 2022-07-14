@@ -24,6 +24,7 @@ public class LogIn extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //for hiding status bar
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
@@ -60,6 +61,7 @@ public class LogIn extends AppCompatActivity {
             }
         });
 
+        //intent to SignUp Screen
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

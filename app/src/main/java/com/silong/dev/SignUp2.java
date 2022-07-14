@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.silong.Operation.ImagePicker;
 import com.silong.Operation.ImageProcessor;
 
 import java.io.BufferedInputStream;
@@ -58,8 +59,7 @@ public class SignUp2 extends AppCompatActivity {
         spinProvince.setText("Bulacan");
         etZip.setText("3023");
 
-        //String[] brgy = getResources().getStringArray(R.array.Barangay);
-
+        //Concatenate all the barangays
         String[] first = getResources().getStringArray(R.array.barangay_3023);
         String[] second = getResources().getStringArray(R.array.barangay_3024);
 
@@ -95,22 +95,15 @@ public class SignUp2 extends AppCompatActivity {
             }
         });
 
+        //Image Picker
         ivPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                getIntent.setType("image/*");
-
-                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                pickIntent.setType("image/*");
-
-                Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-
-                startActivityForResult(chooserIntent, PICK_IMAGE);
+                new ImagePicker (SignUp2.this, PICK_IMAGE);
             }
         });
 
+        //Toast to Remind Silong is for SJDM Only
         spinMunicipality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +111,7 @@ public class SignUp2 extends AppCompatActivity {
             }
         });
 
+        //Toast to Remind Silong is for Bulacan Only
         spinProvince.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +119,7 @@ public class SignUp2 extends AppCompatActivity {
             }
         });
 
+        //Toast to Remind zip is not editable.
         etZip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,6 +127,7 @@ public class SignUp2 extends AppCompatActivity {
             }
         });
 
+        //Create Button, opens Dialog and TNC
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -154,6 +150,7 @@ public class SignUp2 extends AppCompatActivity {
                     return;
                 }
 
+                //Alert Dialog for Confirmation builder.
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(SignUp2.this);
                 builder.setTitle("Terms and Conditions");
                 builder.setIcon(getDrawable(R.drawable.circlelogo_gradient));
@@ -184,6 +181,7 @@ public class SignUp2 extends AppCompatActivity {
                 });
                 builder.show();
 
+                //Shows TNC Screen
                 tnc_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -195,6 +193,7 @@ public class SignUp2 extends AppCompatActivity {
         });
     }
 
+    //FOR IMAGE PICKING, DO NOT DELETE
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
