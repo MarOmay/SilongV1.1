@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -76,12 +78,28 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(LogIn.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LogIn.this, "User: " + auth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(LogIn.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void resetPassword(String email){
+
+        //Send a password reset link to email
+        auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            //code here
+                        }
                     }
                 });
     }

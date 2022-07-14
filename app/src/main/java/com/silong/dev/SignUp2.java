@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.silong.Object.Address;
+import com.silong.Object.User;
 import com.silong.Operation.ImagePicker;
 import com.silong.Operation.ImageProcessor;
 
@@ -46,6 +48,9 @@ public class SignUp2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up2);
         getSupportActionBar().hide();
+
+        User user = (User) getIntent().getSerializableExtra("DATA");
+        String password = (String) getIntent().getExtras().getString("PASSWORD");
 
         btnCreate = (Button) findViewById(R.id.btnsignupCreate);
         ivPicture = (ImageView) findViewById(R.id.ivsignupPicture);
@@ -150,6 +155,15 @@ public class SignUp2 extends AppCompatActivity {
                     return;
                 }
 
+                //Add additional input to User object
+                Address address = new Address(etAddress.getText().toString(),
+                        spinBarangay.getSelectedItem().toString(),
+                        spinMunicipality.getText().toString(),
+                        spinProvince.getText().toString(),
+                        Integer.parseInt(etZip.getText().toString()));
+                user.setAddress(address);
+                user.setPhoto(new ImageProcessor().toBitmap(ivPicture.getDrawable()));
+
                 //Alert Dialog for Confirmation builder.
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(SignUp2.this);
                 builder.setTitle("Terms and Conditions");
@@ -170,7 +184,7 @@ public class SignUp2 extends AppCompatActivity {
                 builder.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //Codes here
+                        uploadData(user, password);
                     }
                 });
                 builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -223,5 +237,16 @@ public class SignUp2 extends AppCompatActivity {
     public void showTnc(){
         Intent i = new Intent(SignUp2.this, TermsConditions.class);
         startActivity(i);
+    }
+
+    public void uploadData(User user, String password){
+        /* Pass data and password to next intent that will perform
+        *  essential processes and then upload data to cloud
+        *
+        Intent intent = new Intent(SignUp2.this, ProcessSignUp.class);
+        intent.putExtra("DATA", user);
+        intent.putExtra("PASSWORD", password);
+        startActivity(intent);
+        finish();*/
     }
 }

@@ -70,6 +70,13 @@ public class ImageProcessor {
         return null;
     }
 
+    public Bitmap toBitmap(Drawable drawable){
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
     public Bitmap toBitmap(String string){
         /* Converts Base64 (String) to Bitmap */
 

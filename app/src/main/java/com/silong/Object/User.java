@@ -2,15 +2,18 @@ package com.silong.Object;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User {
+public class User implements Serializable {
 
     public String userID;
     public String email;
     public String firstName;
     public String lastName;
+    public String birthday;
     public int gender;
+    public String contact;
     public Bitmap photo;
     public boolean accountStatus;
     public int adoptionCounter;
@@ -22,12 +25,14 @@ public class User {
     public User() {
     }
 
-    public User(String userID, String email, String firstName, String lastName, int gender, Bitmap photo, boolean accountStatus, int adoptionCounter, Address address, ArrayList<Adoption> adoptionHistory, ArrayList<Chat> chatHistory, ArrayList<Favorite> likedPet) {
+    public User(String userID, String email, String firstName, String lastName, String birthday, int gender, String contact, Bitmap photo, boolean accountStatus, int adoptionCounter, Address address, ArrayList<Adoption> adoptionHistory, ArrayList<Chat> chatHistory, ArrayList<Favorite> likedPet) {
         this.userID = userID;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.birthday = birthday;
         this.gender = gender;
+        this.contact = contact;
         this.photo = photo;
         this.accountStatus = accountStatus;
         this.adoptionCounter = adoptionCounter;
@@ -39,6 +44,22 @@ public class User {
 
     public String getUserID() {
         return userID;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public void setUserID(String userID) {

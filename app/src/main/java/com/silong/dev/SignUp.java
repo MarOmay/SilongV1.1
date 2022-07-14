@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import com.silong.Object.User;
+
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -105,9 +108,18 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
 
-                Intent i = new Intent(SignUp.this, SignUp2.class);
-                startActivity(i);
+                User user = new User();
+                user.setFirstName(fieldFname.getText().toString());
+                user.setLastName(fieldLname.getText().toString());
+                user.setEmail(fieldEmail.getText().toString());
+                user.setBirthday(fieldDBirthday.getText().toString());
+                //user.setGender(spinGender.getSelectedItem().toString());
+                user.setContact(fieldContact.getText().toString());
 
+                Intent i = new Intent(SignUp.this, SignUp2.class);
+                i.putExtra("DATA", user);
+                i.putExtra("PASSWORD", fieldPassword.getText().toString());
+                startActivity(i);
 
 
             }
