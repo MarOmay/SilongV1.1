@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SignUp extends AppCompatActivity {
 
     ImageView backButton;
@@ -85,15 +88,25 @@ public class SignUp extends AppCompatActivity {
                 }
                 else if (fieldPassword.getText().length() < 8){
                     Toast.makeText(getApplicationContext(), "Password must be at least 8 characters.", Toast.LENGTH_SHORT).show();
-
+                    return;
                 }
                 else if (!fieldPassword.getText().toString().equals(fieldConfirmpass.getText().toString())){
                     Toast.makeText(getApplicationContext(), "Password does not match.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                else {
-                    Intent i = new Intent(SignUp.this, SignUp2.class);
-                    startActivity(i);
+
+                //Checks format of the email
+                String email = fieldEmail.getText().toString();
+                Pattern pattern = Pattern.compile("^(.+)@(.+)$");
+                Matcher matcher = pattern.matcher(fieldEmail.getText().toString());
+                if (!matcher.matches()){
+                    Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                Intent i = new Intent(SignUp.this, SignUp2.class);
+                startActivity(i);
+
 
 
             }
