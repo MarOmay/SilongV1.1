@@ -56,7 +56,7 @@ public class SignUp extends AppCompatActivity {
                 });
             }
         });
-
+        
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(this, R.layout.drop_down_items, gen) {
             @Override
             public int getCount() {
