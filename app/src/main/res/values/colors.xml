@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- custom colors JEPOY -->
+    <color name="pink">#fb528b</color>
+    <color name="darkpink">#d81c60</color>
+    <color name="orange">#ff8e21</color>
+    <color name="gray">#6e6e6a</color>
+    <color name="textgray">#9fb0b9</color>
+    <color name="lightgray">#eceff1</color>
+    <color name="darkgray">#3d3d39</color>
+    <color name="green">#04d428</color>
+    <color name="red">#e6080B</color>
 </resources>

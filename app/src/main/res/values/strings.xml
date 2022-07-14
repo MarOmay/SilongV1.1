@@ -64,6 +64,7 @@
         <item>St. Martin de Porres</item>
         <item>Sapang Palay Proper</item>
         <item>Minuyan Proper</item>
+        <item>Barangay</item>
     </string-array>
     <string-array name="zipcode">
         <item>3023</item>
@@ -76,4 +77,13 @@
         <item>Bulacan</item>
     </string-array>
 
+    <string name="msg">\nBy clicking SUBMIT you have accepted and agreed to all of our Terms and Conditions.\n</string>
+
+    <string name="tnc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. \n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. \n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+
+    <string-array name="Gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Gender</item>
+    </string-array>
 </resources>

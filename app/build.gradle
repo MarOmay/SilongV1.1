@@ -42,4 +42,10 @@ dependencies {
     //Firebase library for realtime database (Alex)
     implementation 'com.google.firebase:firebase-database:20.0.0'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
+
+    //for circular view -jepoy
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    //for gif -jepoy
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
 }
