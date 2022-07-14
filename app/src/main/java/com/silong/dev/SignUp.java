@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -68,8 +69,33 @@ public class SignUp extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SignUp.this, SignUp2.class);
-                startActivity(i);
+
+                //Validate entries before accepting response
+                if(fieldFname.getText().equals("") ||
+                        fieldLname.getText().equals("") ||
+                        fieldPassword.getText().equals("") ||
+                        fieldConfirmpass.getText().equals("") ||
+                        fieldEmail.getText().equals("") ||
+                        fieldDBirthday.getText().equals(null) ||
+                        spinGender.getSelectedItem().toString().equals("Gender") ||
+                        fieldContact.getText().equals("")
+                ){
+                    Toast.makeText(getApplicationContext(), "Please answer all fields.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (fieldPassword.getText().length() < 8){
+                    Toast.makeText(getApplicationContext(), "Password must be at least 8 characters.", Toast.LENGTH_SHORT).show();
+
+                }
+                else if (!fieldPassword.getText().toString().equals(fieldConfirmpass.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Password does not match.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent i = new Intent(SignUp.this, SignUp2.class);
+                    startActivity(i);
+                }
+
+
             }
         });
 

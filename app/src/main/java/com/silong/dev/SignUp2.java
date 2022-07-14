@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.silong.Operation.ImageProcessor;
 
 import java.io.BufferedInputStream;
 import java.util.Arrays;
@@ -73,6 +75,26 @@ public class SignUp2 extends AppCompatActivity {
         spinBarangay.setAdapter(barangayAdapter);
         spinBarangay.setSelection(both.length-1);
 
+        spinBarangay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedBarangay = spinBarangay.getSelectedItem().toString();
+                for (String s : first){
+                    if (s.equals(selectedBarangay))
+                        etZip.setText("3023");
+                }
+                for (String s : second){
+                    if (s.equals(selectedBarangay))
+                        etZip.setText("3024");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         ivPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,10 +111,49 @@ public class SignUp2 extends AppCompatActivity {
             }
         });
 
+        spinMunicipality.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Silong is exclusive to San Jose del Monte City.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        spinProvince.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Silong is exclusive to San Jose del Monte City.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        etZip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Zipcode is not editable.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
+
+                //Validate entries before accepting response
+                if (etAddress.getText().equals("") ||
+                        spinBarangay.getSelectedItem().equals("Barangay")
+                ){
+                    Toast.makeText(getApplicationContext(), "Please answer all fields.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (ivPicture.getDrawable() == null){
+                    Toast.makeText(getApplicationContext(), "Please select a 1x1 photo.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (new ImageProcessor().checkFileSize(ivPicture.getDrawable(), true) == false){
+                    Toast.makeText(getApplicationContext(), "Please select a 1x1 picture less than 1MB.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(SignUp2.this);
                 builder.setTitle("Terms and Conditions");
                 builder.setIcon(getDrawable(R.drawable.circlelogo_gradient));

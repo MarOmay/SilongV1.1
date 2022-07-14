@@ -3,6 +3,8 @@ package com.silong.Operation;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -17,7 +19,7 @@ public class ImageProcessor {
 
     //Maximum file size allowed [MB] * [KB] * [B]
     private final int FILE_LIMIT_IN_KB = 1 * 1024 * 1024;
-    private final int COMPRESSION = 50;
+    private final int COMPRESSION = 80;
 
     public ImageProcessor(){
         /* toUTF8 - Bitmap to Base64 to UTF* conversion
@@ -25,6 +27,13 @@ public class ImageProcessor {
         *  checkFileSize - compare FILE_LIMIT_IN_KB vs actual byte size of bitmap
         * */
 
+    }
+
+    public boolean checkFileSize(Drawable drawable, boolean compress){
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.draw(canvas);
+        return checkFileSize(bitmap, compress);
     }
 
     public boolean checkFileSize(Bitmap bitmap, boolean compress){
