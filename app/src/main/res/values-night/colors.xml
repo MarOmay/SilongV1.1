@@ -2,13 +2,13 @@
 <resources>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="purple_700">#fb528b</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="whiteLogin">#FFFFFFFF</color>
-    <color name="nighty">#FFFFFFFF</color>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FF000000</color>
+    <color name="whiteLogin">#FFffffff</color>
+    <color name="nighty">#242526</color>
     <color name="whitey">#FFFFFFFF</color>
 
     <!-- custom colors -->
@@ -16,14 +16,14 @@
     <color name="darkpink">#d81c60</color>
     <color name="orange">#ff8e21</color>
     <color name="gray">#6e6e6a</color>
-    <color name="textgray">#9fb0b9</color>
-    <color name="lightgray">#eceff1</color>
+    <color name="textgray">#b0b3b8</color>
+    <color name="lightgray">#3a3b3c</color>
     <color name="darkgray">#3d3d39</color>
     <color name="green">#04d428</color>
     <color name="red">#e6080B</color>
 
     <!-- much more custome colors DO NOT REMOVE OR CHANGE -->
-    <color name="splashBackPink">#fb528b</color>
-    <color name="splashBackOrange">#ff8e21</color>
+    <color name="splashBackPink">#242526</color>
+    <color name="splashBackOrange">#3a3b3c</color>
 
 </resources>

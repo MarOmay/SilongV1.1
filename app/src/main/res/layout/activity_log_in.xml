@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".LogIn"
-    android:id="@+id/loginLayout">
+    android:id="@+id/loginLayout"
+    android:background="@color/nighty"
+    android:theme="@style/Theme.Silong.noActionbarAndStatusBar">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +30,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginStart="20dp"
                 android:text="Log-In or Sign-Up"
-                android:textColor="@color/white"
+                android:textColor="@color/whiteLogin"
                 android:textSize="25sp"
                 android:textStyle="bold|italic"
                 android:paddingEnd="10dp"/>
@@ -39,7 +41,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginStart="20dp"
                 android:text="to get started."
-                android:textColor="@color/white"
+                android:textColor="@color/whiteLogin"
                 android:textSize="25sp"
                 android:textStyle="bold|italic" />
 

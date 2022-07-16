@@ -11,7 +11,8 @@
     android:paddingTop="10dp"
     android:paddingEnd="10dp"
     android:paddingBottom="10dp"
-    tools:context=".SignUp2">
+    tools:context=".SignUp2"
+    android:background="@color/nighty">
 
     <LinearLayout
         android:layout_width="match_parent"

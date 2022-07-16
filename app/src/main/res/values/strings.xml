@@ -86,4 +86,6 @@
         <item>Female</item>
         <item>Gender</item>
     </string-array>
+
+    <string name="accRecovMsg">\nCheck your Email for further instructions on how to recover your account.\n\nPlease check your spam and other folders if you don\'t immediately see the email.</string>
 </resources>

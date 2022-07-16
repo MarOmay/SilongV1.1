@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" >
     <!-- Base application theme. -->
     <style name="Theme.Silong" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -10,13 +10,28 @@
         <item name="colorSecondaryVariant">@color/darkpink</item>
         <item name="colorOnSecondary">@color/pink</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
         <!-- Customize your theme here. -->
         <item name="android:autofilledHighlight" tools:targetApi="o">@android:color/transparent</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/productsans_regular</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
     <!-- custom styles silong  jepoy -->
+
+    <!-- custome styles statusbar-->
+
+    <style name="Theme.Silong.noActionbarAndStatusBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fitsSystemWindows">false</item>
+
+    </style>
 
     <style name="textField_style">
         <!-- Change textfield width and height on tf_background.xml -->
@@ -37,6 +52,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">17sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/whitey</item>
         <item name="cornerRadius">50dp</item>
     </style>
 
@@ -47,6 +63,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">17sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/whitey</item>
         <item name="cornerRadius">50dp</item>
     </style>
 

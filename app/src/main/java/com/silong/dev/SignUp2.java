@@ -1,5 +1,7 @@
 package com.silong.dev;
 
+import static com.silong.dev.LogIn.setWindowFlag;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,9 +10,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,6 +53,7 @@ public class SignUp2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up2);
         getSupportActionBar().hide();
+
 
         User user = (User) getIntent().getSerializableExtra("DATA");
         String password = (String) getIntent().getExtras().getString("PASSWORD");
@@ -166,7 +172,7 @@ public class SignUp2 extends AppCompatActivity {
 
                 //Alert Dialog for Confirmation builder.
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(SignUp2.this);
-                builder.setTitle("Terms and Conditions");
+                builder.setTitle(Html.fromHtml("<b>"+"Terms and Conditions"+"</b>"));
                 builder.setIcon(getDrawable(R.drawable.circlelogo_gradient));
                 builder.setBackground(getDrawable(R.drawable.dialog_bg));
                 builder.setMessage(getResources().getString(R.string.msg));
@@ -181,13 +187,13 @@ public class SignUp2 extends AppCompatActivity {
                 tnc_layout.addView(tnc_tv);
                 builder.setView(tnc_layout);
 
-                builder.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(Html.fromHtml("<b>"+"SUBMIT"+"</b>"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         uploadData(user, password);
                     }
                 });
-                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(Html.fromHtml("<b>"+"CANCEL"+"</b>"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //codes here

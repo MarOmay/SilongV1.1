@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Splash"
     android:orientation="horizontal"
+    android:theme="@style/Theme.Silong.noActionbarAndStatusBar"
     android:background="@drawable/gradient_bg">
 
     <pl.droidsonroids.gif.GifImageView
