@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Sign Up"
-                    android:textColor="@color/textgray"
+                    android:textColor="@color/black"
                     android:textSize="40sp"
                     android:textStyle="bold|italic" />
 
