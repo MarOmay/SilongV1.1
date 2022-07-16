@@ -93,6 +93,7 @@
                 tools:ignore="SpeakableTextPresentCheck,DuplicateClickableBoundsCheck">
 
                 <ImageView
+                    android:background="@color/lightgray"
                     android:id="@+id/ivsignupPicture"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

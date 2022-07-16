@@ -8,7 +8,7 @@
     <color name="black">#FFFFFFFF</color>
     <color name="white">#FF000000</color>
     <color name="whiteLogin">#FFffffff</color>
-    <color name="nighty">#242526</color>
+    <color name="nighty">#121212</color>
     <color name="whitey">#FFFFFFFF</color>
 
     <!-- custom colors -->
@@ -17,7 +17,7 @@
     <color name="orange">#ff8e21</color>
     <color name="gray">#6e6e6a</color>
     <color name="textgray">#b0b3b8</color>
-    <color name="lightgray">#3a3b3c</color>
+    <color name="lightgray">#252627</color>
     <color name="darkgray">#3d3d39</color>
     <color name="green">#04d428</color>
     <color name="red">#e6080B</color>
