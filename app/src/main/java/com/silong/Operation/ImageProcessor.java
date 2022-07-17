@@ -70,6 +70,13 @@ public class ImageProcessor {
         return null;
     }
 
+    public String toUTF8(Drawable drawable, boolean compress){
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.draw(canvas);
+        return toUTF8(bitmap, compress);
+    }
+
     public Bitmap toBitmap(Drawable drawable){
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);

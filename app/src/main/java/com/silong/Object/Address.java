@@ -1,6 +1,8 @@
 package com.silong.Object;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
 
     private String addressLine;
     private String barangay;

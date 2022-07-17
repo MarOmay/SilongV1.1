@@ -27,6 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.silong.Object.Address;
 import com.silong.Object.User;
 import com.silong.Operation.ImagePicker;
@@ -53,7 +57,6 @@ public class SignUp2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up2);
         getSupportActionBar().hide();
-
 
         User user = (User) getIntent().getSerializableExtra("DATA");
         String password = (String) getIntent().getExtras().getString("PASSWORD");
@@ -168,7 +171,7 @@ public class SignUp2 extends AppCompatActivity {
                         spinProvince.getText().toString(),
                         Integer.parseInt(etZip.getText().toString()));
                 user.setAddress(address);
-                user.setPhoto(new ImageProcessor().toBitmap(ivPicture.getDrawable()));
+                user.setPhotoAsString(new ImageProcessor().toUTF8(ivPicture.getDrawable(), true));
 
                 //Alert Dialog for Confirmation builder.
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(SignUp2.this);
@@ -248,11 +251,10 @@ public class SignUp2 extends AppCompatActivity {
     public void uploadData(User user, String password){
         /* Pass data and password to next intent that will perform
         *  essential processes and then upload data to cloud
-        *
+        **/
         Intent intent = new Intent(SignUp2.this, ProcessSignUp.class);
         intent.putExtra("DATA", user);
         intent.putExtra("PASSWORD", password);
         startActivity(intent);
-        finish();*/
     }
 }

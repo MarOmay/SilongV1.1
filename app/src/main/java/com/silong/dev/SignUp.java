@@ -24,6 +24,10 @@ import android.widget.Toast;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.silong.Object.User;
 
 import java.io.Serializable;
@@ -32,6 +36,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUp extends AppCompatActivity {
+
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     ImageView backButton;
     static EditText fieldFname, fieldLname, fieldPassword, fieldConfirmpass,
@@ -45,7 +53,6 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         getSupportActionBar().hide();
 
-
         backButton = (ImageView) findViewById(R.id.btnBack);
         fieldDBirthday = (EditText) findViewById(R.id.tfsignupBirthday);
         next = (Button) findViewById(R.id.btnsignupNext);
@@ -56,6 +63,15 @@ public class SignUp extends AppCompatActivity {
         fieldConfirmpass = (EditText) findViewById(R.id.tfsignupConPassword);
         fieldEmail = (EditText) findViewById(R.id.tfsignupEmail);
         fieldContact = (EditText) findViewById(R.id.tfsignupContact);
+
+        //FOR TESTING PURPOSES
+        fieldFname.setText("John");
+        fieldLname.setText("Smith");
+        fieldPassword.setText("password");
+        fieldConfirmpass.setText("password");
+        fieldEmail.setText("johnsmith@gmail.com");
+        fieldContact.setText("1");
+        //END OF TESTING BLOCK
 
         String[] gen = getResources().getStringArray(R.array.Gender);
 
@@ -117,7 +133,7 @@ public class SignUp extends AppCompatActivity {
                 user.setLastName(fieldLname.getText().toString());
                 user.setEmail(fieldEmail.getText().toString());
                 user.setBirthday(fieldDBirthday.getText().toString());
-                //user.setGender(spinGender.getSelectedItem().toString());
+                user.setGender(spinGender.getSelectedItem().toString().equals("Male")?0:1);
                 user.setContact(fieldContact.getText().toString());
 
                 Intent i = new Intent(SignUp.this, SignUp2.class);

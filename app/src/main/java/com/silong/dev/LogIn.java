@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -26,12 +28,21 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LogIn extends AppCompatActivity {
 
-    private FirebaseAuth auth;
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     Button signUp, logIn;
     EditText tfloginEmail, tfloginPassword;
@@ -57,14 +68,25 @@ public class LogIn extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
-        Toast.makeText(this, "Initialize Firebase", Toast.LENGTH_SHORT).show();
-
-        auth = FirebaseAuth.getInstance();
-
-        Toast.makeText(this, "Firebase Live", Toast.LENGTH_SHORT).show();
+        //Initialize Firebase objects
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        mDatabase = database.getReference();
 
         tfloginEmail = findViewById(R.id.tfloginEmail);
         tfloginPassword = findViewById(R.id.tfloginPassword);
+
+        //For auto-fill after registration
+        try {
+            String email = (String) getIntent().getStringExtra("email");
+            String password = (String) getIntent().getStringExtra("password");
+            tfloginEmail.setText(email);
+            tfloginPassword.setText(password);
+        }
+        catch (Exception e){
+            //ignore, no value passed by previous activity
+        }
 
         signUp = (Button) findViewById(R.id.btnSignup);
         logIn = (Button) findViewById(R.id.btnLogin);
@@ -77,14 +99,22 @@ public class LogIn extends AppCompatActivity {
                 String email = tfloginEmail.getText().toString();
                 String password = tfloginPassword.getText().toString();
 
+                Pattern pattern = Pattern.compile("^(.+)@(.+)$");
+                Matcher matcher = pattern.matcher(email);
+
                 if (email.equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter your email.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (!matcher.matches()){
+                    Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (password.equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter your password.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
 
                 attemptLogin(email, password);
             }
@@ -106,13 +136,12 @@ public class LogIn extends AppCompatActivity {
             }
         });
     }
-
     private void attemptLogin(String email, String password){
-        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(LogIn.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                Toast.makeText(LogIn.this, "User: " + auth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LogIn.this, "User: " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
 
             }
         })
@@ -124,18 +153,42 @@ public class LogIn extends AppCompatActivity {
                 });
     }
 
-    private void resetPassword(String email){
+    private void resetPassword(Context context, String email){
 
         //Send a password reset link to email
-        auth.sendPasswordResetEmail(email)
+        mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            //code here
+                            //Show email instruction dialog
+                            accountRecovDia(context);
                         }
                     }
                 });
+    }
+
+    private boolean exist = true;
+    private boolean emailExist(String email){
+        //Check internet connection
+        if(internetConnection()){
+            //Check if email is registered
+            mAuth.fetchSignInMethodsForEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                            exist = task.getResult().getSignInMethods().isEmpty();
+                            if (exist){
+                                Toast.makeText(getApplicationContext(), "Email is not registered.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+        }
+        
+        return !exist; //if SI method is empty, then email doesn't exist
     }
 
     //method for forgot password dialog
@@ -167,8 +220,26 @@ public class LogIn extends AppCompatActivity {
         builder.setPositiveButton(Html.fromHtml("<b>"+"SUBMIT"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //Codes here
-                accountRecovDia(context);
+                //Check if field is empty
+                String email = et_recovEmail.getText().toString();
+                Pattern pattern = Pattern.compile("^(.+)@(.+)$");
+                Matcher matcher = pattern.matcher(email);
+                if(email.equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter your email.", Toast.LENGTH_SHORT).show();
+                }
+                else if (!matcher.matches()){
+                    Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
+                }else{
+                    //Check if email is registered
+                    if(emailExist(email)){
+                        //Trigger Firebase to send instruction email
+                        resetPassword(context, email);
+                    }
+                    else {
+                        Toast.makeText(LogIn.this, "Something went wrong. (LI)", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
             }
         });
         builder.setNegativeButton(Html.fromHtml("<b>"+"CANCEL"+"</b>"), new DialogInterface.OnClickListener() {
@@ -192,6 +263,7 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //Codes here
+                //No codes here, no further action needed
             }
         });
         builder.show();
@@ -208,5 +280,14 @@ public class LogIn extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    private boolean internetConnection(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo!=null){
+            return true;
+        }
+        return false;
     }
 }

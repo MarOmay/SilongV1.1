@@ -15,6 +15,7 @@ public class User implements Serializable {
     public int gender;
     public String contact;
     public Bitmap photo;
+    public String photoAsString;
     public boolean accountStatus;
     public int adoptionCounter;
     public Address address;
@@ -104,6 +105,14 @@ public class User implements Serializable {
 
     public void setPhoto(Bitmap photo) {
         this.photo = photo;
+    }
+
+    public String getPhotoAsString() {
+        return photoAsString;
+    }
+
+    public void setPhotoAsString(String photoAsString) {
+        this.photoAsString = photoAsString;
     }
 
     public boolean isAccountStatus() {
