@@ -91,4 +91,16 @@
 
 
     </style>
+
+    <style name="Theme.Silong.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="My_Widget.MaterialComponents.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <!-- Chip background color selector -->
+        <item name="chipBackgroundColor">@color/bg_chip_state</item>
+        <!-- Chip text color selector -->
+        <item name="android:textColor">@color/text_chip_state</item>
+    </style>
 </resources>
