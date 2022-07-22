@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -113,6 +114,30 @@ public class ImageProcessor {
             e.printStackTrace();
         }
         return false; //failed
+    }
+
+    public void saveToLocal(Context context, String desc, String content){
+        //Check if file exists
+        File file = new File(context.getFilesDir() + "/user.dat");
+        if (!file.exists()){
+            try{
+                FileOutputStream fileOuputStream = context.openFileOutput("user.dat", Context.MODE_PRIVATE);
+            }
+            catch (Exception e){
+                Log.d("USER.DAT", "Error writing " + desc);
+            }
+        }
+        //Create local storage copy of user data
+        try (FileOutputStream fileOutputStream = context.openFileOutput( "user.dat", Context.MODE_APPEND)) {
+            String data = desc + ":" + content + ";\n";
+            fileOutputStream.write(data.getBytes());
+            fileOutputStream.flush();
+            Log.d("USER.DAT", content);
+        }
+        catch (Exception e){
+            Log.d("LLS", e.getMessage());
+            Toast.makeText(context, "Can't write user.dat. (LLS)", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

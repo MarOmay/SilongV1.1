@@ -10,6 +10,8 @@ public class Address implements Serializable {
     private String province;
     private int zipcode;
 
+    public Address(){}
+
     public Address(String addressLine, String barangay, String municipality, String province, int zipcode) {
         this.addressLine = addressLine;
         this.barangay = barangay;

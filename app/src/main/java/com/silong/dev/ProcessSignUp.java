@@ -49,7 +49,7 @@ public class ProcessSignUp extends AppCompatActivity {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        mDatabase = database.getReference();
+        mDatabase = database.getReference("Users");
 
         USER = (User) getIntent().getSerializableExtra("DATA");
         PASSWORD = (String) getIntent().getStringExtra("PASSWORD");

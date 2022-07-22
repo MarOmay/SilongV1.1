@@ -32,8 +32,11 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,7 +45,9 @@ public class LogIn extends AppCompatActivity {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReferenceUser;
+    private DatabaseReference databaseReferenceAdmin;
 
     Button signUp, logIn;
     EditText tfloginEmail, tfloginPassword;
@@ -71,8 +76,7 @@ public class LogIn extends AppCompatActivity {
         //Initialize Firebase objects
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        mDatabase = database.getReference();
+        database = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
         tfloginEmail = findViewById(R.id.tfloginEmail);
         tfloginPassword = findViewById(R.id.tfloginPassword);
@@ -140,9 +144,10 @@ public class LogIn extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(LogIn.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                Toast.makeText(LogIn.this, "User: " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(LogIn.this, LoginLoadingScreen.class);
+                intent.putExtra("UID", mAuth.getCurrentUser().getUid());
+                startActivity(intent);
+                finish();
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
@@ -151,44 +156,6 @@ public class LogIn extends AppCompatActivity {
                         Toast.makeText(LogIn.this, "Login failed", Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-
-    private void resetPassword(Context context, String email){
-
-        //Send a password reset link to email
-        mAuth.sendPasswordResetEmail(email)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            //Show email instruction dialog
-                            accountRecovDia(context);
-                        }
-                    }
-                });
-    }
-
-    private boolean exist = true;
-    private boolean emailExist(String email){
-        //Check internet connection
-        if(internetConnection()){
-            //Check if email is registered
-            mAuth.fetchSignInMethodsForEmail(email)
-                    .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                            exist = task.getResult().getSignInMethods().isEmpty();
-                            if (exist){
-                                Toast.makeText(getApplicationContext(), "Email is not registered.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Please check your internet connection.", Toast.LENGTH_SHORT).show();
-        }
-        
-        return !exist; //if SI method is empty, then email doesn't exist
     }
 
     //method for forgot password dialog
@@ -231,13 +198,7 @@ public class LogIn extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
                 }else{
                     //Check if email is registered
-                    if(emailExist(email)){
-                        //Trigger Firebase to send instruction email
-                        resetPassword(context, email);
-                    }
-                    else {
-                        Toast.makeText(LogIn.this, "Something went wrong. (LI)", Toast.LENGTH_SHORT).show();
-                    }
+                    emailChecker(context, email);
 
                 }
             }
@@ -249,6 +210,45 @@ public class LogIn extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    private void emailChecker(Context context, String email){
+        //Check internet connection
+        if(internetConnection()){
+            //Check if email is registered
+            mAuth.fetchSignInMethodsForEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                            if (task.getResult().getSignInMethods().isEmpty()){
+                                Toast.makeText(getApplicationContext(), "Email is not registered.", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                //Trigger Firebase to send instruction email
+                                resetPassword(context, email);
+                            }
+                        }
+                    });
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void resetPassword(Context context, String email){
+
+        //Send a password reset link to email
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            //Show email instruction dialog
+                            accountRecovDia(context);
+                        }
+                    }
+                });
     }
 
     //method for Account Recovery Dialog

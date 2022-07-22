@@ -4,6 +4,7 @@
     package="com.silong.dev">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -21,7 +22,7 @@
             android:name=".Header"
             android:exported="false" />
         <activity
-            android:name=".ExtraLoadingScreen"
+            android:name=".LoginLoadingScreen"
             android:exported="false" />
         <activity
             android:name=".ProcessSignUp"

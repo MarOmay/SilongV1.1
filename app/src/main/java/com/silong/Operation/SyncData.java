@@ -1,12 +1,19 @@
 package com.silong.Operation;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.silong.Object.User;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 public class SyncData {
 
-    private final Context context;
+    private static Context context;
+
+    private static Thread thread;
 
     public SyncData(Context context){
         this.context = context;

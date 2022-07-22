@@ -256,5 +256,6 @@ public class SignUp2 extends AppCompatActivity {
         intent.putExtra("DATA", user);
         intent.putExtra("PASSWORD", password);
         startActivity(intent);
+        finish();
     }
 }

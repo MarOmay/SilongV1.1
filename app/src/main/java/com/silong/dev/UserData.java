@@ -1,28 +1,62 @@
 package com.silong.dev;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
+import com.silong.Object.Address;
 import com.silong.Object.Adoption;
 import com.silong.Object.Chat;
+import com.silong.Object.Favorite;
 import com.silong.Object.Pet;
 import com.silong.Object.User;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class UserData extends User {
+public class UserData { //removed: extends User
 
-    public ArrayList<Pet> pets;
+    public static String userID;
+    public static String email;
+    public static String firstName;
+    public static String lastName;
+    public static String birthday;
+    public static int gender;
+    public static String contact;
+    public static Bitmap photo;
+    public static boolean accountStatus;
+    public static int adoptionCounter;
+    public static Address address = new Address();
+    public static ArrayList<Adoption> adoptionHistory;
+    public static ArrayList<Chat> chatHistory;
+    public static ArrayList<Favorite> likedPet;
+
+    public static ArrayList<Pet> pets;
 
     public UserData(){
         /* This class will contain all static data of the current user */
 
     }
 
-    public boolean populate(){
+    public static void logout(){
+        Homepage.USERDATA.delete();
+        Homepage.AVATARDATA.delete();
+        //Many other to be added later
+    }
+
+    public static boolean isLoggedIn(Context context){
+        File file = new File(context.getFilesDir(), "user.dat");
+        return file.exists();
+    }
+
+    public static void populate(){
 
         /* Fetch info from APP-SPECIFIC file, then populate static variables */
 
@@ -32,7 +66,7 @@ public class UserData extends User {
         String s = "";
         if ((s = readFile(new Homepage().USERDATA)) != null){
 
-            String[] data = s.split(";");
+            String[] data = s.split(";\n");
 
             for (String item : data) {
                 String [] temp = item.split(":");
@@ -41,7 +75,9 @@ public class UserData extends User {
                     case "email": email = temp[1]; break;
                     case "firstName": firstName = temp[1]; break;
                     case "lastName": lastName = temp[1]; break;
+                    case "birthday": birthday = temp[1]; break;
                     case "gender": gender = Integer.parseInt(temp[1]); break;
+                    case "contact": contact = temp[1]; break;
                     case "addressLine": address.setAddressLine(temp[1]); break;
                     case "barangay": address.setBarangay(temp[1]);break;
                     case "municipality": address.setMunicipality(temp[1]); break;
@@ -128,10 +164,9 @@ public class UserData extends User {
             }
         }//App should be able to run even if adoptions is empty
 
-        return allGood;
     }
 
-    private String readFile(File file){
+    private static String readFile(File file){
 
         /* READS THE CONTENTS OF A FILE */
 
@@ -146,6 +181,36 @@ public class UserData extends User {
             e.printStackTrace();
             return null;
         }
+
+    }
+
+    private String readFile(Context context, String dir){
+        String s = "";
+        try{
+            FileInputStream fis = context.openFileInput(dir);
+            InputStreamReader inputStreamReader =
+                    new InputStreamReader(fis, StandardCharsets.UTF_8);
+            StringBuilder stringBuilder = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(inputStreamReader)) {
+                String line = reader.readLine();
+                while (line != null) {
+                    stringBuilder.append(line).append('\n');
+                    line = reader.readLine();
+                }
+            } catch (IOException e) {
+                Log.d("UserData", e.getMessage());
+            } finally {
+                s = stringBuilder.toString();
+            }
+        }
+        catch (Exception e){
+            Log.d("UserData", "Reading failed: " + dir);
+        }
+
+        return s;
+    }
+
+    private void deleteFile(){
 
     }
 

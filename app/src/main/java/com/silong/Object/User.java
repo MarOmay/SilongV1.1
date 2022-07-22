@@ -115,7 +115,7 @@ public class User implements Serializable {
         this.photoAsString = photoAsString;
     }
 
-    public boolean isAccountStatus() {
+    public boolean getAccountStatus() {
         return accountStatus;
     }
 

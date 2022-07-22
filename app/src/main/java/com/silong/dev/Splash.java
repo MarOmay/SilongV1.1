@@ -38,7 +38,18 @@ public class Splash extends AppCompatActivity {
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(Splash.this, LogIn.class);
+                /* Checks logged in user (Alex)
+                    - if user.dat exists, proceed to Homepage
+                    - else, require login or signup
+                */
+                Intent i;
+                if (UserData.isLoggedIn(getApplicationContext())){
+                    UserData.populate();
+                    i = new Intent(Splash.this, Homepage.class);
+                }
+                else {
+                    i = new Intent(Splash.this, LogIn.class);
+                }
                 startActivity(i);
                 overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
                 finish();

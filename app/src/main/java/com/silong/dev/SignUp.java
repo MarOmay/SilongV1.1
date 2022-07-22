@@ -140,8 +140,7 @@ public class SignUp extends AppCompatActivity {
                 i.putExtra("DATA", user);
                 i.putExtra("PASSWORD", fieldPassword.getText().toString());
                 startActivity(i);
-
-
+                finish();
             }
         });
 
