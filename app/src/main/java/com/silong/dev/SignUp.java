@@ -64,15 +64,6 @@ public class SignUp extends AppCompatActivity {
         fieldEmail = (EditText) findViewById(R.id.tfsignupEmail);
         fieldContact = (EditText) findViewById(R.id.tfsignupContact);
 
-        //FOR TESTING PURPOSES
-        fieldFname.setText("John");
-        fieldLname.setText("Smith");
-        fieldPassword.setText("password");
-        fieldConfirmpass.setText("password");
-        fieldEmail.setText("johnsmith@gmail.com");
-        fieldContact.setText("1");
-        //END OF TESTING BLOCK
-
         String[] gen = getResources().getStringArray(R.array.Gender);
 
         fieldDBirthday.setOnClickListener(new View.OnClickListener() {
