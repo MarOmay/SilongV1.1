@@ -144,12 +144,18 @@ public class SignUp extends AppCompatActivity {
                 //Checks format of the email
                 String email = fieldEmail.getText().toString();
                 Pattern pattern = Pattern.compile("^(.+)@(.+)$");
-                Matcher matcher = pattern.matcher(fieldEmail.getText().toString());
-                if (!matcher.matches()){
+                try {
+                    Matcher matcher = pattern.matcher(fieldEmail.getText().toString());
+                    if (!matcher.matches()){
+                        Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
+                    Log.d("Signup", e.getMessage());
                     return;
                 }
-
 
                 //Check if contact contain enough numbers
                 String tempContact = fieldContact.getText().toString();
@@ -207,16 +213,22 @@ public class SignUp extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                         @Override
                         public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                            if (task.getResult().getSignInMethods().isEmpty()){
-                                Intent i = new Intent(SignUp.this, SignUp2.class);
-                                i.putExtra("DATA", user);
-                                i.putExtra("PASSWORD", fieldPassword.getText().toString());
-                                startActivity(i);
-                                finish();
+                            try{
+                                if (task.getResult().getSignInMethods().isEmpty()){
+                                    Intent i = new Intent(SignUp.this, SignUp2.class);
+                                    i.putExtra("DATA", user);
+                                    i.putExtra("PASSWORD", fieldPassword.getText().toString());
+                                    startActivity(i);
+                                    finish();
+                                }
+                                else {
+                                    //Inform user that email is in use
+                                    Toast.makeText(getApplicationContext(), "Email is already registered.", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else {
-                                //Inform user that email is in use
-                                Toast.makeText(getApplicationContext(), "Email is already registered.", Toast.LENGTH_SHORT).show();
+                            catch (Exception e){
+                                Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
+                                return;
                             }
                         }
                     })
