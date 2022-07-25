@@ -25,7 +25,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginStart="20dp"
@@ -59,7 +59,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp">
 
         <EditText
             android:id="@+id/tfloginEmail"
@@ -87,11 +88,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
             android:clickable="true"
             android:text="Forgot Password?"
             android:textColor="@color/pink"
-            android:textSize="18sp"
+            android:textSize="15sp"
             tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>
@@ -100,6 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="40dp"
+        android:paddingHorizontal="20dp"
         android:gravity="center|bottom"
         android:orientation="vertical">
 

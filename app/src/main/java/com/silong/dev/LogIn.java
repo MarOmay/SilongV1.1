@@ -179,7 +179,7 @@ public class LogIn extends AppCompatActivity {
         et_recovEmail.setBackground(getResources().getDrawable(R.drawable.tf_background));
         et_recovEmail.setPadding(30,0,0,0);
         et_recovEmail.setHint("Email Address");
-        et_recovEmail.setTextSize(15);
+        et_recovEmail.setTextSize(14);
         et_recovEmail.setLayoutParams(params);
         et_recovEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         recov_layout.addView(et_recovEmail);

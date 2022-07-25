@@ -74,7 +74,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="Apply for the pet on screen."
-                    android:textSize="17sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
             </LinearLayout>

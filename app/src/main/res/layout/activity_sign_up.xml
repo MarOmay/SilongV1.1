@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/signupLayout1"
@@ -18,14 +18,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="8"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:orientation="vertical"
-            android:paddingVertical="10dp">
 
             <LinearLayout
                 android:id="@+id/btnLayout"
@@ -37,12 +31,13 @@
                 android:paddingBottom="10dp">
 
                 <ImageView
-                    android:onClick="back"
                     android:id="@+id/btnBack"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:onClick="back"
                     android:src="@drawable/ic_round_arrow_back_ios_24"
-                    app:tint="@color/textgray" />
+                    app:tint="@color/textgray"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
             </LinearLayout>
 
@@ -53,7 +48,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="20dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -61,7 +56,7 @@
                     android:layout_weight="1"
                     android:text="Sign Up"
                     android:textColor="@color/black"
-                    android:textSize="40sp"
+                    android:textSize="35sp"
                     android:textStyle="bold|italic" />
 
                 <ImageView
@@ -77,7 +72,8 @@
         <LinearLayout
             android:id="@+id/layout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="5dp">
@@ -85,7 +81,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="15dp"
+                android:layout_marginVertical="10dp"
                 android:orientation="horizontal">
 
                 <EditText
@@ -113,7 +109,7 @@
                 style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="15dp"
+                android:layout_marginVertical="10dp"
                 android:hint="Password"
                 android:inputType="textPassword" />
 
@@ -122,7 +118,7 @@
                 style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="15dp"
+                android:layout_marginVertical="10dp"
                 android:hint="Confirm Password"
                 android:inputType="textPassword" />
 
@@ -131,14 +127,14 @@
                 style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="15dp"
+                android:layout_marginVertical="10dp"
                 android:hint="Email Address"
                 android:inputType="textEmailAddress" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="15dp"
+                android:layout_marginVertical="10dp"
                 android:orientation="horizontal">
 
                 <EditText
@@ -173,7 +169,7 @@
                 style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="15dp"
+                android:layout_marginVertical="10dp"
                 android:hint="Contact Number"
                 android:inputType="phone" />
 
@@ -188,6 +184,4 @@
 
         </LinearLayout>
 
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Type"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,23 +63,23 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/dogChip"
                     style="@style/My_Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="140dp"
+                    android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:text="DOG"
                     android:textAlignment="center"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/catChip"
                     style="@style/My_Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="140dp"
+                    android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:text="CAT"
                     android:textAlignment="center"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
             </com.google.android.material.chip.ChipGroup>
@@ -90,68 +90,59 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Estimated Age (Months)"
-            android:textSize="18sp" />
+            android:text="Estimated Age"
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1">
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_weight="2"
+                android:saveEnabled="true"
+                app:selectionRequired="true"
+                app:singleLine="true">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Minimum:"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/minAgeET"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="2"
-                    android:background="@color/lightgray"
-                    android:hint="1"
-                    android:inputType="number"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/puppyChip"
+                    style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:text="PUPPY"
                     android:textAlignment="center"
-                    android:textSize="20sp"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Maximum:"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/maxAgeET"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="2"
-                    android:background="@color/lightgray"
-                    android:hint="3"
-                    android:inputType="number"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/adultChip"
+                    style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:text="ADULT"
                     android:textAlignment="center"
-                    android:textSize="20sp"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-            </LinearLayout>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/seniorChip"
+                    style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:text="SENIOR"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.chip.ChipGroup>
 
         </LinearLayout>
 
@@ -160,7 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Gender"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -180,23 +171,23 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/maleChip"
                     style="@style/My_Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="140dp"
+                    android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:text="MALE"
                     android:textAlignment="center"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/femaleChip"
                     style="@style/My_Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="140dp"
+                    android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:text="FEMALE"
                     android:textAlignment="center"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
             </com.google.android.material.chip.ChipGroup>
@@ -214,10 +205,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Show liked pets only"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/likedOnlySwitch"
+                android:paddingEnd="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
