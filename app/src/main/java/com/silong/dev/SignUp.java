@@ -120,14 +120,14 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
 
                 //Validate entries before accepting response
-                if(fieldFname.getText().length() < 1||
-                        fieldLname.getText().length() < 1 ||
-                        fieldPassword.getText().length() < 1 ||
-                        fieldConfirmpass.getText().length() < 1 ||
-                        fieldEmail.getText().length() < 1 ||
+                if(fieldFname.getText().toString().trim().length() < 1||
+                        fieldLname.getText().toString().trim().length() < 1 ||
+                        fieldPassword.getText().toString().trim().length() < 1 ||
+                        fieldConfirmpass.getText().toString().trim().length() < 1 ||
+                        fieldEmail.getText().toString().trim().length() < 1 ||
                         fieldDBirthday.getText().length() < 1 ||
                         spinGender.getSelectedItem().toString().equals("Gender") ||
-                        fieldContact.getText().length() < 1
+                        fieldContact.getText().toString().trim().length() < 1
                 ){
                     Toast.makeText(getApplicationContext(), "Please answer all fields.", Toast.LENGTH_SHORT).show();
                     return;
