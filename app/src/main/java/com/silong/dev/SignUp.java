@@ -141,6 +141,37 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
 
+                //Check that name only includes special characters
+                String fname = fieldFname.getText().toString().trim();
+                Pattern firstNamePattern = Pattern.compile("^[A-Z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Z][A-Za-z]*)*$");
+                try {
+                    Matcher matcher = firstNamePattern.matcher(fname);
+                    if (!matcher.matches()){
+                        Toast.makeText(getApplicationContext(), "Please check your first name.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Please check your last name.", Toast.LENGTH_SHORT).show();
+                    Log.d("SignUp", e.getMessage());
+                    return;
+                }
+
+                String lname = fieldFname.getText().toString().trim();
+                Pattern lastNamePattern = Pattern.compile("^[A-Z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Z][A-Za-z]*)*$");
+                try {
+                    Matcher matcher = lastNamePattern.matcher(lname);
+                    if (!matcher.matches()){
+                        Toast.makeText(getApplicationContext(), "Please check your last name.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Please check your first name.", Toast.LENGTH_SHORT).show();
+                    Log.d("SignUp", e.getMessage());
+                    return;
+                }
+
                 //Checks format of the email
                 String email = fieldEmail.getText().toString();
                 Pattern pattern = Pattern.compile("^(.+)@(.+)$");
