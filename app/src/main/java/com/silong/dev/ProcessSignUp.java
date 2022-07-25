@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.silong.Object.Address;
@@ -79,9 +80,18 @@ public class ProcessSignUp extends AppCompatActivity {
                             if (!internetConnection()){
                                 Toast.makeText(ProcessSignUp.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
                             }
-                            else {
-                                Toast.makeText(ProcessSignUp.this, "Email already exist.", Toast.LENGTH_SHORT).show();
+                            else if (e instanceof FirebaseAuthInvalidCredentialsException){
+                                Toast.makeText(ProcessSignUp.this, "Please use a valid email address.", Toast.LENGTH_SHORT).show();
                             }
+                            else {
+                                Toast.makeText(ProcessSignUp.this, "There is a problem getting you signed up.", Toast.LENGTH_SHORT).show();
+                            }
+
+                            //Bring user back to sign up page, and autofill the data
+                            Intent intent = new Intent(ProcessSignUp.this, SignUp.class);
+                            intent.putExtra("SIGNUPDATA", USER);
+                            startActivity(intent);
+                            finish();
                         }
                     });
         }
