@@ -102,7 +102,7 @@ public class SignUp extends AppCompatActivity {
         {
             try {
                 User temp = (User) getIntent().getSerializableExtra("SIGNUPDATA");
-                fieldFname.setText(temp.getLastName());
+                fieldFname.setText(temp.getFirstName());
                 fieldLname.setText(temp.getLastName());
                 fieldEmail.setText(temp.getEmail());
                 spinGender.setSelection(temp.getGender());
@@ -125,7 +125,7 @@ public class SignUp extends AppCompatActivity {
                         fieldPassword.getText().equals("") ||
                         fieldConfirmpass.getText().equals("") ||
                         fieldEmail.getText().equals("") ||
-                        fieldDBirthday.getText().equals(null) ||
+                        fieldDBirthday.getText().length() < 1 ||
                         spinGender.getSelectedItem().toString().equals("Gender") ||
                         fieldContact.getText().equals("")
                 ){
@@ -149,6 +149,7 @@ public class SignUp extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
 
                 //Check if contact contain enough numbers
                 String tempContact = fieldContact.getText().toString();
