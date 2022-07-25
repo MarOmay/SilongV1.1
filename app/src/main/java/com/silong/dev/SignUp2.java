@@ -52,14 +52,17 @@ public class SignUp2 extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private Bitmap bmp;
 
+    private User user;
+    private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up2);
         getSupportActionBar().hide();
 
-        User user = (User) getIntent().getSerializableExtra("DATA");
-        String password = (String) getIntent().getExtras().getString("PASSWORD");
+        user = (User) getIntent().getSerializableExtra("DATA");
+        password = (String) getIntent().getExtras().getString("PASSWORD");
 
         btnCreate = (Button) findViewById(R.id.btnsignupCreate);
         ivPicture = (ImageView) findViewById(R.id.ivsignupPicture);
@@ -239,7 +242,10 @@ public class SignUp2 extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent intent = new Intent(SignUp2.this, SignUp.class);
+        intent.putExtra("SIGNUPDATA", user);
+        intent.putExtra("PASSWORD", password);
+        startActivity(intent);
         this.finish();
     }
 

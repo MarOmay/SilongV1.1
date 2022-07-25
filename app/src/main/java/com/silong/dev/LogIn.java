@@ -130,6 +130,7 @@ public class LogIn extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LogIn.this, SignUp.class);
                 startActivity(intent);
+                finish();
             }
         });
 

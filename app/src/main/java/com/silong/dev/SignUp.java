@@ -15,7 +15,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -24,6 +26,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -108,6 +111,10 @@ public class SignUp extends AppCompatActivity {
                 spinGender.setSelection(temp.getGender());
                 fieldDBirthday.setText(temp.getBirthday());
                 fieldContact.setText(temp.getContact());
+
+                String password = getIntent().getStringExtra("PASSWORD");
+                fieldPassword.setText(password);
+                fieldConfirmpass.setText(password);
             }
             catch (Exception e){
                 Log.d("SignUp", e.getMessage());
@@ -143,7 +150,7 @@ public class SignUp extends AppCompatActivity {
 
                 //Check that name only includes special characters
                 String fname = fieldFname.getText().toString().trim();
-                Pattern firstNamePattern = Pattern.compile("^[A-Z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Z][A-Za-z]*)*$");
+                Pattern firstNamePattern = Pattern.compile("^[A-Za-z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Za-z][A-Za-z]*)*$");
                 try {
                     Matcher matcher = firstNamePattern.matcher(fname);
                     if (!matcher.matches()){
@@ -158,7 +165,7 @@ public class SignUp extends AppCompatActivity {
                 }
 
                 String lname = fieldFname.getText().toString().trim();
-                Pattern lastNamePattern = Pattern.compile("^[A-Z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Z][A-Za-z]*)*$");
+                Pattern lastNamePattern = Pattern.compile("^[A-Za-z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Za-z][A-Za-z]*)*$");
                 try {
                     Matcher matcher = lastNamePattern.matcher(lname);
                     if (!matcher.matches()){
@@ -232,7 +239,8 @@ public class SignUp extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent intent = new Intent(SignUp.this, LogIn.class);
+        startActivity(intent);
         this.finish();
     }
 
