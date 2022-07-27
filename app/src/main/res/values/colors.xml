@@ -21,6 +21,7 @@
     <color name="darkgray">#3d3d39</color>
     <color name="green">#04d428</color>
     <color name="red">#e6080B</color>
+    <color name="pastelGreen">#55ab55</color>
 
     <!-- much more custome colors DO NOT REMOVE OR CHANGE -->
     <color name="splashBackPink">#fb528b</color>

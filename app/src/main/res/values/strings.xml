@@ -88,4 +88,20 @@
     </string-array>
 
     <string name="accRecovMsg">\nCheck your Email for further instructions on how to recover your account.\n\nPlease check your spam and other folders if you don\'t immediately see the email.</string>
+
+    <string name="aboutOffice">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+
+    <string name="mission">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+
+    <string name="vision">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+
+    <string name="operatingHrs">Mondays to Saturdays\n8:00 AM to 5:00 PM</string>
+
+    <string name="contacts">Phone Numbers:\n0933-995-6566 / 0966-318-1892\n\nTelephone Number:\n(044) 3065341\n\nE-mail:\ncityvet20@yahoo.com</string>
+
+    <string name="location">Motorpool, Productivity Center\nBrgy. Sapang Palay Proper\nCity of San Jose del Monte, Bulacan</string>
+
+    <string name="developed">Developed at\nBULACAN STATE UNIVERSITY\nSARMIENTO CAMPUS</string>
+
+    <string name="developers">Belano, Charl Nikki L.\nDagatan. Joshua Miguel V.\nMaloles, Kenjhi P.\nOmay, Mar Alexis O.\nTrinidad, Jireh D.</string>
 </resources>

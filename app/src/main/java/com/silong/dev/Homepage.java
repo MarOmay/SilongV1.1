@@ -1,6 +1,8 @@
 package com.silong.dev;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -43,10 +45,11 @@ public class Homepage extends AppCompatActivity {
     private SwipeAdapter adapter;
     private List<Integer> list;
     Koloda koloda;
+    DrawerLayout drawerLayout;
 
     TextView headerTitle;
-    ImageView filterImgview, messageImgview, menuImgview;
-    Button applyBtn;
+    ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn;
+    Button applyBtn, aboutOfficeBtn, aboutUsBtn;
     ImageView heartIcon;
 
 
@@ -65,6 +68,7 @@ public class Homepage extends AppCompatActivity {
         PETDATA = new File(getFilesDir(),"pet.dat");
         FAVORITECONFIG = new File(getFilesDir(),"favorite.config");
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         View view = findViewById(R.id.headerLayout);
         headerTitle = (TextView) findViewById(R.id.headerTitle);
         filterImgview = (ImageView) findViewById(R.id.filterImgview);
@@ -72,10 +76,49 @@ public class Homepage extends AppCompatActivity {
         menuImgview = (ImageView) findViewById(R.id.menuImgview);
         applyBtn = (Button) findViewById(R.id.applyBtn);
         heartIcon = (ImageView) findViewById(R.id.heartIcon);
+        closeDrawerBtn = (ImageView) findViewById(R.id.closeDrawerBtn);
+        aboutOfficeBtn = (Button) findViewById(R.id.aboutOfficeBtn);
+        aboutUsBtn = (Button) findViewById(R.id.aboutUsBtn);
+
+        //opens filter dialog
         filterImgview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 filterDia(Homepage.this);
+            }
+        });
+
+        //opens navigation drawer
+        menuImgview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+        //closes navigation drawer
+        closeDrawerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawer(GravityCompat.END);
+            }
+        });
+
+        //takes you to About the Office screen
+        aboutOfficeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Homepage.this, AboutTheOffice.class);
+                startActivity(i);
+            }
+        });
+
+        //takes you to About Us screen
+        aboutUsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent z = new Intent(Homepage.this, AboutUs.class);
+                startActivity(z);
             }
         });
 

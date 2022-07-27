@@ -67,7 +67,7 @@
         <item name="cornerRadius">50dp</item>
     </style>
 
-    <style name="circleButton_style" parent="Widget.MaterialComponents.Button">
+    <style name="circleNextButton_style" parent="Widget.MaterialComponents.Button">
         <item name="android:width">60dp</item>
         <item name="android:height">70dp</item>
         <item name="minWidth">0dp</item>
@@ -77,7 +77,20 @@
         <item name="icon">@drawable/ic_round_chevron_right_24</item>
         <item name="iconGravity">start</item>
         <item name="iconSize">40dp</item>
-        <item name="android:paddingStart">17dp</item>
+        <item name="android:paddingStart">11dp</item>
+    </style>
+
+    <style name="circleExitButton_style" parent="Widget.MaterialComponents.Button">
+        <item name="android:width">60dp</item>
+        <item name="android:height">70dp</item>
+        <item name="minWidth">0dp</item>
+        <item name="android:backgroundTint">@color/pink</item>
+        <item name="android:gravity">center</item>
+        <item name="cornerRadius">50dp</item>
+        <item name="icon">@drawable/ic_round_exit_to_app_24</item>
+        <item name="iconGravity">start</item>
+        <item name="iconSize">30dp</item>
+        <item name="android:paddingStart">15dp</item>
     </style>
 
     <style name="spinner_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
@@ -104,5 +117,16 @@
 
     <style name="Shape" parent="">
         <item name="cornerSize">5%</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyApp.Dialog.Rounded</item>
+        <item name="android:width">10dp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.Dialog.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">100dp</item>
     </style>
 </resources>
