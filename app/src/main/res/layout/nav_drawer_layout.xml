@@ -20,7 +20,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/ic_round_chevron_right_24"
-        app:tint="@color/nighty" />
+        app:tint="@color/whitey"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
