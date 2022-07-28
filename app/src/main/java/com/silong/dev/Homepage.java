@@ -166,19 +166,6 @@ public class Homepage extends AppCompatActivity {
         adapter = new SwipeAdapter(this, list);
         koloda.setAdapter(adapter);
 
-        //TEMPORARY LOGOUT FUNCTION
-        headerTitle.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                UserData.logout();
-                Toast.makeText(Homepage.this, "Logging out...", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Homepage.this, Splash.class);
-                startActivity(intent);
-                finish();
-                return false;
-            }
-        });
-
         UserData.populate();
     }
 
@@ -211,7 +198,12 @@ public class Homepage extends AppCompatActivity {
         builder.setPositiveButton(Html.fromHtml("<b>"+"LOGOUT"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //codes here
+                //Log out user
+                UserData.logout();
+                Toast.makeText(Homepage.this, "Logging out...", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Homepage.this, Splash.class);
+                startActivity(intent);
+                finish();
             }
         });
         builder.setNegativeButton(Html.fromHtml("<b>"+"NO"+"</b>"), new DialogInterface.OnClickListener() {
