@@ -93,7 +93,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/lightgray"
                 android:clickable="true"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </androidx.cardview.widget.CardView>
