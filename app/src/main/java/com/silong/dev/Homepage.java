@@ -53,6 +53,9 @@ public class Homepage extends AppCompatActivity {
     Button applyBtn, aboutOfficeBtn, aboutUsBtn,exitBtn;
     ImageView heartIcon;
 
+    ImageView avatarImgview;
+    TextView usernameTv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,17 @@ public class Homepage extends AppCompatActivity {
         aboutUsBtn = (Button) findViewById(R.id.aboutUsBtn);
         exitBtn = (Button) findViewById(R.id.exitBtn);
 
+        avatarImgview = findViewById(R.id.avatarImgview);
+        usernameTv = findViewById(R.id.usernameTv);
+
+        try {
+            usernameTv.setText(UserData.firstName + " " + UserData.lastName);
+            avatarImgview.setImageBitmap(UserData.photo);
+        }
+        catch (Exception e){
+            Log.d("Homepage", e.getMessage());
+        }
+
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
@@ -90,11 +104,7 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
                 //Update Menu Drawer details
-
-                TextView usernameTv = findViewById(R.id.usernameTv);
                 usernameTv.setText(UserData.firstName + " " + UserData.lastName);
-
-                ImageView avatarImgview = findViewById(R.id.avatarImgview);
                 avatarImgview.setImageBitmap(UserData.photo);
             }
 
@@ -199,6 +209,7 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //Log out user
+                avatarImgview.setImageResource(R.drawable.circlelogo_white);
                 UserData.logout();
                 Toast.makeText(Homepage.this, "Logging out...", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Homepage.this, Splash.class);

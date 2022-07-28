@@ -3,6 +3,7 @@ package com.silong.dev;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
 import com.silong.Object.Address;
@@ -47,9 +48,23 @@ public class UserData { //removed: extends User
     }
 
     public static void logout(){
+        //Delete user-related local files
         Homepage.USERDATA.delete();
         Homepage.AVATARDATA.delete();
         //Many other to be added later
+
+        //Empty static variables at runtime
+        UserData.userID = "";
+        UserData.email = "";
+        UserData.firstName = "";
+        UserData.lastName = "";
+        UserData.birthday = "";
+        UserData.contact = "";
+        UserData.adoptionCounter = 0;
+        UserData.address = new Address();
+        UserData.adoptionHistory = new ArrayList<Adoption>();
+        UserData.chatHistory = new ArrayList<Chat>();
+        UserData.likedPet = new ArrayList<Favorite>();
     }
 
     public static boolean isLoggedIn(Context context){
