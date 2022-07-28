@@ -44,7 +44,7 @@ public class Splash extends AppCompatActivity {
                 */
                 Intent i;
                 if (UserData.isLoggedIn(getApplicationContext())){
-                    UserData.populate();
+                    //UserData.populate();
                     i = new Intent(Splash.this, Homepage.class);
                 }
                 else {

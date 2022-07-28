@@ -20,7 +20,7 @@ public class ImageProcessor {
 
     //Maximum file size allowed [MB] * [KB] * [B]
     private final int FILE_LIMIT_IN_KB = 1 * 1024 * 1024;
-    private final int COMPRESSION = 80;
+    private final int COMPRESSION = 50;
 
     public ImageProcessor(){
         /* toUTF8 - Bitmap to Base64 to UTF* conversion
@@ -114,6 +114,18 @@ public class ImageProcessor {
             e.printStackTrace();
         }
         return false; //failed
+    }
+
+    public void avatarToLocal(Context context, String avatar){
+        try (FileOutputStream fileOutputStream = context.openFileOutput( "avatar.dat", Context.MODE_PRIVATE)) {
+            fileOutputStream.write(avatar.getBytes());
+            fileOutputStream.flush();
+        }
+        catch (Exception e){
+            Log.d("LLS", e.getMessage());
+            Toast.makeText(context, "Can't write user.dat. (LLS)", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void saveToLocal(Context context, String desc, String content){

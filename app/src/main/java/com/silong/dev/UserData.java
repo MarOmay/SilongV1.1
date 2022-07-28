@@ -11,6 +11,7 @@ import com.silong.Object.Chat;
 import com.silong.Object.Favorite;
 import com.silong.Object.Pet;
 import com.silong.Object.User;
+import com.silong.Operation.ImageProcessor;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,13 +64,15 @@ public class UserData { //removed: extends User
         boolean allGood = true;
 
         //Populate all String and int variables
-        String s = "";
-        if ((s = readFile(new Homepage().USERDATA)) != null){
 
-            String[] data = s.split(";\n");
+        try{
+            File userdata = Homepage.USERDATA;
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(userdata));
+            String line;
+            while ((line = bufferedReader.readLine()) != null){
+                line = line.replace(";","");
 
-            for (String item : data) {
-                String [] temp = item.split(":");
+                String [] temp = line.split(":");
                 switch (temp[0]){
                     case "userID": userID = temp[1]; break;
                     case "email": email = temp[1]; break;
@@ -84,13 +87,18 @@ public class UserData { //removed: extends User
                     case "province": address.setProvince(temp[1]); break;
                     case "zipcode":  address.setZipcode(Integer.parseInt(temp[1])); break;
                 }
+
             }
+            bufferedReader.close();
         }
-        else allGood = false;
+        catch (Exception e){
+            Log.d("UserData", e.getMessage());
+        }
 
         //Populate Bitmap variable
         try {
-            photo = BitmapFactory.decodeFile(new Homepage().AVATARDATA.getAbsolutePath());
+            photo = BitmapFactory.decodeFile(Homepage.AVATARDATA.getAbsolutePath());
+
         }catch (Exception e){
             allGood = false;
             //photo = default pic from drawable

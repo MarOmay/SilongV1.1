@@ -37,9 +37,7 @@
             android:id="@+id/avatarImgview"
             android:layout_width="110dp"
             android:layout_height="110dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_round_person_24"
-            app:tint="@color/textgray" />
+            android:scaleType="centerCrop"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -57,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Charl Nikki Belano"
+            android:text=""
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25sp"

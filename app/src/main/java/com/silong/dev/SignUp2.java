@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -37,6 +38,7 @@ import com.silong.Operation.ImagePicker;
 import com.silong.Operation.ImageProcessor;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
 public class SignUp2 extends AppCompatActivity {
@@ -54,6 +56,7 @@ public class SignUp2 extends AppCompatActivity {
 
     private User user;
     private String password;
+    private byte [] photoAsBytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +177,9 @@ public class SignUp2 extends AppCompatActivity {
                         spinProvince.getText().toString(),
                         Integer.parseInt(etZip.getText().toString()));
                 user.setAddress(address);
-                user.setPhotoAsString(new ImageProcessor().toUTF8(ivPicture.getDrawable(), true));
+                //user.setPhotoAsString(new ImageProcessor().toUTF8(((BitmapDrawable)ivPicture.getDrawable()).getBitmap(), true));
+                //user.setPhotoAsString(new ImageProcessor().toUTF8(bmp, true));
+                UserData.photo = bmp;
 
                 //Alert Dialog for Confirmation builder.
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(SignUp2.this);
@@ -196,7 +201,7 @@ public class SignUp2 extends AppCompatActivity {
                 builder.setPositiveButton(Html.fromHtml("<b>"+"SUBMIT"+"</b>"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        uploadData(user, password);
+                        uploadData(user, password, photoAsBytes);
                     }
                 });
                 builder.setNegativeButton(Html.fromHtml("<b>"+"CANCEL"+"</b>"), new DialogInterface.OnClickListener() {
@@ -254,7 +259,7 @@ public class SignUp2 extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void uploadData(User user, String password){
+    public void uploadData(User user, String password, byte [] photo){
         /* Pass data and password to next intent that will perform
         *  essential processes and then upload data to cloud
         **/

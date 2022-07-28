@@ -1,5 +1,6 @@
 package com.silong.dev;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -52,7 +53,6 @@ public class Homepage extends AppCompatActivity {
     Button applyBtn, aboutOfficeBtn, aboutUsBtn;
     ImageView heartIcon;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +79,34 @@ public class Homepage extends AppCompatActivity {
         closeDrawerBtn = (ImageView) findViewById(R.id.closeDrawerBtn);
         aboutOfficeBtn = (Button) findViewById(R.id.aboutOfficeBtn);
         aboutUsBtn = (Button) findViewById(R.id.aboutUsBtn);
+
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                //Update Menu Drawer details
+
+                TextView usernameTv = findViewById(R.id.usernameTv);
+                usernameTv.setText(UserData.firstName + " " + UserData.lastName);
+
+                ImageView avatarImgview = findViewById(R.id.avatarImgview);
+                avatarImgview.setImageBitmap(UserData.photo);
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
 
         //opens filter dialog
         filterImgview.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +169,10 @@ public class Homepage extends AppCompatActivity {
                 return false;
             }
         });
+
+        UserData.populate();
     }
+
     //Method for executing Filter Dialog
     public void filterDia(Context context){
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
