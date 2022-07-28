@@ -116,18 +116,6 @@ public class ImageProcessor {
         return false; //failed
     }
 
-    public void avatarToLocal(Context context, String avatar){
-        try (FileOutputStream fileOutputStream = context.openFileOutput( "avatar.dat", Context.MODE_PRIVATE)) {
-            fileOutputStream.write(avatar.getBytes());
-            fileOutputStream.flush();
-        }
-        catch (Exception e){
-            Log.d("LLS", e.getMessage());
-            Toast.makeText(context, "Can't write user.dat. (LLS)", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
     public void saveToLocal(Context context, String desc, String content){
         //Check if file exists
         File file = new File(context.getFilesDir() + "/user.dat");

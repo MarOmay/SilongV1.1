@@ -61,10 +61,7 @@ public class UserData { //removed: extends User
 
         /* Fetch info from APP-SPECIFIC file, then populate static variables */
 
-        boolean allGood = true;
-
         //Populate all String and int variables
-
         try{
             File userdata = Homepage.USERDATA;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(userdata));
@@ -100,9 +97,7 @@ public class UserData { //removed: extends User
             photo = BitmapFactory.decodeFile(Homepage.AVATARDATA.getAbsolutePath());
 
         }catch (Exception e){
-            allGood = false;
-            //photo = default pic from drawable
-            e.printStackTrace();
+            Log.d("UserData", e.getMessage());
         }
 
         //Populate Pets
@@ -128,9 +123,8 @@ public class UserData { //removed: extends User
                 pets.add(tempPet);
             }
         }
-        else allGood = false;
 
-        //Poplate Chats
+        //Populate Chats
         String sChats = "";
         if ((sChats = readFile(new Homepage().CHATDATA)) != null) {
             String[] aChats = sChats.split("\n");
@@ -186,7 +180,7 @@ public class UserData { //removed: extends User
             }
             return s;
         }catch (Exception e){
-            e.printStackTrace();
+            Log.d("UserData", e.getMessage());
             return null;
         }
 
@@ -216,10 +210,6 @@ public class UserData { //removed: extends User
         }
 
         return s;
-    }
-
-    private void deleteFile(){
-
     }
 
 

@@ -214,6 +214,7 @@ public class SignUp extends AppCompatActivity {
                     }
                     catch (Exception e){
                         Toast.makeText(SignUp.this, "Invalid contact number.", Toast.LENGTH_SHORT).show();
+                        Log.d("SignUp", e.getMessage());
                         return;
                     }
                 }
@@ -267,6 +268,7 @@ public class SignUp extends AppCompatActivity {
                             }
                             catch (Exception e){
                                 Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
+                                Log.d("SignUp", e.getMessage());
                                 return;
                             }
                         }

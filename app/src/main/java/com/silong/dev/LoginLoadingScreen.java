@@ -63,14 +63,6 @@ public class LoginLoadingScreen extends AppCompatActivity {
             Log.d("USERTYPE:", "Not user");
         }
 
-        boolean admin = false;
-        try {
-            databaseReferenceAdmin = database.getReference("Admins/" + uid);
-            admin = true;
-        } catch (Exception e){
-            Log.d("USERTYPE:", "Not admin");
-        }
-
         //Retrieve data from database
         if (user){
 
@@ -270,9 +262,6 @@ public class LoginLoadingScreen extends AppCompatActivity {
             startActivity(intent);
             finish();
 
-        }
-        else if (admin){
-            databaseReferenceAdmin = database.getReference("Admins/" + uid);
         }
         else{
             Toast.makeText(this, "Account can't be resolved. (LLS)", Toast.LENGTH_SHORT).show();

@@ -142,18 +142,23 @@ public class LogIn extends AppCompatActivity {
         });
     }
     private void attemptLogin(String email, String password){
+        LoadingDialog loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoadingDialog();
+
         mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Intent intent = new Intent(LogIn.this, LoginLoadingScreen.class);
                 intent.putExtra("UID", mAuth.getCurrentUser().getUid());
                 startActivity(intent);
+                loadingDialog.dismissLoadingDialog();
                 finish();
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        loadingDialog.dismissLoadingDialog();
                         Toast.makeText(LogIn.this, "Login failed", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -214,6 +219,8 @@ public class LogIn extends AppCompatActivity {
     }
 
     private void emailChecker(Context context, String email){
+        LoadingDialog loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoadingDialog();
         //Check internet connection
         if(internetConnection()){
             //Check if email is registered
@@ -221,6 +228,7 @@ public class LogIn extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                         @Override
                         public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                            loadingDialog.dismissLoadingDialog();
                             if (task.getResult().getSignInMethods().isEmpty()){
                                 Toast.makeText(getApplicationContext(), "Email is not registered.", Toast.LENGTH_SHORT).show();
                             }
@@ -234,20 +242,30 @@ public class LogIn extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "Please check your internet connection.", Toast.LENGTH_SHORT).show();
         }
+        loadingDialog.dismissLoadingDialog();
 
     }
 
     private void resetPassword(Context context, String email){
+        LoadingDialog loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoadingDialog();
 
         //Send a password reset link to email
         mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        loadingDialog.dismissLoadingDialog();
                         if (task.isSuccessful()) {
                             //Show email instruction dialog
                             accountRecovDia(context);
                         }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        loadingDialog.dismissLoadingDialog();
                     }
                 });
     }
