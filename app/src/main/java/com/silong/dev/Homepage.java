@@ -50,7 +50,7 @@ public class Homepage extends AppCompatActivity {
 
     TextView headerTitle;
     ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn;
-    Button applyBtn, aboutOfficeBtn, aboutUsBtn;
+    Button applyBtn, aboutOfficeBtn, aboutUsBtn,exitBtn;
     ImageView heartIcon;
 
     @Override
@@ -79,6 +79,7 @@ public class Homepage extends AppCompatActivity {
         closeDrawerBtn = (ImageView) findViewById(R.id.closeDrawerBtn);
         aboutOfficeBtn = (Button) findViewById(R.id.aboutOfficeBtn);
         aboutUsBtn = (Button) findViewById(R.id.aboutUsBtn);
+        exitBtn = (Button) findViewById(R.id.exitBtn);
 
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -150,6 +151,14 @@ public class Homepage extends AppCompatActivity {
             }
         });
 
+        //triggers exit dialog
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog(Homepage.this);
+            }
+        });
+
         //Koloda swipe
         koloda = findViewById(R.id.koloda);
         list = new ArrayList<>();
@@ -185,6 +194,27 @@ public class Homepage extends AppCompatActivity {
             }
         });
         builder.setNegativeButton(Html.fromHtml("<b>"+"CANCEL"+"</b>"), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //codes here
+            }
+        });
+        builder.show();
+    }
+
+    private void exitDialog(Context context) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+        builder.setTitle(Html.fromHtml("<b>"+"Exit"+"</b>"));
+        builder.setIcon(getDrawable(R.drawable.circlelogo_gradient));
+        builder.setBackground(getDrawable(R.drawable.dialog_bg));
+        builder.setMessage("Are you sure you want to exit the app?\nThis will log you out of your account.\n");
+        builder.setPositiveButton(Html.fromHtml("<b>"+"LOGOUT"+"</b>"), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //codes here
+            }
+        });
+        builder.setNegativeButton(Html.fromHtml("<b>"+"NO"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //codes here

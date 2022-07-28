@@ -91,8 +91,8 @@
         <item name="icon">@drawable/ic_round_exit_to_app_24</item>
         <item name="iconTint">@color/whitey</item>
         <item name="iconGravity">start</item>
-        <item name="iconSize">30dp</item>
-        <item name="android:paddingStart">15dp</item>
+        <item name="iconSize">25dp</item>
+        <item name="android:paddingStart">18dp</item>
     </style>
 
     <style name="spinner_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
