@@ -73,26 +73,8 @@ public class ProcessSignUp extends AppCompatActivity {
                             //Get uid from Firebase
                             USER.setUserID(mAuth.getCurrentUser().getUid());
                             if(task.isSuccessful()){
-                                //Sign into account first for auth rules
-                                mAuth.signInWithEmailAndPassword(USER.getEmail(), PASSWORD)
-                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                                saveUserData();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(ProcessSignUp.this, "Database error. PSU", Toast.LENGTH_SHORT).show();
-                                                Log.d("ProcessSignUp", e.getMessage());
-                                                //Bring user back to sign up page, and autofill the data
-                                                Intent intent = new Intent(ProcessSignUp.this, SignUp.class);
-                                                intent.putExtra("SIGNUPDATA", USER);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        });
+                                saveUserData();
+
                             }
                             else {
                                 onBackPressed();
