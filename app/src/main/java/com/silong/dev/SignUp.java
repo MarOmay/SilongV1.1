@@ -197,7 +197,7 @@ public class SignUp extends AppCompatActivity {
 
                 //Check if contact contain enough numbers
                 String tempContact = fieldContact.getText().toString();
-                if (tempContact.length() < 11){
+                if (tempContact.length() < 11 && tempContact.length() > 11){
                     Toast.makeText(SignUp.this, "Please check your contact number.", Toast.LENGTH_SHORT).show();
                     return;
                 }
