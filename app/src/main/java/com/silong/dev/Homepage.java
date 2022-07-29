@@ -20,6 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.silong.Operation.SyncData;
 import com.yalantis.library.Koloda;
 
@@ -42,6 +46,12 @@ public class Homepage extends AppCompatActivity {
     protected static File CHATCONFIG;
     protected static File PETDATA;
     protected static File FAVORITECONFIG;
+
+    //Firebase objects
+    private FirebaseAnalytics mAnalytics;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mReference;
 
     private SwipeAdapter adapter;
     private List<Integer> list;
@@ -70,6 +80,10 @@ public class Homepage extends AppCompatActivity {
         CHATCONFIG = new File(getFilesDir(),"chat.config");
         PETDATA = new File(getFilesDir(),"pet.dat");
         FAVORITECONFIG = new File(getFilesDir(),"favorite.config");
+
+        //Initialize Firebase Objects
+        mAnalytics = FirebaseAnalytics.getInstance(this);
+        mAuth = FirebaseAuth.getInstance();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         View view = findViewById(R.id.headerLayout);
@@ -211,6 +225,7 @@ public class Homepage extends AppCompatActivity {
                 //Log out user
                 avatarImgview.setImageResource(R.drawable.circlelogo_white);
                 UserData.logout();
+                mAuth.signOut();
                 Toast.makeText(Homepage.this, "Logging out...", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Homepage.this, Splash.class);
                 startActivity(intent);
