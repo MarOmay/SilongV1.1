@@ -61,7 +61,14 @@ public class ProcessSignUp extends AppCompatActivity {
 
         USER.setPhotoAsString(new ImageProcessor().toUTF8(UserData.photo, true));
 
-        registerEmail();
+        try{
+            registerEmail();
+        }
+        catch (Exception e){
+            Toast.makeText(ProcessSignUp.this, "There is a problem registering your email.", Toast.LENGTH_SHORT).show();
+            Log.d("ProcessSignUp", e.getMessage());
+            backToSignUp();
+        }
     }
 
     private void registerEmail(){
@@ -73,8 +80,34 @@ public class ProcessSignUp extends AppCompatActivity {
                             //Get uid from Firebase
                             USER.setUserID(mAuth.getCurrentUser().getUid());
                             if(task.isSuccessful()){
-                                saveUserData();
-
+                                try{
+                                    saveUserData();
+                                }
+                                catch (Exception e){
+                                    Toast.makeText(ProcessSignUp.this, "There is a problem getting you signed up.", Toast.LENGTH_SHORT).show();
+                                    Log.d("ProcessSignUp", e.getMessage());
+                                    backToSignUp();
+                                }
+                                //Sign into account first for auth rules
+                                /*mAuth.signInWithEmailAndPassword(USER.getEmail(), PASSWORD)
+                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                saveUserData();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(ProcessSignUp.this, "Database error. PSU", Toast.LENGTH_SHORT).show();
+                                                Log.d("ProcessSignUp", e.getMessage());
+                                                //Bring user back to sign up page, and autofill the data
+                                                Intent intent = new Intent(ProcessSignUp.this, SignUp.class);
+                                                intent.putExtra("SIGNUPDATA", USER);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });*/
                             }
                             else {
                                 onBackPressed();
@@ -95,10 +128,7 @@ public class ProcessSignUp extends AppCompatActivity {
                             }
 
                             //Bring user back to sign up page, and autofill the data
-                            Intent intent = new Intent(ProcessSignUp.this, SignUp.class);
-                            intent.putExtra("SIGNUPDATA", USER);
-                            startActivity(intent);
-                            finish();
+                            backToSignUp();
                         }
                     });
         }
@@ -163,5 +193,12 @@ public class ProcessSignUp extends AppCompatActivity {
                         onBackPressed();
                     }
                 });
+    }
+
+    private void backToSignUp(){
+        Intent intent = new Intent(ProcessSignUp.this, SignUp.class);
+        intent.putExtra("SIGNUPDATA", USER);
+        startActivity(intent);
+        finish();
     }
 }

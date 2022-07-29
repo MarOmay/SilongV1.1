@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -236,6 +237,13 @@ public class LogIn extends AppCompatActivity {
                                 //Trigger Firebase to send instruction email
                                 resetPassword(context, email);
                             }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Can't check your email right now.", Toast.LENGTH_SHORT).show();
+                            Log.d("LogIn", e.getMessage());
                         }
                     });
         }
