@@ -2,6 +2,7 @@ package com.silong.dev;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -39,6 +40,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +56,9 @@ public class LogIn extends AppCompatActivity {
     Button signUp, logIn;
     EditText tfloginEmail, tfloginPassword;
     TextView forgotPass;
+
+    private int loginAttempts = 0;
+    private boolean allowLogin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,13 +121,44 @@ public class LogIn extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                if (loginAttempts >= 3){
+                    Toast.makeText(getApplicationContext(), "Too many failed attempts.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Try again after 60 seconds.", Toast.LENGTH_LONG).show();
+                    loginAttempts = 0;
+                    allowLogin = false;
+                    logIn.setTextColor(Color.LTGRAY);
+
+                    try{
+                        Timer timer = new Timer();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                allowLogin = true;
+                                Button btn = findViewById(R.id.btnLogin);
+                                btn.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.whitey));
+                            }
+                        }, 1*(60*1000));
+                    }
+                    catch (Exception e){
+                        Log.d("LogIn", e.getMessage());
+                    }
+
+                    return;
+                }
+
                 if (password.equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter your password.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-
-                attemptLogin(email, password);
+                if(allowLogin){
+                    attemptLogin(email, password);
+                }
+                else {
+                    Toast.makeText(LogIn.this, "Please try again later.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
 
@@ -149,6 +186,7 @@ public class LogIn extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
+                loginAttempts = 0;
                 Intent intent = new Intent(LogIn.this, LoginLoadingScreen.class);
                 intent.putExtra("UID", mAuth.getCurrentUser().getUid());
                 startActivity(intent);
@@ -159,6 +197,7 @@ public class LogIn extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        loginAttempts++;
                         loadingDialog.dismissLoadingDialog();
                         Toast.makeText(LogIn.this, "Login failed", Toast.LENGTH_SHORT).show();
                     }
