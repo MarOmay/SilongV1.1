@@ -49,9 +49,8 @@ public class LogIn extends AppCompatActivity {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReferenceUser;
-    private DatabaseReference databaseReferenceAdmin;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mReference;
 
     Button signUp, logIn;
     EditText tfloginEmail, tfloginPassword;
@@ -83,7 +82,7 @@ public class LogIn extends AppCompatActivity {
         //Initialize Firebase objects
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
         tfloginEmail = findViewById(R.id.tfloginEmail);
         tfloginPassword = findViewById(R.id.tfloginPassword);
@@ -183,25 +182,66 @@ public class LogIn extends AppCompatActivity {
         LoadingDialog loadingDialog = new LoadingDialog(this);
         loadingDialog.startLoadingDialog();
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                loginAttempts = 0;
-                Intent intent = new Intent(LogIn.this, LoginLoadingScreen.class);
-                intent.putExtra("UID", mAuth.getCurrentUser().getUid());
-                startActivity(intent);
-                loadingDialog.dismissLoadingDialog();
-                finish();
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        loginAttempts++;
-                        loadingDialog.dismissLoadingDialog();
-                        Toast.makeText(LogIn.this, "Login failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        //Check internet connection
+        if (internetConnection()){
+            //attempt sign in
+            mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            loginAttempts = 0;
+                            //check if regular access
+                            String uid = mAuth.getCurrentUser().getUid();
+                            try {
+                                mReference = mDatabase.getReference("Users");
+                                mReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        boolean found = false;
+                                        for (DataSnapshot snap : snapshot.getChildren()){
+                                            if (snap.getKey().equals(uid)){
+                                                UserData.userID = uid;
+                                                found = true;
+                                            }
+                                        }
+
+                                        if (found){
+                                            loadingDialog.dismissLoadingDialog();
+                                            Intent intent = new Intent(LogIn.this, LoginLoadingScreen.class);
+                                            intent.putExtra("UID", mAuth.getCurrentUser().getUid());
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        else {
+                                            Toast.makeText(LogIn.this, "Unauthorized access.", Toast.LENGTH_SHORT).show();
+                                            loadingDialog.dismissLoadingDialog();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                            catch (Exception e){
+                                Log.d("LogIn", e.getMessage());
+                            }
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            loginAttempts++;
+                            loadingDialog.dismissLoadingDialog();
+                            Toast.makeText(LogIn.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else {
+            Toast.makeText(this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     //method for forgot password dialog
