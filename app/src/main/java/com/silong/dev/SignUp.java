@@ -41,6 +41,7 @@ import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.silong.Object.User;
+import com.silong.Operation.InputValidator;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -150,73 +151,29 @@ public class SignUp extends AppCompatActivity {
 
                 //Check that name only includes special characters
                 String fname = fieldFname.getText().toString().trim();
-                Pattern firstNamePattern = Pattern.compile("^[A-Za-z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Za-z][A-Za-z]*)*$");
-                try {
-                    Matcher matcher = firstNamePattern.matcher(fname);
-                    if (!matcher.matches()){
-                        Toast.makeText(getApplicationContext(), "Please check your first name.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                catch (Exception e){
-                    Toast.makeText(getApplicationContext(), "Please check your last name.", Toast.LENGTH_SHORT).show();
-                    Log.d("SignUp", e.getMessage());
+                if (!InputValidator.checkName(fname)) {
+                    Toast.makeText(getApplicationContext(), "Please check your first name.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 String lname = fieldFname.getText().toString().trim();
-                Pattern lastNamePattern = Pattern.compile("^[A-Za-z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Za-z][A-Za-z]*)*$");
-                try {
-                    Matcher matcher = lastNamePattern.matcher(lname);
-                    if (!matcher.matches()){
-                        Toast.makeText(getApplicationContext(), "Please check your last name.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                catch (Exception e){
-                    Toast.makeText(getApplicationContext(), "Please check your first name.", Toast.LENGTH_SHORT).show();
-                    Log.d("SignUp", e.getMessage());
+                if (!InputValidator.checkName(lname)) {
+                    Toast.makeText(getApplicationContext(), "Please check your last name.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 //Checks format of the email
                 String email = fieldEmail.getText().toString();
-                Pattern pattern = Pattern.compile("^(.+)@(.+)$");
-                try {
-                    Matcher matcher = pattern.matcher(fieldEmail.getText().toString());
-                    if (!matcher.matches()){
-                        Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                catch (Exception e){
+                if (!InputValidator.checkEmail(email)){
                     Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
-                    Log.d("Signup", e.getMessage());
                     return;
                 }
 
-                //Check if contact contain enough numbers
+                //Check format of contact number
                 String tempContact = fieldContact.getText().toString();
-                if (tempContact.length() < 11 || tempContact.length() > 11){
-                    Toast.makeText(SignUp.this, "Please check your contact number.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else if (!tempContact.startsWith("09")){
+                if (!InputValidator.checkContact(tempContact)){
                     Toast.makeText(SignUp.this, "Please follow the number format: 09xxxxxxxxx", Toast.LENGTH_SHORT).show();
                     return;
-                }
-
-                //Check if contact contains letters or special chars
-                String s = fieldContact.getText().toString();
-                for (int i = 0; i < s.length(); i++){
-                    try {
-                        Integer.parseInt(String.valueOf(s.charAt(i)));
-                    }
-                    catch (Exception e){
-                        Toast.makeText(SignUp.this, "Invalid contact number.", Toast.LENGTH_SHORT).show();
-                        Log.d("SignUp", e.getMessage());
-                        return;
-                    }
                 }
 
                 user = new User();

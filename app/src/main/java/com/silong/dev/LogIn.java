@@ -39,6 +39,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.silong.Operation.InputValidator;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -116,7 +117,7 @@ public class LogIn extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please enter your email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if (!matcher.matches()){
+                else if (!InputValidator.checkEmail(email)){
                     Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -192,29 +193,33 @@ public class LogIn extends AppCompatActivity {
                             //check if regular access
                             String uid = mAuth.getCurrentUser().getUid();
                             try {
-                                mReference = mDatabase.getReference("Users");
+                                mReference = mDatabase.getReference("Users/" + uid + "/accountStatus");
                                 mReference.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        boolean found = false;
-                                        for (DataSnapshot snap : snapshot.getChildren()){
-                                            if (snap.getKey().equals(uid)){
-                                                UserData.userID = uid;
-                                                found = true;
+                                        boolean accountStatus = false;
+
+                                        try {
+                                            accountStatus = (Boolean) snapshot.getValue();
+
+                                            if (accountStatus){
+                                                loadingDialog.dismissLoadingDialog();
+                                                Intent intent = new Intent(LogIn.this, LoginLoadingScreen.class);
+                                                intent.putExtra("UID", mAuth.getCurrentUser().getUid());
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                            else {
+                                                Toast.makeText(LogIn.this, "Unauthorized access.", Toast.LENGTH_SHORT).show();
+                                                loadingDialog.dismissLoadingDialog();
                                             }
                                         }
-
-                                        if (found){
-                                            loadingDialog.dismissLoadingDialog();
-                                            Intent intent = new Intent(LogIn.this, LoginLoadingScreen.class);
-                                            intent.putExtra("UID", mAuth.getCurrentUser().getUid());
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                        else {
+                                        catch (Exception e){
                                             Toast.makeText(LogIn.this, "Unauthorized access.", Toast.LENGTH_SHORT).show();
                                             loadingDialog.dismissLoadingDialog();
+                                            Log.d("LogIn", e.getMessage());
                                         }
+
                                     }
 
                                     @Override
@@ -224,6 +229,7 @@ public class LogIn extends AppCompatActivity {
                                 });
                             }
                             catch (Exception e){
+                                Toast.makeText(LogIn.this, "An error occurred.", Toast.LENGTH_SHORT).show();
                                 Log.d("LogIn", e.getMessage());
                             }
 
