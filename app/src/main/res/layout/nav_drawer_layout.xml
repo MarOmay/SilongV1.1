@@ -15,12 +15,13 @@
 
     <ImageView
         android:id="@+id/closeDrawerBtn"
+        android:onClick="onPressedCloseDrawer"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/ic_round_chevron_right_24"
-        app:tint="@color/whitey"/>
+        app:tint="@color/whitey" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
@@ -104,6 +105,7 @@
             <Button
                 android:id="@+id/aboutOfficeBtn"
                 style="@style/orangeButton_style"
+                android:onClick="onPressedAboutOffice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
@@ -112,6 +114,7 @@
             <Button
                 android:id="@+id/aboutUsBtn"
                 style="@style/orangeButton_style"
+                android:onClick="onPressedAboutUs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
@@ -129,6 +132,7 @@
             <Button
                 android:id="@+id/exitBtn"
                 style="@style/circleExitButton_style"
+                android:onClick="onPressedLogout"
                 android:layout_width="60dp"
                 android:layout_height="70dp"
                 android:layout_marginEnd="10dp"

@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -24,6 +27,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.silong.CustomDialog.ExitDialog;
+import com.silong.CustomDialog.FilterDialog;
 import com.silong.Operation.SyncData;
 import com.yalantis.library.Koloda;
 
@@ -85,6 +90,19 @@ public class Homepage extends AppCompatActivity {
         mAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
 
+        //Receive logout trigger
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mLogoutReceiver, new IntentFilter("logout-user"));
+
+        //Receive drawer avatar trigger
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mAvatarReceiver, new IntentFilter("update-avatar"));
+
+        //Receive drawer name trigger
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mNameReceiver, new IntentFilter("update-name"));
+
+        //Initialize layout views
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         View view = findViewById(R.id.headerLayout);
         headerTitle = (TextView) findViewById(R.id.headerTitle);
@@ -101,43 +119,15 @@ public class Homepage extends AppCompatActivity {
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
 
-        try {
-            usernameTv.setText(UserData.firstName + " " + UserData.lastName);
-            avatarImgview.setImageBitmap(UserData.photo);
-        }
-        catch (Exception e){
-            Log.d("Homepage", e.getMessage());
-        }
 
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
-                //Update Menu Drawer details
-                usernameTv.setText(UserData.firstName + " " + UserData.lastName);
-                avatarImgview.setImageBitmap(UserData.photo);
-            }
-
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
+        /*--------------------------- MANUAL OnClickListener ---------------------------*/
 
         //opens filter dialog
         filterImgview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                filterDia(Homepage.this);
+                FilterDialog filterDialog = new FilterDialog(Homepage.this);
+                filterDialog.show();
             }
         });
 
@@ -149,39 +139,8 @@ public class Homepage extends AppCompatActivity {
             }
         });
 
-        //closes navigation drawer
-        closeDrawerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawer(GravityCompat.END);
-            }
-        });
+        /*--------------------------- END OnClickListener ---------------------------*/
 
-        //takes you to About the Office screen
-        aboutOfficeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Homepage.this, AboutTheOffice.class);
-                startActivity(i);
-            }
-        });
-
-        //takes you to About Us screen
-        aboutUsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent z = new Intent(Homepage.this, AboutUs.class);
-                startActivity(z);
-            }
-        });
-
-        //triggers exit dialog
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                exitDialog(Homepage.this);
-            }
-        });
 
         //Koloda swipe
         koloda = findViewById(R.id.koloda);
@@ -190,54 +149,66 @@ public class Homepage extends AppCompatActivity {
         adapter = new SwipeAdapter(this, list);
         koloda.setAdapter(adapter);
 
-        UserData.populate();
+        UserData.populate(this);
     }
 
-    //Method for executing Filter Dialog
-    public void filterDia(Context context){
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-        builder.setBackground(getDrawable(R.drawable.dialog_bg));
-        builder.setView(R.layout.filter_layout);
-        builder.setPositiveButton(Html.fromHtml("<b>"+"APPLY"+"</b>"), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //Codes here
-            }
-        });
-        builder.setNegativeButton(Html.fromHtml("<b>"+"CANCEL"+"</b>"), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //codes here
-            }
-        });
-        builder.show();
+    public void onPressedAdoptionHistory(View view){
+
     }
 
-    private void exitDialog(Context context) {
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-        builder.setTitle(Html.fromHtml("<b>"+"Exit"+"</b>"));
-        builder.setIcon(getDrawable(R.drawable.circlelogo_gradient));
-        builder.setBackground(getDrawable(R.drawable.dialog_bg));
-        builder.setMessage("Are you sure you want to exit the app?\nThis will log you out of your account.\n");
-        builder.setPositiveButton(Html.fromHtml("<b>"+"LOGOUT"+"</b>"), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //Log out user
-                avatarImgview.setImageResource(R.drawable.circlelogo_white);
-                UserData.logout();
-                mAuth.signOut();
-                Toast.makeText(Homepage.this, "Logging out...", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Homepage.this, Splash.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        builder.setNegativeButton(Html.fromHtml("<b>"+"NO"+"</b>"), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //codes here
-            }
-        });
-        builder.show();
+    public void onPressedAboutOffice(View view){
+        Intent i = new Intent(Homepage.this, AboutTheOffice.class);
+        startActivity(i);
+    }
+
+    public void onPressedAboutUs(View view){
+        Intent z = new Intent(Homepage.this, AboutUs.class);
+        startActivity(z);
+    }
+
+    public void onPressedCloseDrawer(View view){
+        drawerLayout.closeDrawer(GravityCompat.END);
+    }
+
+    public void onPressedLogout(View view){
+        ExitDialog exitDialog = new ExitDialog(Homepage.this);
+        exitDialog.show();
+    }
+
+    private BroadcastReceiver mAvatarReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            avatarImgview.setImageBitmap(UserData.photo);
+        }
+    };
+
+    private BroadcastReceiver mNameReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            usernameTv.setText(UserData.firstName + " " + UserData.lastName);
+        }
+    };
+
+    private BroadcastReceiver mLogoutReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Log out user
+            avatarImgview.setImageResource(R.drawable.circlelogo_white);
+            UserData.logout();
+            mAuth.signOut();
+            Toast.makeText(Homepage.this, "Logging out...", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(Homepage.this, Splash.class);
+            startActivity(i);
+            finish();
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLogoutReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mAvatarReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mNameReceiver);
+        super.onDestroy();
     }
 }

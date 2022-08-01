@@ -1,10 +1,13 @@
 package com.silong.dev;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.silong.Object.Address;
 import com.silong.Object.Adoption;
@@ -72,7 +75,7 @@ public class UserData { //removed: extends User
         return file.exists();
     }
 
-    public static void populate(){
+    public static void populate(Activity activity){
 
         /* Fetch info from APP-SPECIFIC file, then populate static variables */
 
@@ -101,6 +104,8 @@ public class UserData { //removed: extends User
                 }
 
             }
+            TextView tv = activity.findViewById(R.id.usernameTv);
+            tv.setText(firstName + " " + lastName);
             bufferedReader.close();
         }
         catch (Exception e){
@@ -110,7 +115,8 @@ public class UserData { //removed: extends User
         //Populate Bitmap variable
         try {
             photo = BitmapFactory.decodeFile(Homepage.AVATARDATA.getAbsolutePath());
-
+            ImageView iv = activity.findViewById(R.id.avatarImgview);
+            iv.setImageBitmap(UserData.photo);
         }catch (Exception e){
             Log.d("UserData", e.getMessage());
         }

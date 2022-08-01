@@ -84,6 +84,7 @@
 
         <TextView
             android:id="@+id/forgotPassword"
+            android:onClick="onPressedForgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -107,6 +108,7 @@
         <Button
             android:id="@+id/btnLogin"
             style="@style/pinkButton_style"
+            android:onClick="onPressedLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -115,6 +117,7 @@
         <Button
             android:id="@+id/btnSignup"
             style="@style/orangeButton_style"
+            android:onClick="onPressedSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

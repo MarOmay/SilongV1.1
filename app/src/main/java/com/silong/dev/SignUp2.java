@@ -1,7 +1,5 @@
 package com.silong.dev;
 
-import static com.silong.dev.LogIn.setWindowFlag;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;

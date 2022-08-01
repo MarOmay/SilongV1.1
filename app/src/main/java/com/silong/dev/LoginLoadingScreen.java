@@ -1,9 +1,8 @@
 package com.silong.dev;
 
-import static com.silong.dev.LogIn.setWindowFlag;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -108,6 +107,9 @@ public class LoginLoadingScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserData.firstName = snapshot.getValue().toString();
                     new ImageProcessor().saveToLocal(getApplicationContext(), "firstName", UserData.firstName);
+                    //Send broadcast
+                    Intent intent = new Intent("update-name");
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
                     Toast.makeText(getApplicationContext(), "Welcome, " + UserData.firstName + "!", Toast.LENGTH_SHORT).show();
                 }
 
@@ -121,6 +123,9 @@ public class LoginLoadingScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserData.lastName = snapshot.getValue().toString();
                     new ImageProcessor().saveToLocal(getApplicationContext(), "lastName", UserData.lastName);
+                    //Send broadcast
+                    Intent intent = new Intent("update-name");
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
                 }
 
                 @Override
@@ -172,6 +177,9 @@ public class LoginLoadingScreen extends AppCompatActivity {
                     Bitmap bitmap = new ImageProcessor().toBitmap(photo);
                     UserData.photo = bitmap;
                     new ImageProcessor().saveToLocal(getApplicationContext(), bitmap, "avatar.dat");
+                    //Send broadcast
+                    Intent intent = new Intent("update-avatar");
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
                 }
 
                 @Override
