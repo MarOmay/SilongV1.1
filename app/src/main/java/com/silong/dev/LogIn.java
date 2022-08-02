@@ -93,7 +93,7 @@ public class LogIn extends AppCompatActivity {
 
         //Receive email
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mMessageReceiver, new IntentFilter("reset-password-email"));
+                .registerReceiver(mEmailReceiver, new IntentFilter("reset-password-email"));
 
         tfloginEmail = findViewById(R.id.tfloginEmail);
         tfloginPassword = findViewById(R.id.tfloginPassword);
@@ -115,7 +115,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void onPressedLogin(View view){
-        String email = tfloginEmail.getText().toString();
+        String email = tfloginEmail.getText().toString().trim();
         String password = tfloginPassword.getText().toString();
 
         if (email.equals("")){
@@ -252,6 +252,7 @@ public class LogIn extends AppCompatActivity {
     private void emailChecker(Context context, String email){
         LoadingDialog loadingDialog = new LoadingDialog(this);
         loadingDialog.startLoadingDialog();
+
         //Check internet connection
         if(Utility.internetConnection(getApplicationContext())){
             //Check if email is registered
@@ -310,7 +311,7 @@ public class LogIn extends AppCompatActivity {
                 });
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mEmailReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             try {
@@ -322,4 +323,10 @@ public class LogIn extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mEmailReceiver);
+        super.onDestroy();
+    }
 }

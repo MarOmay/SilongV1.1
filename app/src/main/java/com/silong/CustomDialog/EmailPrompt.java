@@ -47,7 +47,7 @@ public class EmailPrompt  extends MaterialAlertDialogBuilder{
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //Check if field is empty
-                String email = et_recovEmail.getText().toString();
+                String email = et_recovEmail.getText().toString().trim();
                 if(email.equals("")){
                     Toast.makeText(context, "Please enter your email.", Toast.LENGTH_SHORT).show();
                 }

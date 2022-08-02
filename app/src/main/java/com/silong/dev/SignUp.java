@@ -161,28 +161,28 @@ public class SignUp extends AppCompatActivity {
                 }
 
                 //Checks format of the email
-                String email = fieldEmail.getText().toString();
+                String email = fieldEmail.getText().toString().trim();
                 if (!InputValidator.checkEmail(email)){
                     Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 //Check format of contact number
-                String tempContact = fieldContact.getText().toString();
+                String tempContact = fieldContact.getText().toString().trim();
                 if (!InputValidator.checkContact(tempContact)){
                     Toast.makeText(SignUp.this, "Please follow the number format: 09xxxxxxxxx", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 user = new User();
-                user.setFirstName(fieldFname.getText().toString());
-                user.setLastName(fieldLname.getText().toString());
-                user.setEmail(fieldEmail.getText().toString());
+                user.setFirstName(fieldFname.getText().toString().trim());
+                user.setLastName(fieldLname.getText().toString().trim());
+                user.setEmail(fieldEmail.getText().toString().trim());
                 user.setBirthday(fieldDBirthday.getText().toString());
                 user.setGender(spinGender.getSelectedItem().toString().equals("Male")?0:1);
-                user.setContact(fieldContact.getText().toString());
+                user.setContact(fieldContact.getText().toString().trim());
 
-                emailChecker(getApplicationContext(), fieldEmail.getText().toString());
+                emailChecker(getApplicationContext(), fieldEmail.getText().toString().trim());
 
             }
         });
