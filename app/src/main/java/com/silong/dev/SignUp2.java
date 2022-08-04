@@ -152,7 +152,7 @@ public class SignUp2 extends AppCompatActivity {
             public void onClick(View view) {
 
                 //Validate entries before accepting response
-                if (etAddress.getText().length() < 1 ||
+                if (etAddress.getText().toString().trim().length() < 1 ||
                         spinBarangay.getSelectedItem().equals("Barangay")
                 ){
                     Toast.makeText(getApplicationContext(), "Please answer all fields.", Toast.LENGTH_SHORT).show();
