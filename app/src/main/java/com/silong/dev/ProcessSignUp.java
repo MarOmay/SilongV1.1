@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.silong.Object.Address;
 import com.silong.Object.User;
 import com.silong.Operation.ImageProcessor;
+import com.silong.Operation.Utility;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,8 @@ public class ProcessSignUp extends AppCompatActivity {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mReference;
 
     private User USER;
     private String PASSWORD;
@@ -51,8 +53,8 @@ public class ProcessSignUp extends AppCompatActivity {
         //Initialize Firebase objects
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        mDatabase = database.getReference("Users");
+        mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        //mReference = mDatabase.getReference("Users");
 
         USER = (User) getIntent().getSerializableExtra("DATA");
         PASSWORD = (String) getIntent().getStringExtra("PASSWORD");
@@ -115,7 +117,7 @@ public class ProcessSignUp extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            if (!internetConnection()){
+                            if (!Utility.internetConnection(getApplicationContext())){
                                 Toast.makeText(ProcessSignUp.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
                             }
                             else if (e instanceof FirebaseAuthInvalidCredentialsException){
@@ -136,16 +138,9 @@ public class ProcessSignUp extends AppCompatActivity {
         }
     }
 
-    private boolean internetConnection(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo!=null){
-            return true;
-        }
-        return false;
-    }
-
     private void saveUserData(){
+        mReference = mDatabase.getReference("Users/" + USER.getUserID());
+
         Map<String, Object> map = new HashMap<>();
         map.put("firstName",USER.getFirstName());
         map.put("lastName",USER.getLastName());
@@ -166,12 +161,16 @@ public class ProcessSignUp extends AppCompatActivity {
         map.put("chatHistory", 0);
         map.put("likedPet", 0);
 
-        mDatabase.child(USER.getUserID()).updateChildren(map)
+        mReference.updateChildren(map)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         mAuth.signOut();
                         Toast.makeText(ProcessSignUp.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+
+                        mReference = mDatabase.getReference("accountSummary/" + USER.getUserID());
+                        mReference.setValue(true);
+
                         Intent intent = new Intent(ProcessSignUp.this, LogIn.class);
                         intent.putExtra("email", USER.getEmail());
                         intent.putExtra("password", PASSWORD);
@@ -182,7 +181,7 @@ public class ProcessSignUp extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        if (internetConnection()){
+                        if (Utility.internetConnection(getApplicationContext())){
                             Toast.makeText(ProcessSignUp.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
                         }
                         else {
