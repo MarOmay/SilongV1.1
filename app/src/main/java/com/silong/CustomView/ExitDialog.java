@@ -1,19 +1,15 @@
-package com.silong.CustomDialog;
+package com.silong.CustomView;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Html;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.silong.dev.Homepage;
 import com.silong.dev.R;
-import com.silong.dev.Splash;
-import com.silong.dev.UserData;
 
 public class ExitDialog extends MaterialAlertDialogBuilder {
 

@@ -89,6 +89,7 @@
 
             <ImageView
                 android:id="@+id/ivsignupPicture"
+                android:onClick="onPressedAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/lightgray"
@@ -109,7 +110,7 @@
             android:inputType="textMultiLine"
             android:paddingVertical="20dp" />
 
-        <Spinner
+        <com.silong.CustomView.BarangaySpinner
             android:id="@+id/spsignupBarangay"
             style="@style/spinner_style"
             android:layout_width="match_parent"
@@ -120,6 +121,7 @@
 
         <EditText
             android:id="@+id/spsignupMunicipality"
+            android:onClick="onPressedDefault"
             style="@style/textField_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,6 +140,7 @@
 
             <EditText
                 android:id="@+id/spsignupProvince"
+                android:onClick="onPressedDefault"
                 style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,6 +153,7 @@
 
             <EditText
                 android:id="@+id/tfsignupZip"
+                android:onClick="onPressedDefault"
                 style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,6 +168,7 @@
 
         <Button
             android:id="@+id/btnsignupCreate"
+            android:onClick="onPressedCreate"
             style="@style/pinkButton_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.silong.CustomDialog;
+package com.silong.CustomView;
 
 import android.app.Activity;
 import android.content.res.ColorStateList;

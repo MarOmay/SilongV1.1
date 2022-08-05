@@ -1,4 +1,4 @@
-package com.silong.CustomDialog;
+package com.silong.CustomView;
 
 import android.content.Context;
 import android.content.DialogInterface;
