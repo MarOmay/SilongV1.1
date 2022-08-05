@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Silong</string>
 
     //to reference this, use getResources().getStringArray(name)
@@ -106,4 +106,7 @@
     <string name="developers">Belano, Charl Nikki L.\nDagatan. Joshua Miguel V.\nMaloles, Kenjhi P.\nOmay, Mar Alexis O.\nTrinidad, Jireh D.</string>
 
     <string name="deactMessage">It seems like you are trying to access deactivated account. Activating this account again will require administrator\'s approval.</string>
+
+    <string name="requestDeactivationMessage">Deactivating your account means...\n\n-You may no longer view the adoption listing.\n-Your data and account will not be completely deleted from the database.\n
+    -You cannot create another account under the same email address.\n-and Activating your account again will require approval from the administrators.\n\nDo you want to continue?\n</string>
 </resources>

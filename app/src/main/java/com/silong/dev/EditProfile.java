@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.silong.CustomView.RequestDeactivationDialog;
+
 public class EditProfile extends AppCompatActivity {
 
     EditText newPasswordEt, newFnameEt, newLnameEt, newBirthdayEt, newContactEt;
@@ -39,9 +41,9 @@ public class EditProfile extends AppCompatActivity {
         saveChangesBtn = (Button) findViewById(R.id.saveChangesBtn);
     }
 
-    public void onRequestDeactPressed(View view){
-        Intent i = new Intent(EditProfile.this, DeactivatedScreen.class);
-        startActivity(i);
+    public void onRequestDeactivationPressed(View view){
+        RequestDeactivationDialog requestDeactivationDialog = new RequestDeactivationDialog(EditProfile.this);
+        requestDeactivationDialog.show();
     }
 
     public void back(View view) {
