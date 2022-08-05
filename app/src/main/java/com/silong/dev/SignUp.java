@@ -3,11 +3,14 @@ package com.silong.dev;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -38,8 +41,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.silong.CustomView.DatePickerFragment;
+import com.silong.CustomView.GenderSpinner;
 import com.silong.Object.User;
 import com.silong.Operation.InputValidator;
+import com.silong.Operation.Utility;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -70,10 +76,13 @@ public class SignUp extends AppCompatActivity {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
 
+        //Receive date from DatePickerFragment
+        LocalBroadcastManager.getInstance(this).registerReceiver(mDate, new IntentFilter("update-date"));
+
         backButton = (ImageView) findViewById(R.id.btnBack);
         fieldDBirthday = (EditText) findViewById(R.id.tfsignupBirthday);
         next = (Button) findViewById(R.id.btnsignupNext);
-        spinGender = findViewById(R.id.spsignupGender);
+        spinGender = (GenderSpinner) findViewById(R.id.spsignupGender);
         fieldFname = (EditText) findViewById(R.id.tfsignupFname);
         fieldLname = (EditText) findViewById(R.id.tfsignupLname);
         fieldPassword = (EditText) findViewById(R.id.tfsignupPassword);
@@ -81,128 +90,98 @@ public class SignUp extends AppCompatActivity {
         fieldEmail = (EditText) findViewById(R.id.tfsignupEmail);
         fieldContact = (EditText) findViewById(R.id.tfsignupContact);
 
-        String[] gen = getResources().getStringArray(R.array.Gender);
-
-        fieldDBirthday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "datePicker");
-            }
-        });
-        
-        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(this, R.layout.drop_down_items, gen) {
-            @Override
-            public int getCount() {
-                return gen.length-1;
-            }
-        };
-        spinGender.setAdapter(genderAdapter);
-        spinGender.setSelection(gen.length-1);
-
         //Check if there's data forwarded by other activity
-        {
-            try {
-                User temp = (User) getIntent().getSerializableExtra("SIGNUPDATA");
-                fieldFname.setText(temp.getFirstName());
-                fieldLname.setText(temp.getLastName());
-                fieldEmail.setText(temp.getEmail());
-                spinGender.setSelection(temp.getGender());
-                fieldDBirthday.setText(temp.getBirthday());
-                fieldContact.setText(temp.getContact());
+        checkIntentForExtras();
+    }
 
-                String password = getIntent().getStringExtra("PASSWORD");
-                fieldPassword.setText(password);
-                fieldConfirmpass.setText(password);
-            }
-            catch (Exception e){
-                Log.d("SignUp", e.getMessage());
-            }
+    public void checkIntentForExtras(){
+        try {
+            User temp = (User) getIntent().getSerializableExtra("SIGNUPDATA");
+            fieldFname.setText(temp.getFirstName());
+            fieldLname.setText(temp.getLastName());
+            fieldEmail.setText(temp.getEmail());
+            spinGender.setSelection(temp.getGender());
+            fieldDBirthday.setText(temp.getBirthday());
+            fieldContact.setText(temp.getContact());
+
+            String password = getIntent().getStringExtra("PASSWORD");
+            fieldPassword.setText(password);
+            fieldConfirmpass.setText(password);
+        }
+        catch (Exception e){
+            Log.d("SignUp", e.getMessage());
+        }
+    }
+
+    public void onPressedBirthday(View view){
+        DialogFragment newFragment = new DatePickerFragment(SignUp.this);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void onPressedNext(View view){
+        //Validate entries before accepting response
+        if(fieldFname.getText().toString().trim().length() < 1||
+                fieldLname.getText().toString().trim().length() < 1 ||
+                fieldPassword.getText().toString().trim().length() < 1 ||
+                fieldConfirmpass.getText().toString().trim().length() < 1 ||
+                fieldEmail.getText().toString().trim().length() < 1 ||
+                fieldDBirthday.getText().length() < 1 ||
+                spinGender.getSelectedItem().toString().equals("Gender") ||
+                fieldContact.getText().toString().trim().length() < 1
+        ){
+            Toast.makeText(getApplicationContext(), "Please answer all fields.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if (fieldPassword.getText().length() < 8){
+            Toast.makeText(getApplicationContext(), "Password must be at least 8 characters.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if (!fieldPassword.getText().toString().equals(fieldConfirmpass.getText().toString())){
+            Toast.makeText(getApplicationContext(), "Password does not match.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        //Intent to next screen of SignUP
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        //Check that name only includes special characters
+        String fname = fieldFname.getText().toString().trim();
+        if (!InputValidator.checkName(fname)) {
+            Toast.makeText(getApplicationContext(), "Please check your first name.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                //Validate entries before accepting response
-                if(fieldFname.getText().toString().trim().length() < 1||
-                        fieldLname.getText().toString().trim().length() < 1 ||
-                        fieldPassword.getText().toString().trim().length() < 1 ||
-                        fieldConfirmpass.getText().toString().trim().length() < 1 ||
-                        fieldEmail.getText().toString().trim().length() < 1 ||
-                        fieldDBirthday.getText().length() < 1 ||
-                        spinGender.getSelectedItem().toString().equals("Gender") ||
-                        fieldContact.getText().toString().trim().length() < 1
-                ){
-                    Toast.makeText(getApplicationContext(), "Please answer all fields.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else if (fieldPassword.getText().length() < 8){
-                    Toast.makeText(getApplicationContext(), "Password must be at least 8 characters.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else if (!fieldPassword.getText().toString().equals(fieldConfirmpass.getText().toString())){
-                    Toast.makeText(getApplicationContext(), "Password does not match.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        String lname = fieldFname.getText().toString().trim();
+        if (!InputValidator.checkName(lname)) {
+            Toast.makeText(getApplicationContext(), "Please check your last name.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                //Check that name only includes special characters
-                String fname = fieldFname.getText().toString().trim();
-                if (!InputValidator.checkName(fname)) {
-                    Toast.makeText(getApplicationContext(), "Please check your first name.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        //Checks format of the email
+        String email = fieldEmail.getText().toString().trim();
+        if (!InputValidator.checkEmail(email)){
+            Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                String lname = fieldFname.getText().toString().trim();
-                if (!InputValidator.checkName(lname)) {
-                    Toast.makeText(getApplicationContext(), "Please check your last name.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        //Check format of contact number
+        String tempContact = fieldContact.getText().toString().trim();
+        if (!InputValidator.checkContact(tempContact)){
+            Toast.makeText(SignUp.this, "Please follow the number format: 09xxxxxxxxx", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                //Checks format of the email
-                String email = fieldEmail.getText().toString().trim();
-                if (!InputValidator.checkEmail(email)){
-                    Toast.makeText(getApplicationContext(), "Please check the format of your email.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        user = new User();
+        user.setFirstName(fieldFname.getText().toString().trim());
+        user.setLastName(fieldLname.getText().toString().trim());
+        user.setEmail(fieldEmail.getText().toString().trim());
+        user.setBirthday(fieldDBirthday.getText().toString());
+        user.setGender(spinGender.getSelectedItem().toString().equals("Male")?0:1);
+        user.setContact(fieldContact.getText().toString().trim());
 
-                //Check format of contact number
-                String tempContact = fieldContact.getText().toString().trim();
-                if (!InputValidator.checkContact(tempContact)){
-                    Toast.makeText(SignUp.this, "Please follow the number format: 09xxxxxxxxx", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                user = new User();
-                user.setFirstName(fieldFname.getText().toString().trim());
-                user.setLastName(fieldLname.getText().toString().trim());
-                user.setEmail(fieldEmail.getText().toString().trim());
-                user.setBirthday(fieldDBirthday.getText().toString());
-                user.setGender(spinGender.getSelectedItem().toString().equals("Male")?0:1);
-                user.setContact(fieldContact.getText().toString().trim());
-
-                emailChecker(getApplicationContext(), fieldEmail.getText().toString().trim());
-
-            }
-        });
-
-    }
-
-    public void back(View view){
-        onBackPressed();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(SignUp.this, LogIn.class);
-        startActivity(intent);
-        this.finish();
+        emailChecker(getApplicationContext(), fieldEmail.getText().toString().trim());
     }
 
     private void emailChecker(Context context, String email){
         //Check internet connection
-        if(internetConnection()){
+        if(Utility.internetConnection(getApplicationContext())){
             //Check if email is registered
             mAuth.fetchSignInMethodsForEmail(email)
                     .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
@@ -241,34 +220,27 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    private boolean internetConnection(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo!=null){
-            return true;
+    private BroadcastReceiver mDate = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            fieldDBirthday.setText(intent.getStringExtra("date"));
         }
-        return false;
+    };
+
+    public void back(View view){
+        onBackPressed();
     }
 
-    //date picker fragment
-    //only allows 18 years old and above
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SignUp.this, LogIn.class);
+        startActivity(intent);
+        this.finish();
+    }
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-            c.add(Calendar.YEAR, -18);
-            dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
-            return  dialog;
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            fieldDBirthday.setText(month+1+"/"+day+"/"+year);
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mDate);
     }
 }

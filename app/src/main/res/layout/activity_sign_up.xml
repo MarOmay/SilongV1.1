@@ -139,6 +139,7 @@
 
                 <EditText
                     android:id="@+id/tfsignupBirthday"
+                    android:onClick="onPressedBirthday"
                     style="@style/textField_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -153,7 +154,7 @@
                     android:hint="Birthday"
                     android:inputType="date" />
 
-                <Spinner
+                <com.silong.CustomView.GenderSpinner
                     android:id="@+id/spsignupGender"
                     style="@style/spinner_style"
                     android:layout_width="match_parent"
@@ -175,6 +176,7 @@
 
             <Button
                 android:id="@+id/btnsignupNext"
+                android:onClick="onPressedNext"
                 style="@style/pinkButton_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
