@@ -104,4 +104,6 @@
     <string name="developed">Developed at\nBULACAN STATE UNIVERSITY\nSARMIENTO CAMPUS</string>
 
     <string name="developers">Belano, Charl Nikki L.\nDagatan. Joshua Miguel V.\nMaloles, Kenjhi P.\nOmay, Mar Alexis O.\nTrinidad, Jireh D.</string>
+
+    <string name="deactMessage">It seems like you are trying to access deactivated account. Activating this account again will require administrator\'s approval.</string>
 </resources>

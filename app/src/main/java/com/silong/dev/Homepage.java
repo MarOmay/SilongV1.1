@@ -50,7 +50,7 @@ public class Homepage extends AppCompatActivity {
     Koloda koloda;
     DrawerLayout drawerLayout;
 
-    TextView headerTitle;
+    TextView headerTitle, editProfileTv;
     ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn;
     Button applyBtn, aboutOfficeBtn, aboutUsBtn,exitBtn;
     ImageView heartIcon;
@@ -102,6 +102,7 @@ public class Homepage extends AppCompatActivity {
         aboutOfficeBtn = (Button) findViewById(R.id.aboutOfficeBtn);
         aboutUsBtn = (Button) findViewById(R.id.aboutUsBtn);
         exitBtn = (Button) findViewById(R.id.exitBtn);
+        editProfileTv = (TextView) findViewById(R.id.editProfileTv);
 
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
@@ -146,6 +147,11 @@ public class Homepage extends AppCompatActivity {
     public void onPressedLogout(View view){
         ExitDialog exitDialog = new ExitDialog(Homepage.this);
         exitDialog.show();
+    }
+
+    public void onEditProfilePressed(View view){
+        Intent i = new Intent(Homepage.this, EditProfile.class);
+        startActivity(i);
     }
 
     private BroadcastReceiver mAvatarReceiver = new BroadcastReceiver() {
