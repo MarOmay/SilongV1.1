@@ -106,29 +106,6 @@ public class Homepage extends AppCompatActivity {
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
 
-
-        /*--------------------------- MANUAL OnClickListener ---------------------------*/
-
-        //opens filter dialog
-        filterImgview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FilterDialog filterDialog = new FilterDialog(Homepage.this);
-                filterDialog.show();
-            }
-        });
-
-        //opens navigation drawer
-        menuImgview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.END);
-            }
-        });
-
-        /*--------------------------- END OnClickListener ---------------------------*/
-
-
         //Koloda swipe
         koloda = findViewById(R.id.koloda);
         list = new ArrayList<>();
@@ -137,6 +114,15 @@ public class Homepage extends AppCompatActivity {
         koloda.setAdapter(adapter);
 
         UserData.populate(this);
+    }
+
+    public void onPressedFilter(View view){
+        FilterDialog filterDialog = new FilterDialog(Homepage.this);
+        filterDialog.show();
+    }
+
+    public void onPressedMenu(View view){
+        drawerLayout.openDrawer(GravityCompat.END);
     }
 
     public void onPressedAdoptionHistory(View view){
