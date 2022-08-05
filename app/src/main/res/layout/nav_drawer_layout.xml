@@ -33,15 +33,15 @@
         android:layout_marginTop="-80dp"
         android:backgroundTint="@color/whitey"
         app:cardCornerRadius="100dp"
+        app:cardElevation="10dp"
         app:strokeColor="@color/whitey"
-        app:strokeWidth="5dp"
-        app:cardElevation="10dp">
+        app:strokeWidth="5dp">
 
         <ImageView
             android:id="@+id/avatarImgview"
             android:layout_width="110dp"
             android:layout_height="110dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -91,8 +91,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/adoptionHistoryBtn"
@@ -126,8 +126,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="bottom|end">
+            android:gravity="bottom|end"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/exitBtn"
