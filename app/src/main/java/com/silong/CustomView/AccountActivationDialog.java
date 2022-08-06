@@ -49,6 +49,7 @@ public class AccountActivationDialog extends MaterialAlertDialogBuilder {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent("request-activation");
+                intent.putExtra("reason", reasonEt.getText().toString());
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         });
