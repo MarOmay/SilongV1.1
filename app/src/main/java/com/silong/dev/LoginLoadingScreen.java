@@ -75,8 +75,8 @@ public class LoginLoadingScreen extends AppCompatActivity {
                     UserData.accountStatus = (Boolean) snapshot.getValue();
                     if (!UserData.accountStatus) {
                         //Notify User that the account is deactivated
-                        Toast.makeText(LoginLoadingScreen.this, "Account Deactivated.", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginLoadingScreen.this, LogIn.class);
+                        Intent intent = new Intent(LoginLoadingScreen.this, DeactivatedScreen.class);
+                        intent.putExtra("uid", UserData.userID);
                         startActivity(intent);
                         finish();
                     }

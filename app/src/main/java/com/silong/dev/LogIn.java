@@ -198,8 +198,11 @@ public class LogIn extends AppCompatActivity {
                                                 finish();
                                             }
                                             else {
-                                                Toast.makeText(LogIn.this, "Unauthorized access.", Toast.LENGTH_SHORT).show();
                                                 loadingDialog.dismissLoadingDialog();
+                                                Intent intent = new Intent(LogIn.this, DeactivatedScreen.class);
+                                                intent.putExtra("uid", UserData.userID);
+                                                startActivity(intent);
+                                                finish();
                                             }
                                         }
                                         catch (Exception e){

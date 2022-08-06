@@ -1,5 +1,6 @@
 package com.silong.dev;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,18 +11,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.FilterDialog;
+import com.silong.Object.User;
+import com.silong.Operation.Utility;
 import com.yalantis.library.Koloda;
 
 import java.io.File;
@@ -76,6 +84,7 @@ public class Homepage extends AppCompatActivity {
         //Initialize Firebase Objects
         mAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
         //Receive logout trigger
         LocalBroadcastManager.getInstance(this)
@@ -115,6 +124,7 @@ public class Homepage extends AppCompatActivity {
         koloda.setAdapter(adapter);
 
         UserData.populate(this);
+        checkAccountStatus();
     }
 
     public void onPressedFilter(View view){
@@ -152,6 +162,38 @@ public class Homepage extends AppCompatActivity {
     public void onEditProfilePressed(View view){
         Intent i = new Intent(Homepage.this, EditProfile.class);
         startActivity(i);
+    }
+
+    private void checkAccountStatus(){
+        if(Utility.internetConnection(getApplicationContext())){
+            try{
+                mReference = mDatabase.getReference("accountSummary/" + UserData.userID);
+                mReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        boolean status = (Boolean) snapshot.getValue();
+                        if (!status){
+                            Intent intent = new Intent(Homepage.this, DeactivatedScreen.class);
+                            intent.putExtra("uid", UserData.userID);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+            catch (Exception e){
+                Log.d("Homepage", e.getMessage());
+                //if (e instanceof )
+            }
+        }
+        else {
+            Toast.makeText(this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private BroadcastReceiver mAvatarReceiver = new BroadcastReceiver() {
