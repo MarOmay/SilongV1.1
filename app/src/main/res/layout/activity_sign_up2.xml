@@ -12,19 +12,20 @@
     android:paddingTop="5dp"
     android:paddingEnd="5dp"
     android:paddingBottom="5dp"
+    android:weightSum="10"
     tools:context=".SignUp2">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="8"
+        android:layout_weight="4.1"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/btnLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:paddingStart="15dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
@@ -72,7 +73,7 @@
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1.6"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="5dp">
@@ -89,11 +90,11 @@
 
             <ImageView
                 android:id="@+id/ivsignupPicture"
-                android:onClick="onPressedAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/lightgray"
                 android:clickable="true"
+                android:onClick="onPressedAvatar"
                 android:scaleType="centerCrop"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -121,7 +122,6 @@
 
         <EditText
             android:id="@+id/spsignupMunicipality"
-            android:onClick="onPressedDefault"
             style="@style/textField_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,6 +129,7 @@
             android:layout_marginEnd="1dp"
             android:editable="false"
             android:inputType="none"
+            android:onClick="onPressedDefault"
             android:textColor="@color/textgray"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -140,7 +141,6 @@
 
             <EditText
                 android:id="@+id/spsignupProvince"
-                android:onClick="onPressedDefault"
                 style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,12 +148,12 @@
                 android:layout_weight="1"
                 android:editable="false"
                 android:inputType="none"
+                android:onClick="onPressedDefault"
                 android:textColor="@color/textgray"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <EditText
                 android:id="@+id/tfsignupZip"
-                android:onClick="onPressedDefault"
                 style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,19 +161,29 @@
                 android:layout_weight="2"
                 android:editable="false"
                 android:inputType="none"
+                android:onClick="onPressedDefault"
                 android:textColor="@color/textgray"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4.3"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <Button
             android:id="@+id/btnsignupCreate"
-            android:onClick="onPressedCreate"
             style="@style/pinkButton_style"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginVertical="20dp"
+            android:onClick="onPressedCreate"
             android:text="create account" />
 
     </LinearLayout>
