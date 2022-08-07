@@ -11,11 +11,13 @@
     android:paddingTop="5dp"
     android:paddingEnd="5dp"
     android:paddingBottom="5dp"
+    android:weightSum="10"
     tools:context=".EditProfile">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="4.6"
         android:orientation="vertical">
 
         <LinearLayout
@@ -55,11 +57,10 @@
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1.5"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingHorizontal="5dp"
-        android:paddingVertical="20dp">
+        android:paddingHorizontal="5dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
@@ -89,48 +90,11 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/newFnameEt"
-                style="@style/textField_style"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
-                android:layout_weight="1"
-                android:hint="First Name" />
-
-            <EditText
-                android:id="@+id/newLnameEt"
-                style="@style/textField_style"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_weight="1"
-                android:hint="Last Name" />
-
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/newPasswordEt"
-            style="@style/textField_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:drawableRight="@drawable/ic_baseline_visibility_24"
-            android:longClickable="false"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal">
-
-            <EditText
                 android:id="@+id/newBirthdayEt"
                 style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:cursorVisible="false"
@@ -141,16 +105,41 @@
                 android:hint="Birthday"
                 android:inputType="date" />
 
-            <Spinner
-                android:id="@+id/newGenderSp"
-                style="@style/spinner_style"
+            <EditText
+                android:id="@+id/newGenderEt"
+                style="@style/textField_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
                 android:layout_marginEnd="1dp"
                 android:layout_weight="1"
+                android:drawableRight="@drawable/down_grey"
+                android:drawableTint="@color/textgray"
+                android:hint="Gender"
+                android:inputType="text"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/newAddressEt"
+            style="@style/textField_style"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginVertical="10dp"
+            android:gravity="start"
+            android:hint="Address"
+            android:inputType="textMultiLine"
+            android:paddingVertical="20dp" />
+
+        <com.silong.CustomView.BarangaySpinner
+            android:id="@+id/newBarangaySp"
+            style="@style/spinner_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_marginEnd="1dp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <EditText
             android:id="@+id/newContactEt"
@@ -161,12 +150,24 @@
             android:hint="Contact Number"
             android:inputType="phone" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3.9"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="20dp">
+
         <LinearLayout
-            android:layout_marginVertical="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:paddingVertical="5dp">
 
             <LinearLayout
@@ -176,12 +177,15 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/requestResetTv"
+                    android:id="@+id/deactTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Request to reset adoption counter."
+                    android:onClick="onRequestDeactivationPressed"
+                    android:text="Deactivate"
                     android:textColor="@color/pink"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <View
                     android:layout_width="match_parent"
@@ -193,22 +197,68 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/requestDeactTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Request account deactivation."
+                    android:text="or"
                     android:textColor="@color/pink"
-                    android:textSize="16sp"
-                    android:onClick="onRequestDeactivationPressed"/>
+                    android:textSize="16sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:alpha="0"
+                    android:background="@color/pink" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/deleteTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRequestDeactivationPressed"
+                    android:text="Delete"
+                    android:textColor="@color/pink"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/pink" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="account."
+                    android:textColor="@color/pink"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:alpha="0"
                     android:background="@color/pink" />
 
             </LinearLayout>
@@ -219,9 +269,9 @@
             android:id="@+id/saveChangesBtn"
             style="@style/pinkButton_style"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:text="save changes" />
 
     </LinearLayout>

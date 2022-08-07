@@ -16,10 +16,10 @@ import com.silong.CustomView.RequestDeactivationDialog;
 
 public class EditProfile extends AppCompatActivity {
 
-    EditText newPasswordEt, newFnameEt, newLnameEt, newBirthdayEt, newContactEt;
-    Spinner newGenderSp;
-    TextView requestResetTv, requestDeactTv;
+    EditText newGenderEt, newBirthdayEt, newContactEt;
+    TextView deleteTv, deactTv;
     Button saveChangesBtn;
+    Spinner newBarangaySp;
     ImageView newPictureIv;
     boolean passwordVisible;
 
@@ -29,16 +29,14 @@ public class EditProfile extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         getSupportActionBar().hide();
 
-        newFnameEt = (EditText) findViewById(R.id.newFnameEt);
-        newLnameEt = (EditText) findViewById(R.id.newLnameEt);
-        newPasswordEt = (EditText) findViewById(R.id.newPasswordEt);
         newBirthdayEt = (EditText) findViewById(R.id.newBirthdayEt);
         newContactEt = (EditText) findViewById(R.id.newContactEt);
-        newGenderSp = (Spinner) findViewById(R.id.newGenderSp);
-        requestResetTv = (TextView) findViewById(R.id.requestResetTv);
-        requestDeactTv = (TextView) findViewById(R.id.requestDeactTv);
+        newGenderEt = (EditText) findViewById(R.id.newGenderEt);
+        deleteTv = (TextView) findViewById(R.id.deleteTv);
+        deactTv = (TextView) findViewById(R.id.deactTv);
         newPictureIv = (ImageView) findViewById(R.id.newPictureIv);
         saveChangesBtn = (Button) findViewById(R.id.saveChangesBtn);
+        newBarangaySp = (Spinner) findViewById(R.id.newBarangaySp);
     }
 
     public void onRequestDeactivationPressed(View view){
