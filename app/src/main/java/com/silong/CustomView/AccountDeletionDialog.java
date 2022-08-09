@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.silong.dev.R;
 
-public class RequestDeletionDialog extends MaterialAlertDialogBuilder {
+public class AccountDeletionDialog extends MaterialAlertDialogBuilder {
 
-    public RequestDeletionDialog(@NonNull Context context) {
+    public AccountDeletionDialog(@NonNull Context context) {
         super(context);
-        super.setTitle(Html.fromHtml("<b>" + "Request Deletion" + "</b>"));
+        super.setTitle(Html.fromHtml("<b>" + "Account Deletion" + "</b>"));
         super.setBackground(context.getDrawable(R.drawable.dialog_bg));
         super.setMessage(context.getResources().getString(R.string.requestDeletionMessage));
 

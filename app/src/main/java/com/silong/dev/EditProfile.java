@@ -2,9 +2,7 @@ package com.silong.dev;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.silong.CustomView.RequestDeactivationDialog;
-import com.silong.CustomView.RequestDeletionDialog;
+import com.silong.CustomView.AccountDeletionDialog;
 
 public class EditProfile extends AppCompatActivity {
 
@@ -46,7 +44,7 @@ public class EditProfile extends AppCompatActivity {
     }
 
     public void onRequestDeletionPressed(View view){
-        RequestDeletionDialog requestDeletionDialog = new RequestDeletionDialog(EditProfile.this);
+        AccountDeletionDialog requestDeletionDialog = new AccountDeletionDialog(EditProfile.this);
         requestDeletionDialog.show();
     }
 
