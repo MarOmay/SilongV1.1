@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.silong.CustomView.RequestDeactivationDialog;
+import com.silong.CustomView.RequestDeletionDialog;
 
 public class EditProfile extends AppCompatActivity {
 
@@ -42,6 +43,11 @@ public class EditProfile extends AppCompatActivity {
     public void onRequestDeactivationPressed(View view){
         RequestDeactivationDialog requestDeactivationDialog = new RequestDeactivationDialog(EditProfile.this);
         requestDeactivationDialog.show();
+    }
+
+    public void onRequestDeletionPressed(View view){
+        RequestDeletionDialog requestDeletionDialog = new RequestDeletionDialog(EditProfile.this);
+        requestDeletionDialog.show();
     }
 
     public void back(View view) {
