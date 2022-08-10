@@ -54,6 +54,15 @@ public class BarangaySpinner extends androidx.appcompat.widget.AppCompatSpinner 
         this.setOnItemSelectedListener(onItemSelectedListener);
     }
 
+    public int getPositionOf(String brgy){
+        ArrayAdapter<String> arrayAdapter = getArrayAdapter();
+        return arrayAdapter.getPosition(brgy);
+    }
+
+    public String getZip(){
+        return zip;
+    }
+
     @Override
     public void setAdapter(SpinnerAdapter adapter) {
         super.setAdapter(adapter);
@@ -82,12 +91,16 @@ public class BarangaySpinner extends androidx.appcompat.widget.AppCompatSpinner 
             String selectedBarangay = getSelectedItem().toString();
 
             for (String s : first){
-                if (s.equals(selectedBarangay))
+                if (s.equals(selectedBarangay)){
                     intent.putExtra("zip", "3023");
+                    zip = "3023";
+                }
             }
             for (String s : second){
-                if (s.equals(selectedBarangay))
+                if (s.equals(selectedBarangay)){
                     intent.putExtra("zip", "3024");
+                    zip = "3024";
+                }
             }
 
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
