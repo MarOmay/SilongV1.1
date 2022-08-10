@@ -171,12 +171,17 @@ public class Homepage extends AppCompatActivity {
                 mReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        boolean status = (Boolean) snapshot.getValue();
-                        if (!status){
-                            Intent intent = new Intent(Homepage.this, DeactivatedScreen.class);
-                            intent.putExtra("uid", UserData.userID);
-                            startActivity(intent);
-                            finish();
+                        try {
+                            boolean status = (Boolean) snapshot.getValue();
+                            if (!status){
+                                Intent intent = new Intent(Homepage.this, DeactivatedScreen.class);
+                                intent.putExtra("uid", UserData.userID);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                        catch (Exception e){
+                            Log.d("Homepage", e.getMessage());
                         }
                     }
 
@@ -188,7 +193,6 @@ public class Homepage extends AppCompatActivity {
             }
             catch (Exception e){
                 Log.d("Homepage", e.getMessage());
-                //if (e instanceof )
             }
         }
         else {

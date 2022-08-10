@@ -72,15 +72,23 @@ public class LoginLoadingScreen extends AppCompatActivity {
             databaseReferenceUser.child("accountStatus").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.accountStatus = (Boolean) snapshot.getValue();
-                    if (!UserData.accountStatus) {
-                        //Notify User that the account is deactivated
-                        Intent intent = new Intent(LoginLoadingScreen.this, DeactivatedScreen.class);
-                        intent.putExtra("uid", UserData.userID);
-                        startActivity(intent);
+                    try{
+                        UserData.accountStatus = (Boolean) snapshot.getValue();
+                        if (!UserData.accountStatus) {
+                            //Notify User that the account is deactivated
+                            Intent intent = new Intent(LoginLoadingScreen.this, DeactivatedScreen.class);
+                            intent.putExtra("uid", UserData.userID);
+                            startActivity(intent);
+                            finish();
+                        }
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "accountStatus", UserData.accountStatus?"true":"false");
+                    }
+                    catch (Exception e){
+                        Log.d("LLS", e.getMessage());
+                        Intent i = new Intent(LoginLoadingScreen.this, Splash.class);
+                        startActivity(i);
                         finish();
                     }
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "accountStatus", UserData.accountStatus?"true":"false");
                 }
 
                 @Override
