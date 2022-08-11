@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,12 +13,11 @@ import com.silong.Object.Adoption;
 import com.silong.Object.Chat;
 import com.silong.Object.Favorite;
 import com.silong.Object.Pet;
-import com.silong.Object.User;
-import com.silong.Operation.ImageProcessor;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,7 +41,7 @@ public class UserData { //removed: extends User
     public static ArrayList<Chat> chatHistory;
     public static ArrayList<Favorite> likedPet;
 
-    public static ArrayList<Pet> pets;
+    public static ArrayList<Pet> pets = new ArrayList<>();
 
     public UserData(){
         /* This class will contain all static data of the current user */
@@ -121,30 +119,6 @@ public class UserData { //removed: extends User
             Log.d("UserData", e.getMessage());
         }
 
-        //Populate Pets
-        String sPets = "";
-        if ((sPets = readFile(new Homepage().PETDATA)) != null) {
-            String[] aPets = sPets.split("\n");
-            for (String temp : aPets){
-                String[] items = temp.split(";");
-                Pet tempPet = new Pet();
-                for (String item : items){
-                    String[] arr = item.split(":");
-                    switch (arr[0]){
-                        case "petID": tempPet.setId(Integer.parseInt(arr[1])); break;
-                        case "status": tempPet.setStatus(Integer.parseInt(arr[1]));break;
-                        case "type": tempPet.setType(Integer.parseInt(arr[1]));break;
-                        case "gender": tempPet.setGender(Integer.parseInt(arr[1]));break;
-                        case "color": tempPet.setColor(arr[1]);break;
-                        case "age": tempPet.setAge(Integer.parseInt(arr[1]));break;
-                        case "size": tempPet.setSize(Integer.parseInt(arr[1]));break;
-                        case "likes": tempPet.setLikes(Integer.parseInt(arr[1]));break;
-                    }
-                }
-                pets.add(tempPet);
-            }
-        }
-
         //Populate Chats
         String sChats = "";
         if ((sChats = readFile(new Homepage().CHATDATA)) != null) {
@@ -187,6 +161,62 @@ public class UserData { //removed: extends User
             }
         }//App should be able to run even if adoptions is empty
 
+    }
+
+    public static void populateRecords(Activity activity){
+        //Clear current ArrayList to avoid duplicate entries
+        pets.clear();
+
+        /* Fetch info from APP-SPECIFIC file, then populate static variables */
+
+        try{
+            ArrayList<File> petRecords = new ArrayList<File>();
+
+            for (File file : activity.getFilesDir().listFiles()){
+                if (file.getAbsolutePath().contains("pet-")){
+                    petRecords.add(file);
+                }
+            }
+
+            //read each account info
+            for (File record : petRecords){
+                Pet pet = new Pet();
+
+                //Read basic info
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(record));
+                String line;
+                while ((line = bufferedReader.readLine()) != null){
+                    line = line.replace(";","");
+
+                    String [] temp = line.split(":");
+                    switch (temp[0]){
+                        case "petID": pet.setPetID(temp[1]); break;
+                        case "status": pet.setStatus(Integer.parseInt(temp[1])); break;
+                        case "type": pet.setType(Integer.parseInt(temp[1])); break;
+                        case "gender": pet.setGender(Integer.parseInt(temp[1])); break;
+                        case "size": pet.setSize(Integer.parseInt(temp[1])); break;
+                        case "age": pet.setAge(Integer.parseInt(temp[1])); break;
+                        case "color" : pet.setColor(temp[1]); break;
+                    }
+
+                }
+                bufferedReader.close();
+
+                //Read avatar
+                try{
+                    pet.setPhoto(BitmapFactory.decodeFile(activity.getFilesDir() + "/petpic-" + pet.getPetID()));
+                }
+                catch (Exception e){
+                    Log.d("AdminData-pR", e.getMessage());
+                }
+
+                pets.add(pet);
+            }
+
+        }
+        catch (Exception e){
+            Log.d("AdminData-pR", e.getMessage());
+        }
     }
 
     private static String readFile(File file){
@@ -233,5 +263,57 @@ public class UserData { //removed: extends User
         return s;
     }
 
+    public static void writePetToLocal(Context context, String filename, String desc, String content){
+        //Check if file exists
+        File file = new File(context.getFilesDir() + "/pet-" + filename);
+        if (!file.exists()){
+            try{
+                FileOutputStream fileOuputStream = context.openFileOutput("pet-" + filename, Context.MODE_PRIVATE);
+            }
+            catch (Exception e){
+                Log.d("UserData-wPTL0", e.getMessage());
+            }
+        }
+        //Create local storage copy of pet profile
+        try (FileOutputStream fileOutputStream = context.openFileOutput( "pet-" + filename, Context.MODE_APPEND)) {
+            String data = desc + ":" + content + ";\n";
+            fileOutputStream.write(data.getBytes());
+            fileOutputStream.flush();
+        }
+        catch (Exception e){
+            Log.d("UserData-wPTL1", e.getMessage());
+        }
+    }
+
+    public static Pet fetchRecordFromLocal(Activity activity, String uid){
+        Pet pet = new Pet();
+
+        try{
+            File file = new File(activity.getFilesDir(), "pet-" + uid);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = bufferedReader.readLine()) != null){
+                line = line.replace(";","");
+
+                String [] temp = line.split(":");
+                switch (temp[0]){
+                    case "petID": pet.setPetID(temp[1]); break;
+                    case "status": pet.setStatus(Integer.parseInt(temp[1])); break;
+                    case "type": pet.setType(Integer.parseInt(temp[1])); break;
+                    case "gender": pet.setGender(Integer.parseInt(temp[1])); break;
+                    case "size": pet.setSize(Integer.parseInt(temp[1])); break;
+                    case "age": pet.setAge(Integer.parseInt(temp[1])); break;
+                    case "color" : pet.setColor(temp[1]); break;
+                }
+
+            }
+            bufferedReader.close();
+        }
+        catch (Exception e){
+            Log.d("UserData-fRFL", e.getMessage());
+        }
+
+        return pet;
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.silong.dev;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,6 +11,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,9 +32,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.FilterDialog;
+import com.silong.CustomView.LoadingDialog;
+import com.silong.Object.Pet;
 import com.silong.Object.User;
+import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.Utility;
+import com.silong.Task.AccountStatusChecker;
+import com.silong.Task.SyncPetRecord;
 import com.yalantis.library.Koloda;
+import com.yalantis.library.KolodaListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,18 +63,18 @@ public class Homepage extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
 
-    private SwipeAdapter adapter;
-    private List<Integer> list;
-    Koloda koloda;
     DrawerLayout drawerLayout;
 
     TextView headerTitle, editProfileTv;
     ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn;
     Button applyBtn, aboutOfficeBtn, aboutUsBtn,exitBtn;
     ImageView heartIcon;
+    Koloda koloda;
 
     ImageView avatarImgview;
     TextView usernameTv;
+
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +108,15 @@ public class Homepage extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mNameReceiver, new IntentFilter("update-name"));
 
+        //Receive koloda update trigger
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mLoadKoloda, new IntentFilter("load-koloda"));
+
+        loadingDialog = new LoadingDialog(Homepage.this);
+        loadingDialog.startLoadingDialog();
+
+        fetchActiveRecords();
+
         //Initialize layout views
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         View view = findViewById(R.id.headerLayout);
@@ -105,6 +124,7 @@ public class Homepage extends AppCompatActivity {
         filterImgview = (ImageView) findViewById(R.id.filterImgview);
         messageImgview = (ImageView) findViewById(R.id.messageImgview);
         menuImgview = (ImageView) findViewById(R.id.menuImgview);
+        koloda = findViewById(R.id.koloda);
         applyBtn = (Button) findViewById(R.id.applyBtn);
         heartIcon = (ImageView) findViewById(R.id.heartIcon);
         closeDrawerBtn = (ImageView) findViewById(R.id.closeDrawerBtn);
@@ -116,15 +136,10 @@ public class Homepage extends AppCompatActivity {
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
 
-        //Koloda swipe
-        koloda = findViewById(R.id.koloda);
-        list = new ArrayList<>();
-
-        adapter = new SwipeAdapter(this, list);
-        koloda.setAdapter(adapter);
-
         UserData.populate(this);
         checkAccountStatus();
+        loadKoloda();
+        setKolodaListener();
     }
 
     public void onPressedFilter(View view){
@@ -132,9 +147,14 @@ public class Homepage extends AppCompatActivity {
         filterDialog.show();
     }
 
+    public void onPressedMessage(View view){
+
+    }
+
     public void onPressedMenu(View view){
         drawerLayout.openDrawer(GravityCompat.END);
     }
+
 
     public void onPressedAdoptionHistory(View view){
 
@@ -165,40 +185,111 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void checkAccountStatus(){
-        if(Utility.internetConnection(getApplicationContext())){
-            try{
-                mReference = mDatabase.getReference("accountSummary/" + UserData.userID);
-                mReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        try {
-                            boolean status = (Boolean) snapshot.getValue();
-                            if (!status){
-                                Intent intent = new Intent(Homepage.this, DeactivatedScreen.class);
-                                intent.putExtra("uid", UserData.userID);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                        catch (Exception e){
-                            Log.d("Homepage", e.getMessage());
-                        }
-                    }
+        AccountStatusChecker accountStatusChecker = new AccountStatusChecker(Homepage.this);
+        accountStatusChecker.execute();
+    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-            catch (Exception e){
-                Log.d("Homepage", e.getMessage());
-            }
+    private void loadKoloda(){
+        try {
+            SwipeAdapter adapter = new SwipeAdapter(this, UserData.pets);
+            koloda.setAdapter(adapter);
         }
-        else {
-            Toast.makeText(this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+        catch (Exception e){
+            Log.d("Homepage-lK", e.getMessage() != null ? e.getMessage() : "Error");
         }
     }
+
+    private void fetchActiveRecords(){
+        SyncPetRecord sync = new SyncPetRecord(Homepage.this);
+        sync.execute();
+    }
+
+    private void setKolodaListener(){
+        koloda.setKolodaListener(new KolodaListener() {
+            @Override
+            public void onNewTopCard(int i) {
+
+            }
+
+            @Override
+            public void onCardDrag(int i, @NonNull View view, float v) {
+
+            }
+
+            @Override
+            public void onCardSwipedLeft(int i) {
+                //insert the removed record to the end of arraylist
+                SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
+                swipeAdapter.insert(UserData.pets.get(i+1));
+            }
+
+            @Override
+            public void onCardSwipedRight(int i) {
+                //insert the removed record to the end of arraylist
+                SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
+                swipeAdapter.insert(UserData.pets.get(i+1));
+            }
+
+            @Override
+            public void onClickRight(int i) {
+
+            }
+
+            @Override
+            public void onClickLeft(int i) {
+
+            }
+
+            @Override
+            public void onCardSingleTap(int i) {
+
+            }
+
+            @Override
+            public void onCardDoubleTap(int i) {
+
+            }
+
+            @Override
+            public void onCardLongPress(int i) {
+
+            }
+
+            @Override
+            public void onEmptyDeck() {
+                try {
+                    //if empty, try to insert records
+                    SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
+                    for (Pet p : UserData.pets)
+                        swipeAdapter.insert(p);
+                }
+                catch (Exception e){
+                    //Restart activity
+                    Log.d("Homepage-sKL", e.getMessage() != null ? e.getMessage() : "onEmptyDeckListener");
+                    Intent intent = getIntent();
+                    overridePendingTransition(0, 0);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
+    private BroadcastReceiver mLoadKoloda = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                loadingDialog.dismissLoadingDialog();
+            }
+            catch (Exception e){
+                Log.d("Homepage-var", e.getMessage());
+            }
+            loadKoloda();
+
+        }
+    };
 
     private BroadcastReceiver mAvatarReceiver = new BroadcastReceiver() {
         @Override
@@ -234,6 +325,7 @@ public class Homepage extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLogoutReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mAvatarReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mNameReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLoadKoloda);
         super.onDestroy();
     }
 }

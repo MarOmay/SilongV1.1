@@ -46,6 +46,7 @@
 
         <ImageView
             android:id="@+id/messageImgview"
+            android:onClick="onPressedMessage"
             android:layout_width="200dp"
             android:layout_height="25dp"
             android:layout_weight="1"

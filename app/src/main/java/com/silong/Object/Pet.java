@@ -1,21 +1,24 @@
 package com.silong.Object;
 
+import android.graphics.Bitmap;
+
 public class Pet {
 
-    private int id;
+    private String petID;
     private int status;
     private int type;
     private int gender;
     private String color;
     private int age;
     private int size;
+    private Bitmap photo;
     private int likes;
 
     public Pet() {
     }
 
-    public Pet(int id, int status, int type, int gender, String color, int age, int size, int likes) {
-        this.id = id;
+    public Pet(String id, int status, int type, int gender, String color, int age, int size, int likes) {
+        this.petID = id;
         this.status = status;
         this.type = type;
         this.gender = gender;
@@ -25,12 +28,12 @@ public class Pet {
         this.likes = likes;
     }
 
-    public int getId() {
-        return id;
+    public String getPetID() {
+        return petID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPetID(String petID) {
+        this.petID = petID;
     }
 
     public int getStatus() {
@@ -79,6 +82,14 @@ public class Pet {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
     }
 
     public int getLikes() {

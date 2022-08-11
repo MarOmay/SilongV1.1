@@ -28,6 +28,7 @@ import com.silong.Object.Address;
 import com.silong.Object.User;
 import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.SyncData;
+import com.silong.Task.SyncPetRecord;
 
 import java.io.File;
 import java.io.FileOutputStream;
