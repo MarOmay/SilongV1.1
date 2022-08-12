@@ -11,17 +11,18 @@
         android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:background="@color/pink" />
+        android:background="@drawable/nav_head_bg" />
 
     <ImageView
         android:id="@+id/closeDrawerBtn"
-        android:onClick="onPressedCloseDrawer"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
+        android:onClick="onPressedCloseDrawer"
         android:src="@drawable/ic_round_chevron_right_24"
-        app:tint="@color/whitey" />
+        app:tint="@color/whitey"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
@@ -71,11 +72,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:onClick="onEditProfilePressed"
             android:text="Edit Profile"
             android:textAlignment="center"
             android:textColor="@color/pink"
             android:textSize="17sp"
-            android:onClick="onEditProfilePressed"/>
+            tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>
 

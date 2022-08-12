@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProcessSignUp"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="3"
+    tools:context=".HorizontalProgressBar">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,13 +16,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ProgressBar
-            android:layout_marginTop="150dp"
-            android:layout_width="wrap_content"
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
             android:indeterminate="true"
-            android:indeterminateTint="@color/pink" />
+            android:indeterminateTint="@color/pink"
+            android:layout_marginTop="150dp"
+            android:layout_marginBottom="30dp"/>
 
     </LinearLayout>
 
@@ -33,10 +34,11 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/horizontalProgressTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Signing Up..."
+            android:text="Text here"
             android:textSize="20sp" />
 
     </LinearLayout>
