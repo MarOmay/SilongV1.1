@@ -17,6 +17,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBar"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:indeterminate="true"
@@ -38,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Text here"
+            android:text="Loading resources..."
             android:textSize="20sp" />
 
     </LinearLayout>

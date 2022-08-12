@@ -46,7 +46,7 @@ public class Splash extends AppCompatActivity {
                 Intent i;
                 if (UserData.isLoggedIn(getApplicationContext())){
                     //UserData.populate();
-                    i = new Intent(Splash.this, Homepage.class);
+                    i = new Intent(Splash.this, HorizontalProgressBar.class);
                 }
                 else {
                     i = new Intent(Splash.this, LogIn.class);

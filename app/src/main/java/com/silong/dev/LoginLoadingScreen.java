@@ -275,7 +275,7 @@ public class LoginLoadingScreen extends AppCompatActivity {
             //insert liked pet
 
             //Once all data is retrieved, route user to Homepage
-            Intent intent = new Intent(LoginLoadingScreen.this, Homepage.class);
+            Intent intent = new Intent(LoginLoadingScreen.this, HorizontalProgressBar.class);
             startActivity(intent);
             finish();
 

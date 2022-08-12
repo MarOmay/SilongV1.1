@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.LoadingDialog;
 import com.silong.Object.Pet;
 import com.silong.Operation.Utility;
+import com.silong.dev.HorizontalProgressBar;
 import com.silong.dev.UserData;
 
 import java.io.File;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 public class SyncPetRecord extends AsyncTask {
 
     private Activity activity;
+    private ArrayList<String> keys = new ArrayList<>();
+
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
 
@@ -34,19 +37,50 @@ public class SyncPetRecord extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] objects) {
-        if (Utility.internetConnection(activity)){
+
+        if (HorizontalProgressBar.snapshot == null)
+            return null;
+
+        try {
+            ArrayList<String> list = new ArrayList<>();
+            for (DataSnapshot snap : HorizontalProgressBar.snapshot.getChildren()){
+
+                Log.d("DEBUGGER>>>", "SPR: key-" + snap.getKey());
+
+                File file = new File(activity.getFilesDir(), "pet-" + snap.getKey());
+                if (file.exists()){
+                    //Check if status of local record matches
+                    Pet tempPet = UserData.fetchRecordFromLocal(activity, snap.getKey());
+                    if (tempPet.getStatus() != Integer.valueOf(snap.getValue().toString())){
+                        //delete local record, to rewrite new record
+                        file.delete();
+                        fetchRecordFromCloud(snap.getKey());
+                    }
+                }
+                else {
+                    fetchRecordFromCloud(snap.getKey());
+                }
+                list.add("pet-" + snap.getKey());
+            }
+            //delete local copy of deleted accounts
+            cleanLocalRecord(list, "pet-");
+            UserData.populateRecords(activity);
+        }
+        catch (Exception e){
+            Log.d("SPR-dIB", e.getMessage());
+        }
+
+        /*if (Utility.internetConnection(activity)){
             //Get all pet records
             mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
             mReference = mDatabase.getReference("Pets");
-            mReference.addValueEventListener(new ValueEventListener() {
+            mReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try{
                         //Get all User uid
                         ArrayList<String> list = new ArrayList<>();
                         for (DataSnapshot snap : snapshot.getChildren()){
-
-                            Log.d("snap", snap.getKey());
 
                             //skip counter to avoid error
                             if (snap.getKey().equals("counter"))
@@ -70,13 +104,11 @@ public class SyncPetRecord extends AsyncTask {
                         //delete local copy of deleted accounts
                         cleanLocalRecord(list, "pet-");
                         UserData.populateRecords(activity);
-                        loadKoloda();
                     }
                     catch (Exception e){
                         Log.d("Homepage-fAR", e.getMessage());
                     }
                     UserData.populateRecords(activity);
-                    loadKoloda();
                 }
 
                 @Override
@@ -88,18 +120,13 @@ public class SyncPetRecord extends AsyncTask {
         else {
             Toast.makeText(activity, "No internet connection.", Toast.LENGTH_SHORT).show();
             UserData.populateRecords(activity);
-        }
+        }*/
         return null;
     }
 
     private void fetchRecordFromCloud(String id){
         RecordDownloader downloader = new RecordDownloader(activity, id);
         downloader.execute();
-    }
-
-    private void loadKoloda(){
-        Intent intent = new Intent("load-koloda");
-        LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
     }
 
     private void cleanLocalRecord(ArrayList<String> list, String prefix){

@@ -74,8 +74,6 @@ public class Homepage extends AppCompatActivity {
     ImageView avatarImgview;
     TextView usernameTv;
 
-    private LoadingDialog loadingDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,15 +105,6 @@ public class Homepage extends AppCompatActivity {
         //Receive drawer name trigger
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mNameReceiver, new IntentFilter("update-name"));
-
-        //Receive koloda update trigger
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mLoadKoloda, new IntentFilter("load-koloda"));
-
-        loadingDialog = new LoadingDialog(Homepage.this);
-        loadingDialog.startLoadingDialog();
-
-        fetchActiveRecords();
 
         //Initialize layout views
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -199,11 +188,6 @@ public class Homepage extends AppCompatActivity {
         }
     }
 
-    private void fetchActiveRecords(){
-        SyncPetRecord sync = new SyncPetRecord(Homepage.this);
-        sync.execute();
-    }
-
     private void setKolodaListener(){
         koloda.setKolodaListener(new KolodaListener() {
             @Override
@@ -257,39 +241,10 @@ public class Homepage extends AppCompatActivity {
 
             @Override
             public void onEmptyDeck() {
-                try {
-                    //if empty, try to insert records
-                    SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
-                    for (Pet p : UserData.pets)
-                        swipeAdapter.insert(p);
-                }
-                catch (Exception e){
-                    //Restart activity
-                    Log.d("Homepage-sKL", e.getMessage() != null ? e.getMessage() : "onEmptyDeckListener");
-                    Intent intent = getIntent();
-                    overridePendingTransition(0, 0);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    finish();
-                    overridePendingTransition(0, 0);
-                    startActivity(intent);
-                }
+
             }
         });
     }
-
-    private BroadcastReceiver mLoadKoloda = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                loadingDialog.dismissLoadingDialog();
-            }
-            catch (Exception e){
-                Log.d("Homepage-var", e.getMessage());
-            }
-            loadKoloda();
-
-        }
-    };
 
     private BroadcastReceiver mAvatarReceiver = new BroadcastReceiver() {
         @Override
@@ -320,12 +275,21 @@ public class Homepage extends AppCompatActivity {
     };
 
     @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.END)){
+            drawerLayout.closeDrawer(GravityCompat.END);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLogoutReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mAvatarReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mNameReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLoadKoloda);
         super.onDestroy();
     }
 }

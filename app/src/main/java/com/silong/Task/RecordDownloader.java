@@ -17,12 +17,18 @@ import com.google.firebase.database.ValueEventListener;
 import com.silong.Operation.ImageProcessor;
 import com.silong.dev.UserData;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class RecordDownloader extends AsyncTask {
 
     private Activity activity;
     private String id;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
+
+    private ArrayList<String> fragments = new ArrayList<>();
 
     public RecordDownloader(Activity activity, String id){
         this.activity = activity;
@@ -42,7 +48,7 @@ public class RecordDownloader extends AsyncTask {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int status = Integer.valueOf(snapshot.getValue().toString());
                     UserData.writePetToLocal(activity, id, "status", String.valueOf(status));
-                    Log.d("fromCloud", status+"");
+                    fragments.add("status");
                 }
 
                 @Override
@@ -55,7 +61,7 @@ public class RecordDownloader extends AsyncTask {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int type = Integer.valueOf(snapshot.getValue().toString());
                     UserData.writePetToLocal(activity, id, "type", String.valueOf(type));
-                    Log.d("fromCloud", type+"");
+                    fragments.add("type");
                 }
 
                 @Override
@@ -68,7 +74,7 @@ public class RecordDownloader extends AsyncTask {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int gender = Integer.valueOf(snapshot.getValue().toString());
                     UserData.writePetToLocal(activity, id, "gender", String.valueOf(gender));
-                    Log.d("fromCloud", gender+"");
+                    fragments.add("gender");
                 }
 
                 @Override
@@ -81,7 +87,7 @@ public class RecordDownloader extends AsyncTask {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int size = Integer.valueOf(snapshot.getValue().toString());
                     UserData.writePetToLocal(activity, id, "size", String.valueOf(size));
-                    Log.d("fromCloud", size+"");
+                    fragments.add("size");
                 }
 
                 @Override
@@ -94,7 +100,7 @@ public class RecordDownloader extends AsyncTask {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int age = Integer.valueOf(snapshot.getValue().toString());
                     UserData.writePetToLocal(activity, id, "age", String.valueOf(age));
-                    Log.d("fromCloud", age+"");
+                    fragments.add("age");
                 }
 
                 @Override
@@ -107,7 +113,7 @@ public class RecordDownloader extends AsyncTask {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String color = snapshot.getValue().toString();
                     UserData.writePetToLocal(activity, id, "color", String.valueOf(color));
-                    Log.d("fromCloud", color+"");
+                    fragments.add("color");
                 }
 
                 @Override
@@ -122,8 +128,7 @@ public class RecordDownloader extends AsyncTask {
                     Bitmap bitmap = new ImageProcessor().toBitmap(photo);
                     new ImageProcessor().saveToLocal(activity, bitmap, "petpic-" + id);
                     UserData.populateRecords(activity);
-                    loadKoloda();
-                    Log.d("fromCloud", "photo");
+                    fragments.add("photo");
                 }
 
                 @Override
@@ -139,8 +144,22 @@ public class RecordDownloader extends AsyncTask {
         return null;
     }
 
-    private void loadKoloda(){
-        Intent intent = new Intent("load-koloda");
-        LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
+    private void loop(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (fragments.size() == 7){
+                    reloadUserData();
+                }
+                else
+                    loop();
+            }
+        }, 1000);
     }
+
+    public void reloadUserData(){
+        UserData.populateRecords(activity);
+    }
+
 }
