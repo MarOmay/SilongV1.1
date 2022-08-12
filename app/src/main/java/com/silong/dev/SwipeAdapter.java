@@ -57,8 +57,8 @@ public class SwipeAdapter extends BaseAdapter {
             Pet p = pets.get(index);
 
             imageSwipe.setImageBitmap(p.getPhoto());
-            genderSign.setImageResource(p.getGender() == Gender.MALE ? R.drawable.gender_male : R.drawable.gender_female);
-            animalFace.setImageResource(p.getType() == PetType.DOG ? R.drawable.dog_face : R.drawable.cat_face);
+            genderSign.setImageResource(p.getGender() == Gender.MALE ? R.drawable.gendermale : R.drawable.genderfemale);
+            animalFace.setImageResource(p.getType() == PetType.DOG ? R.drawable.dogface : R.drawable.catface);
 
             //translate color
             String color = "";

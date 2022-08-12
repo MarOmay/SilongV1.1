@@ -48,8 +48,7 @@
                         android:id="@+id/genderSign"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/gender_female"
-                        app:tint="@color/whitey" />
+                        android:src="@drawable/genderfemale"/>
 
                 </LinearLayout>
 
@@ -74,10 +73,12 @@
                             android:id="@+id/animalFace"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/dog_face"
-                            app:tint="@color/whitey"/>
+                            android:src="@drawable/dogface"/>
 
                         <TextView
+                            android:paddingStart="3dp"
+                            android:shadowColor="@color/darkgray"
+                            android:shadowRadius="5"
                             android:id="@+id/petColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -98,8 +99,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:clickable="true"
-                            android:src="@drawable/heart_icon"
-                            app:tint="@color/whitey"
+                            android:src="@drawable/hearticon"
                             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                     </LinearLayout>
