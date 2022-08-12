@@ -22,7 +22,7 @@ public class HomepageExitDialog extends MaterialAlertDialogBuilder {
         super.setPositiveButton(Html.fromHtml("<b>"+"YES"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //codes here
+                System.exit(0);
             }
         });
         super.setNegativeButton(Html.fromHtml("<b>"+"NO"+"</b>"), new DialogInterface.OnClickListener() {

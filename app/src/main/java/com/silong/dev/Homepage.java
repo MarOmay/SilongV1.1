@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.FilterDialog;
+import com.silong.CustomView.HomepageExitDialog;
 import com.silong.CustomView.LoadingDialog;
 import com.silong.Object.Pet;
 import com.silong.Object.User;
@@ -280,7 +281,8 @@ public class Homepage extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.END);
         }
         else {
-            super.onBackPressed();
+            HomepageExitDialog homepageExitDialog = new HomepageExitDialog(Homepage.this);
+            homepageExitDialog.show();
         }
     }
 
