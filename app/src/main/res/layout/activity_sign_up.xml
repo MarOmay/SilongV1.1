@@ -106,6 +106,15 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/tfsignupEmail"
+            style="@style/textField_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress" />
+
+        <EditText
             android:id="@+id/tfsignupPassword"
             style="@style/textField_style"
             android:layout_width="match_parent"
@@ -122,15 +131,6 @@
             android:layout_marginVertical="10dp"
             android:hint="Confirm Password"
             android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/tfsignupEmail"
-            style="@style/textField_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress" />
 
         <LinearLayout
             android:layout_width="match_parent"
