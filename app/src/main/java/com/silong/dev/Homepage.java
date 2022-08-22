@@ -133,8 +133,8 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void onPressedFilter(View view){
-        FilterDialog filterDialog = new FilterDialog(Homepage.this);
-        filterDialog.show();
+        Intent i = new Intent(Homepage.this, Filter.class);
+        startActivity(i);
     }
 
     public void onPressedMessage(View view){

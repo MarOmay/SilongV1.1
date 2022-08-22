@@ -16,6 +16,7 @@
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/productsans_regular</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/nighty</item>
     </style>
 
     <!-- custom styles silong  jepoy -->
@@ -64,6 +65,17 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/whitey</item>
+        <item name="cornerRadius">50dp</item>
+    </style>
+
+    <style name="blackButton_style">
+        <item name="android:width">340dp</item>
+        <item name="android:height">60dp</item>
+        <item name="android:backgroundTint">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">50dp</item>
     </style>
 
