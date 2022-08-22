@@ -12,7 +12,10 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -51,6 +54,7 @@ public class LogIn extends AppCompatActivity {
     Button signUp, logIn;
     EditText tfloginEmail, tfloginPassword;
     TextView forgotPass;
+    static boolean passwordVisible;
 
     private int loginAttempts = 0;
     private boolean allowLogin = true;
@@ -100,6 +104,35 @@ public class LogIn extends AppCompatActivity {
         catch (Exception e){
             //ignore, no value passed by previous activity
         }
+
+        //for show/hide pass
+        tfloginPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                final int Right = 2;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (motionEvent.getRawX() >= tfloginPassword.getRight() - tfloginPassword.getCompoundDrawables()[Right].getBounds().width()) {
+                        int selection = tfloginPassword.getSelectionEnd();
+                        if (passwordVisible) {
+                            //drawable image
+                            tfloginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_visibility_24, 0);
+                            //for hide password
+                            tfloginPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordVisible = false;
+                        } else {
+                            //drawable image
+                            tfloginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_visibility_off_24, 0);
+                            //for show password
+                            tfloginPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordVisible = true;
+                        }
+                        tfloginPassword.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
     }
 

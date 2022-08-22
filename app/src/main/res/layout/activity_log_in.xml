@@ -80,7 +80,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:hint="Password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:drawableRight="@drawable/ic_baseline_visibility_24"/>
 
         <TextView
             android:id="@+id/forgotPassword"
