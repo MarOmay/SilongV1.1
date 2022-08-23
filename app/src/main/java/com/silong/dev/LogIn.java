@@ -54,7 +54,7 @@ public class LogIn extends AppCompatActivity {
     Button signUp, logIn;
     EditText tfloginEmail, tfloginPassword;
     TextView forgotPass;
-    static boolean passwordVisible;
+    static boolean passwordVisible = false;
 
     private int loginAttempts = 0;
     private boolean allowLogin = true;

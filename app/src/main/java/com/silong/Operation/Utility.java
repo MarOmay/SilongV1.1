@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 public class Utility {
 
@@ -28,6 +30,10 @@ public class Utility {
             return true;
         }
         return false;
+    }
+
+    public void passwordFieldTransformer(EditText field, boolean visible){
+        field.setTransformationMethod(visible ? null : new PasswordTransformationMethod());
     }
 
 }
