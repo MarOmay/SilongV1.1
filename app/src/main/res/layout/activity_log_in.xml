@@ -78,6 +78,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:gravity="center_vertical"
+            android:background="@drawable/tf_background"
             android:orientation="horizontal"
             android:weightSum="2">
 
