@@ -97,7 +97,7 @@
                 android:layout_height="25dp"
                 android:layout_weight="1.7"
                 android:onClick="onShowHide"
-                android:src="@drawable/ic_baseline_visibility_24"
+                android:src="@drawable/ic_baseline_visibility_off_24"
                 tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         </LinearLayout>

@@ -333,12 +333,12 @@ public class LogIn extends AppCompatActivity {
     public void onShowHide(View view){
         if (ctr == 0){
             new Utility().passwordFieldTransformer(tfloginPassword, true);
-            showHideIv.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_off_24));
+            showHideIv.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_24));
             ctr++;
         }
         else {
             new Utility().passwordFieldTransformer(tfloginPassword, false);
-            showHideIv.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_24));
+            showHideIv.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_off_24));
             ctr--;
         }
     }
