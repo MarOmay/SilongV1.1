@@ -62,7 +62,7 @@ public class Homepage extends AppCompatActivity {
     public static boolean OLD = true;
     public static boolean MALE = true;
     public static boolean FEMALE = true;
-    public static boolean LIKED = true;
+    public static boolean LIKED = false;
 
     /* APP-SPECIFIC FILES */
     protected static File USERDATA;
@@ -221,6 +221,7 @@ public class Homepage extends AppCompatActivity {
         ArrayList<Pet> filteredList = new ArrayList<>();
 
         for (Pet pet : UserData.pets){
+
             if (pet.getType() == PetType.DOG && !Homepage.DOG)
                 continue;
             else if (pet.getType() == PetType.CAT && !Homepage.CAT)
@@ -239,7 +240,10 @@ public class Homepage extends AppCompatActivity {
                 continue;
             
             filteredList.add(pet);
+            Log.d("DEBUGGER>>>", "Added");
         }
+
+        Log.d("DEBUGGER>>>", "Size: " + filteredList.size());
 
         return filteredList;
     }

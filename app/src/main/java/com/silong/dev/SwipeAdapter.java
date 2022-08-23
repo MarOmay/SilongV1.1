@@ -9,8 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.collection.LLRBNode;
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetColor;
 import com.silong.EnumClass.PetType;
@@ -26,6 +28,7 @@ public class SwipeAdapter extends BaseAdapter {
     public SwipeAdapter(Context context, ArrayList<Pet> pets) {
         this.context = context;
         this.pets = pets;
+
     }
 
     @Override
@@ -56,7 +59,11 @@ public class SwipeAdapter extends BaseAdapter {
             ImageView animalFace = convertView.findViewById(R.id.animalFace);
             TextView petColor = convertView.findViewById(R.id.petColor);
 
+            ImageView heartIcon = convertView.findViewById(R.id.heartIcon);
+
             Pet p = pets.get(index);
+
+            attachLikeListener(heartIcon, p);
 
             imageSwipe.setImageBitmap(p.getPhoto());
             genderSign.setImageResource(p.getGender() == Gender.MALE ? R.drawable.gendermale : R.drawable.genderfemale);
@@ -78,6 +85,10 @@ public class SwipeAdapter extends BaseAdapter {
             color.replace(" ", " / ");
 
             petColor.setText(color);
+
+            if (p.isLiked())
+                heartIcon.setColorFilter(ContextCompat.getColor(context,R.color.red ), android.graphics.PorterDuff.Mode.MULTIPLY);
+
         }
         catch (Exception e){
             Log.d("SwipeAdapter-gV", e.getMessage());
@@ -85,6 +96,24 @@ public class SwipeAdapter extends BaseAdapter {
 
 
         return convertView;
+    }
+
+    private void attachLikeListener(ImageView imageView, Pet pet){
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pet.setLiked(!pet.isLiked());
+                UserData.writePetToLocal(context, pet.getPetID(), "liked", "" + pet.isLiked());
+                UserData.pets.get(UserData.pets.indexOf(pet)).setLiked(pet.isLiked());
+
+                if (pet.isLiked()){
+                    imageView.setColorFilter(ContextCompat.getColor(context, R.color.red), android.graphics.PorterDuff.Mode.MULTIPLY);
+                }
+                else {
+                    imageView.clearColorFilter();
+                }
+            }
+        });
     }
 
     public void insert(Pet p){

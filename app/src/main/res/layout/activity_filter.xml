@@ -317,6 +317,7 @@
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/likedOnlySwitch"
+                    android:onClick="onPressedLiked"
                     android:paddingEnd="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

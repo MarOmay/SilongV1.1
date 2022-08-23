@@ -9,11 +9,14 @@ import android.view.View;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class Filter extends AppCompatActivity {
 
     private Chip dogChip, catChip, puppyChip, youngChip, oldChip, maleChip, femaleChip;
     private ChipGroup genderToggle, ageToggle, typeToggle;
+
+    private SwitchMaterial likedOnlySwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,8 @@ public class Filter extends AppCompatActivity {
         maleChip = findViewById(R.id.maleChip);
         femaleChip = findViewById(R.id.femaleChip);
 
+        likedOnlySwitch = findViewById(R.id.likedOnlySwitch);
+
         if (Homepage.DOG) typeToggle.check(R.id.dogChip);
         if (Homepage.CAT) typeToggle.check(R.id.catChip);
         if (Homepage.PUPPY) ageToggle.check(R.id.puppyChip);
@@ -41,6 +46,7 @@ public class Filter extends AppCompatActivity {
         if (Homepage.OLD) ageToggle.check(R.id.oldChip);
         if (Homepage.MALE) genderToggle.check(R.id.maleChip);
         if (Homepage.FEMALE) genderToggle.check(R.id.femaleChip);
+        likedOnlySwitch.setChecked(Homepage.LIKED);
 
     }
 
@@ -70,6 +76,10 @@ public class Filter extends AppCompatActivity {
 
     public void onPressedFemale(View view){
         Homepage.FEMALE = femaleChip.isChecked();
+    }
+
+    public void onPressedLiked(View view){
+        Homepage.LIKED = likedOnlySwitch.isChecked();
     }
 
     public void back(View view){

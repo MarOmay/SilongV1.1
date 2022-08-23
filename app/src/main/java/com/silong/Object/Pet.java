@@ -12,20 +12,9 @@ public class Pet {
     private int age;
     private int size;
     private Bitmap photo;
-    private int likes;
+    private boolean liked;
 
     public Pet() {
-    }
-
-    public Pet(String id, int status, int type, int gender, String color, int age, int size, int likes) {
-        this.petID = id;
-        this.status = status;
-        this.type = type;
-        this.gender = gender;
-        this.color = color;
-        this.age = age;
-        this.size = size;
-        this.likes = likes;
     }
 
     public String getPetID() {
@@ -92,11 +81,11 @@ public class Pet {
         this.photo = photo;
     }
 
-    public int getLikes() {
-        return likes;
+    public boolean isLiked() {
+        return liked;
     }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 }
