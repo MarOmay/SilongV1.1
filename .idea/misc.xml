@@ -11,6 +11,7 @@
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_deactivated_screen.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_extra_loading_screen.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_filter.xml" value="0.4" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_header.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_homepage.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_horizontal_progress_bar.xml" value="0.25" />
@@ -32,13 +33,11 @@
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_dashboard.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_edit_profile.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_extra_loading_screen.xml" value="0.21052631578947367" />
-        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_filter.xml" value="0.20964912280701756" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_header.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_homepage.xml" value="0.21784420289855072" />
-        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_log_in.xml" value="0.264" />
+        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_log_in.xml" value="0.1" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_main.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_process_sign_up.xml" value="0.21052631578947367" />
-        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_registration.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_sign_up.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_sign_up2.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_splash.xml" value="0.1" />

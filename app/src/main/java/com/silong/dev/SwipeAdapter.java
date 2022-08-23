@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetColor;
 import com.silong.EnumClass.PetType;
@@ -81,10 +83,15 @@ public class SwipeAdapter extends BaseAdapter {
             Log.d("SwipeAdapter-gV", e.getMessage());
         }
 
+
         return convertView;
     }
 
     public void insert(Pet p){
         pets.add(p);
+    }
+
+    public ArrayList<Pet> getList(){
+        return pets;
     }
 }

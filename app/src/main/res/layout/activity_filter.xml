@@ -111,6 +111,7 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/typeToggle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -122,6 +123,7 @@
                         <com.google.android.material.chip.Chip
                             android:id="@+id/dogChip"
                             style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                            android:onClick="onPressedDog"
                             android:layout_width="120dp"
                             android:layout_height="match_parent"
                             android:clickable="true"
@@ -133,6 +135,7 @@
                         <com.google.android.material.chip.Chip
                             android:id="@+id/catChip"
                             style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                            android:onClick="onPressedCat"
                             android:layout_width="120dp"
                             android:layout_height="match_parent"
                             android:clickable="true"
@@ -174,6 +177,7 @@
                     android:scrollbars="none">
 
                     <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/ageToggle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -186,6 +190,7 @@
                         <com.google.android.material.chip.Chip
                             android:id="@+id/puppyChip"
                             style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                            android:onClick="onPressedPuppy"
                             android:layout_width="100dp"
                             android:layout_height="match_parent"
                             android:clickable="true"
@@ -195,23 +200,25 @@
                             android:textStyle="bold" />
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/adultChip"
+                            android:id="@+id/youngChip"
                             style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                            android:onClick="onPressedYoung"
                             android:layout_width="100dp"
                             android:layout_height="match_parent"
                             android:clickable="true"
-                            android:text="ADULT"
+                            android:text="YOUNG"
                             android:textAlignment="center"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/seniorChip"
+                            android:id="@+id/oldChip"
                             style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                            android:onClick="onPressedOld"
                             android:layout_width="100dp"
                             android:layout_height="match_parent"
                             android:clickable="true"
-                            android:text="SENIOR"
+                            android:text="OLD"
                             android:textAlignment="center"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -249,6 +256,7 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/genderToggle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -259,6 +267,7 @@
                         <com.google.android.material.chip.Chip
                             android:id="@+id/maleChip"
                             style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                            android:onClick="onPressedMale"
                             android:layout_width="120dp"
                             android:layout_height="match_parent"
                             android:clickable="true"
@@ -270,6 +279,7 @@
                         <com.google.android.material.chip.Chip
                             android:id="@+id/femaleChip"
                             style="@style/My_Widget.MaterialComponents.Chip.Choice"
+                            android:onClick="onPressedFemale"
                             android:layout_width="120dp"
                             android:layout_height="match_parent"
                             android:clickable="true"
@@ -326,6 +336,7 @@
             <Button
                 android:id="@+id/filterApplyBtn"
                 style="@style/pinkButton_style"
+                android:onClick="back"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center"

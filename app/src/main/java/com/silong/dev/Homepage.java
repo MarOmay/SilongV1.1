@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.material.chip.Chip;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -34,6 +36,10 @@ import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.FilterDialog;
 import com.silong.CustomView.HomepageExitDialog;
 import com.silong.CustomView.LoadingDialog;
+import com.silong.EnumClass.Gender;
+import com.silong.EnumClass.PetAge;
+import com.silong.EnumClass.PetSize;
+import com.silong.EnumClass.PetType;
 import com.silong.Object.Pet;
 import com.silong.Object.User;
 import com.silong.Operation.ImageProcessor;
@@ -48,6 +54,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Homepage extends AppCompatActivity {
+
+    public static boolean DOG = true;
+    public static boolean CAT = true;
+    public static boolean PUPPY = true;
+    public static boolean YOUNG = true;
+    public static boolean OLD = true;
+    public static boolean MALE = true;
+    public static boolean FEMALE = true;
+    public static boolean LIKED = true;
 
     /* APP-SPECIFIC FILES */
     protected static File USERDATA;
@@ -74,6 +89,8 @@ public class Homepage extends AppCompatActivity {
 
     ImageView avatarImgview;
     TextView usernameTv;
+
+    private ArrayList<Pet> tempPetList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +152,7 @@ public class Homepage extends AppCompatActivity {
     public void onPressedFilter(View view){
         Intent i = new Intent(Homepage.this, Filter.class);
         startActivity(i);
+        finish();
     }
 
     public void onPressedMessage(View view){
@@ -181,12 +199,49 @@ public class Homepage extends AppCompatActivity {
 
     private void loadKoloda(){
         try {
-            SwipeAdapter adapter = new SwipeAdapter(this, UserData.pets);
+            //making a copy of the filtered list as koloda listener reference
+            tempPetList = filterList();
+
+            if (tempPetList.size() < 3){
+                for (Pet pet : tempPetList)
+                    tempPetList.add(pet);
+            }
+
+            ArrayList<Pet> copyOfTempPetList = (ArrayList<Pet>) tempPetList.clone();
+
+            SwipeAdapter adapter = new SwipeAdapter(this, copyOfTempPetList);
             koloda.setAdapter(adapter);
         }
         catch (Exception e){
             Log.d("Homepage-lK", e.getMessage() != null ? e.getMessage() : "Error");
         }
+    }
+
+    private ArrayList<Pet> filterList(){
+        ArrayList<Pet> filteredList = new ArrayList<>();
+
+        for (Pet pet : UserData.pets){
+            if (pet.getType() == PetType.DOG && !Homepage.DOG)
+                continue;
+            else if (pet.getType() == PetType.CAT && !Homepage.CAT)
+                continue;
+
+            if (pet.getGender() == Gender.MALE && !Homepage.MALE)
+                continue;
+            else if (pet.getGender() == Gender.FEMALE && !Homepage.FEMALE)
+                continue;
+
+            if (!Homepage.PUPPY && pet.getAge() == PetAge.PUPPY)
+                continue;
+            if (!Homepage.YOUNG && pet.getAge() == PetAge.YOUNG)
+                continue;
+            if (!Homepage.OLD && pet.getAge() == PetAge.OLD)
+                continue;
+            
+            filteredList.add(pet);
+        }
+
+        return filteredList;
     }
 
     private void setKolodaListener(){
@@ -203,16 +258,27 @@ public class Homepage extends AppCompatActivity {
 
             @Override
             public void onCardSwipedLeft(int i) {
+
                 //insert the removed record to the end of arraylist
+                i++;
+                while (i >= tempPetList.size())
+                    i -= tempPetList.size();
+                Log.d("DEBUGGER>>>", "value of i: " + i);
                 SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
-                swipeAdapter.insert(UserData.pets.get(i+1));
+                //swipeAdapter.insert(UserData.pets.get(i+1));
+                swipeAdapter.insert(tempPetList.get(i));
             }
 
             @Override
             public void onCardSwipedRight(int i) {
+
                 //insert the removed record to the end of arraylist
+                i++;
+                while (i >= tempPetList.size())
+                    i -= tempPetList.size();
+                Log.d("DEBUGGER>>>", "value of i: " + i);
                 SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
-                swipeAdapter.insert(UserData.pets.get(i+1));
+                swipeAdapter.insert(tempPetList.get(i));
             }
 
             @Override
