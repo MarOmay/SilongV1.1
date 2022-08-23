@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ public class LogIn extends AppCompatActivity {
     EditText tfloginEmail, tfloginPassword;
     TextView forgotPass;
     static boolean passwordVisible = false;
+    int ctr = 0;
+    ImageView showHideIv;
 
     private int loginAttempts = 0;
     private boolean allowLogin = true;
@@ -93,6 +96,7 @@ public class LogIn extends AppCompatActivity {
         signUp = (Button) findViewById(R.id.btnSignup);
         logIn = (Button) findViewById(R.id.btnLogin);
         forgotPass = (TextView) findViewById(R.id.forgotPassword);
+        showHideIv = (ImageView) findViewById(R.id.showHideIv);
 
         //For auto-fill after registration
         try {
@@ -104,35 +108,6 @@ public class LogIn extends AppCompatActivity {
         catch (Exception e){
             //ignore, no value passed by previous activity
         }
-
-        //for show/hide pass
-        tfloginPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int Right = 2;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    if (motionEvent.getRawX() >= tfloginPassword.getRight() - tfloginPassword.getCompoundDrawables()[Right].getBounds().width()) {
-                        int selection = tfloginPassword.getSelectionEnd();
-                        if (passwordVisible) {
-                            //drawable image
-                            tfloginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_visibility_24, 0);
-                            //for hide password
-                            tfloginPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            passwordVisible = false;
-                        } else {
-                            //drawable image
-                            tfloginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_visibility_off_24, 0);
-                            //for show password
-                            tfloginPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            passwordVisible = true;
-                        }
-                        tfloginPassword.setSelection(selection);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
 
     }
 
@@ -353,5 +328,18 @@ public class LogIn extends AppCompatActivity {
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mEmailReceiver);
         super.onDestroy();
+    }
+
+    public void onShowHide(View view){
+        if (ctr == 0){
+            new Utility().passwordFieldTransformer(tfloginPassword, true);
+            showHideIv.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_off_24));
+            ctr++;
+        }
+        else {
+            new Utility().passwordFieldTransformer(tfloginPassword, false);
+            showHideIv.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_24));
+            ctr--;
+        }
     }
 }

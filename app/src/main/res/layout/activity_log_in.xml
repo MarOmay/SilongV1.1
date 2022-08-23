@@ -60,32 +60,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="20dp">
+        android:gravity="center"
+        android:paddingHorizontal="25dp">
 
         <EditText
             android:id="@+id/tfloginEmail"
+            style="@style/textField_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/textField_style"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"/>
+            android:hint="Email Address" />
 
-        <EditText
-            android:id="@+id/tfloginPassword"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/textField_style"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:drawableRight="@drawable/ic_baseline_visibility_24" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/tfloginPassword"
+                style="@style/passField_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                android:hint="Password"
+                android:inputType="textPassword" />
+
+            <ImageView
+                android:id="@+id/showHideIv"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_weight="1.7"
+                android:onClick="onShowHide"
+                android:src="@drawable/ic_baseline_visibility_24"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/forgotPassword"
-            android:onClick="onPressedForgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
