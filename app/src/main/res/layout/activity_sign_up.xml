@@ -77,7 +77,7 @@
         android:layout_weight="1.6"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingHorizontal="5dp">
+        android:paddingHorizontal="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,23 +114,67 @@
             android:hint="Email Address"
             android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/tfsignupPassword"
-            style="@style/textField_style"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginVertical="10dp"
-            android:hint="Password"
-            android:inputType="textPassword" />
+            android:gravity="center_vertical"
+            android:background="@drawable/tf_background"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <EditText
-            android:id="@+id/tfsignupConPassword"
-            style="@style/textField_style"
+            <EditText
+                android:id="@+id/tfsignupPassword"
+                style="@style/passField_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35"
+                android:layout_gravity="center"
+                android:hint="Password"
+                android:inputType="textPassword" />
+
+            <ImageView
+                android:id="@+id/signUpPassHide"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_weight="1.65"
+                android:onClick="onPassShowHide"
+                android:src="@drawable/ic_baseline_visibility_off_24"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginVertical="10dp"
-            android:hint="Confirm Password"
-            android:inputType="textPassword" />
+            android:gravity="center_vertical"
+            android:background="@drawable/tf_background"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/tfsignupConPassword"
+                style="@style/passField_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35"
+                android:layout_gravity="center"
+                android:hint="Confirm Password"
+                android:inputType="textPassword" />
+
+            <ImageView
+                android:id="@+id/signUpConPassHide"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_weight="1.65"
+                android:onClick="onConPassShowHide"
+                android:src="@drawable/ic_baseline_visibility_off_24"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

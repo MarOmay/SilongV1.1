@@ -58,11 +58,12 @@ public class SignUp extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    ImageView backButton;
+    ImageView backButton, signUpPassHide, signUpConPassHide;
     static EditText fieldFname, fieldLname, fieldPassword, fieldConfirmpass,
             fieldEmail, fieldDBirthday, fieldContact;
     Spinner spinGender;
     Button next;
+    int ctr = 0, ctr1 = 0;
 
     private User user;
 
@@ -89,6 +90,8 @@ public class SignUp extends AppCompatActivity {
         fieldConfirmpass = (EditText) findViewById(R.id.tfsignupConPassword);
         fieldEmail = (EditText) findViewById(R.id.tfsignupEmail);
         fieldContact = (EditText) findViewById(R.id.tfsignupContact);
+        signUpPassHide = (ImageView) findViewById(R.id.signUpPassHide);
+        signUpConPassHide = (ImageView) findViewById(R.id.signUpConPassHide);
 
         //Check if there's data forwarded by other activity
         checkIntentForExtras();
@@ -242,5 +245,31 @@ public class SignUp extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDate);
+    }
+
+    public void onPassShowHide(View view){
+        if (ctr == 0){
+            new Utility().passwordFieldTransformer(fieldPassword, true);
+            signUpPassHide.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_24));
+            ctr++;
+        }
+        else {
+            new Utility().passwordFieldTransformer(fieldPassword, false);
+            signUpPassHide.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_off_24));
+            ctr--;
+        }
+    }
+
+    public void onConPassShowHide(View view){
+        if (ctr == 0){
+            new Utility().passwordFieldTransformer(fieldConfirmpass, true);
+            signUpConPassHide.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_24));
+            ctr++;
+        }
+        else {
+            new Utility().passwordFieldTransformer(fieldConfirmpass, false);
+            signUpConPassHide.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_off_24));
+            ctr--;
+        }
     }
 }
