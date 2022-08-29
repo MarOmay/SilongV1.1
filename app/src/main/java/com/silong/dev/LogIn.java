@@ -208,7 +208,7 @@ public class LogIn extends AppCompatActivity {
                                             else {
                                                 loadingDialog.dismissLoadingDialog();
                                                 Intent intent = new Intent(LogIn.this, DeactivatedScreen.class);
-                                                intent.putExtra("uid", UserData.userID);
+                                                intent.putExtra("uid", mAuth.getCurrentUser().getUid());
                                                 startActivity(intent);
                                                 finish();
                                             }

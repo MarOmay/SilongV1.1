@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class DeactivatedScreen extends AppCompatActivity {
 
-    TextView requestActivationTv;
+    TextView requestActivationTv, messageTv;
 
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
@@ -50,6 +50,7 @@ public class DeactivatedScreen extends AppCompatActivity {
 
         uid = getIntent().getStringExtra("uid");
 
+        messageTv = findViewById(R.id.messageTv);
         requestActivationTv = (TextView) findViewById(R.id.requestActivationTv);
 
     }
@@ -72,20 +73,22 @@ public class DeactivatedScreen extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(DeactivatedScreen.this, "Request sent.", Toast.LENGTH_SHORT).show();
-                                Toast.makeText(DeactivatedScreen.this, "Please wait for an admin to review your request.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Please wait for an admin to review your request.", Toast.LENGTH_LONG).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(DeactivatedScreen.this, "Request not sent.", Toast.LENGTH_SHORT).show();
+                                messageTv.setText(e.getMessage());
+                                Log.d("DEBUGGER>>>", e.getMessage());
                             }
                         });
             }
             catch (Exception e){
                 Log.d("DS", e.getMessage());
                 Toast.makeText(this, "Failed to send request.", Toast.LENGTH_SHORT).show();
+                Log.d("DEBUGGER>>>", e.getMessage());
             }
         }
         else {
@@ -99,6 +102,14 @@ public class DeactivatedScreen extends AppCompatActivity {
             sendRequest(uid, intent.getStringExtra("reason"));
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     @Override
     protected void onDestroy() {
