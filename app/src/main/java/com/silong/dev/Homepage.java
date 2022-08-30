@@ -39,18 +39,22 @@ import com.silong.CustomView.LoadingDialog;
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetAge;
 import com.silong.EnumClass.PetSize;
+import com.silong.EnumClass.PetStatus;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Pet;
 import com.silong.Object.User;
 import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
+import com.silong.Task.PetStatusUpdater;
 import com.silong.Task.SyncPetRecord;
 import com.yalantis.library.Koloda;
 import com.yalantis.library.KolodaListener;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Homepage extends AppCompatActivity {
@@ -91,6 +95,7 @@ public class Homepage extends AppCompatActivity {
     TextView usernameTv;
 
     private ArrayList<Pet> tempPetList = new ArrayList<>();
+    private Pet CURRENT_PET = new Pet();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +128,10 @@ public class Homepage extends AppCompatActivity {
         //Receive drawer name trigger
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mNameReceiver, new IntentFilter("update-name"));
+
+        //Receive trigger from ASC task initiated by Apply button
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mBeginApplication, new IntentFilter("account-status-active"));
 
         //Initialize layout views
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -249,6 +258,7 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void setKolodaListener(){
+        CURRENT_PET = tempPetList.get(0);
         koloda.setKolodaListener(new KolodaListener() {
             @Override
             public void onNewTopCard(int i) {
@@ -271,6 +281,13 @@ public class Homepage extends AppCompatActivity {
                 SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
                 //swipeAdapter.insert(UserData.pets.get(i+1));
                 swipeAdapter.insert(tempPetList.get(i));
+
+                if (tempPetList.size() == i+1){
+                    CURRENT_PET = tempPetList.get(0);
+                }
+                else {
+                    CURRENT_PET = tempPetList.get(i+1);
+                }
             }
 
             @Override
@@ -283,6 +300,13 @@ public class Homepage extends AppCompatActivity {
                 Log.d("DEBUGGER>>>", "value of i: " + i);
                 SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
                 swipeAdapter.insert(tempPetList.get(i));
+
+                if (tempPetList.size() == i+1){
+                    CURRENT_PET = tempPetList.get(0);
+                }
+                else {
+                    CURRENT_PET = tempPetList.get(i+1);
+                }
             }
 
             @Override
@@ -317,6 +341,13 @@ public class Homepage extends AppCompatActivity {
         });
     }
 
+    public void onPressedApply(View view){
+        if (Utility.internetConnection(getApplicationContext())){
+            AccountStatusChecker accountStatusChecker = new AccountStatusChecker(Homepage.this);
+            accountStatusChecker.execute();
+        }
+    }
+
     private BroadcastReceiver mAvatarReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -345,6 +376,30 @@ public class Homepage extends AppCompatActivity {
         }
     };
 
+    private BroadcastReceiver mBeginApplication = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+
+                Log.d("DEBUGGER>>>", "P: " + CURRENT_PET.getPetID());
+                Log.d("DEBUGGER>>>", "C: " + CURRENT_PET.getColor());
+
+                //launch timeline
+                //check pet status
+                //if petStatus != active, goto Homepage
+                //inform users
+                //else, PetStatusUpdater petStatusUpdater = new PetStatusUpdater(Homepage.this, CURRENT_PET.getPetID(), false);
+                //write file indicator
+                //write all database updates
+
+            }
+            catch (Exception e){
+                Log.d("Homepage-mBA", "Invalid trigger");
+            }
+
+        }
+    };
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.END)){
@@ -359,6 +414,7 @@ public class Homepage extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         // Unregister since the activity is about to be closed.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mBeginApplication);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLogoutReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mAvatarReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mNameReceiver);

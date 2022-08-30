@@ -251,11 +251,13 @@ public class SignUp extends AppCompatActivity {
         if (ctr == 0){
             new Utility().passwordFieldTransformer(fieldPassword, true);
             signUpPassHide.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_24));
+            fieldPassword.setSelection(fieldPassword.getText().length());
             ctr++;
         }
         else {
             new Utility().passwordFieldTransformer(fieldPassword, false);
             signUpPassHide.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_off_24));
+            fieldPassword.setSelection(fieldPassword.getText().length());
             ctr--;
         }
     }
@@ -264,11 +266,13 @@ public class SignUp extends AppCompatActivity {
         if (ctr == 0){
             new Utility().passwordFieldTransformer(fieldConfirmpass, true);
             signUpConPassHide.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_24));
+            fieldConfirmpass.setSelection(fieldConfirmpass.getText().length());
             ctr++;
         }
         else {
             new Utility().passwordFieldTransformer(fieldConfirmpass, false);
             signUpConPassHide.setImageDrawable(getDrawable(R.drawable.ic_baseline_visibility_off_24));
+            fieldConfirmpass.setSelection(fieldConfirmpass.getText().length());
             ctr--;
         }
     }

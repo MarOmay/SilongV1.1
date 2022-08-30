@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +43,9 @@ public class AccountStatusChecker extends AsyncTask {
                             activity.startActivity(intent);
                             activity.finish();
                         }
+                        else {
+                            sendBroadcast("account-status-active");
+                        }
                     }
                     catch (Exception e){
                         Log.d("ASC-dIB", e.getMessage());
@@ -58,5 +62,10 @@ public class AccountStatusChecker extends AsyncTask {
             Log.d("ASC-dIB", e.getMessage());
         }
         return null;
+    }
+
+    private void sendBroadcast(String code){
+        Intent intent = new Intent(code);
+        LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
     }
 }

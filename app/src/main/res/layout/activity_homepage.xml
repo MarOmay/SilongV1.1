@@ -81,6 +81,7 @@
 
             <Button
                 android:id="@+id/applyBtn"
+                android:onClick="onPressedApply"
                 style="@style/pinkButton_style"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"

@@ -5,9 +5,13 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Utility {
 
@@ -34,6 +38,12 @@ public class Utility {
 
     public void passwordFieldTransformer(EditText field, boolean visible){
         field.setTransformationMethod(visible ? null : new PasswordTransformationMethod());
+    }
+
+    public static String dateToday(){
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
+        Date date = new Date();
+        return formatter.format(date);
     }
 
 }

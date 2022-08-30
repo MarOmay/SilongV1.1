@@ -31,6 +31,8 @@ import com.silong.Object.User;
 import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.Utility;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -160,6 +162,7 @@ public class ProcessSignUp extends AppCompatActivity {
         map.put("adoptionHistory", 0);
         map.put("chatHistory", 0);
         map.put("likedPet", 0);
+        map.put("created", Utility.dateToday());
 
         mReference.updateChildren(map)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
