@@ -341,6 +341,10 @@ public class EditProfile extends AppCompatActivity {
             try{
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(getContentResolver().openInputStream(data.getData()));
                 Bitmap bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+                if (!new ImageProcessor().checkFileSize(bitmap, true)) {
+                    Toast.makeText(getApplicationContext(), "Please select a 1x1 picture less than 1MB.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 newPictureIv.setImageBitmap(bitmap);
             }
             catch (Exception e){
