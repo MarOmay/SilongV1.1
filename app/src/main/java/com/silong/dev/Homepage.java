@@ -258,7 +258,15 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void setKolodaListener(){
-        CURRENT_PET = tempPetList.get(0);
+
+        try {
+            CURRENT_PET = tempPetList.get(0);
+        }
+        catch (Exception e){
+            Log.d("DEBUGGER>>>", e.getMessage());
+        }
+
+
         koloda.setKolodaListener(new KolodaListener() {
             @Override
             public void onNewTopCard(int i) {
