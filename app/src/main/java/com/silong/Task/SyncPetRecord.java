@@ -56,6 +56,30 @@ public class SyncPetRecord extends AsyncTask {
                         file.delete();
                         fetchRecordFromCloud(snap.getKey());
                     }
+                    else {
+                        //check last revision
+                        mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                        mReference = mDatabase.getReference().child("Pets").child(snap.getKey()).child("lastModified");
+                        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String lastModified = snapshot.getValue().toString();
+                                Log.d("DEBUGGER>>>", "cur " + tempPet.getLastModified());
+                                Log.d("DEBUGGER>>>", "new " + lastModified);
+                                if (!tempPet.getLastModified().equals(lastModified)){
+                                    //delete local record, to rewrite new record
+                                    file.delete();
+                                    fetchRecordFromCloud(snap.getKey());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    } //end of else
+
                 }
                 else {
                     fetchRecordFromCloud(snap.getKey());

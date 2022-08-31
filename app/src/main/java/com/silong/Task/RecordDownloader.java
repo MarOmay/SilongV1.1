@@ -121,6 +121,19 @@ public class RecordDownloader extends AsyncTask {
 
                 }
             });
+            tempReference.child("lastModified").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String lastModified = snapshot.getValue().toString();
+                    UserData.writePetToLocal(activity, id, "lastModified", lastModified);
+                    fragments.add("lastModified");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             tempReference.child("photo").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -149,7 +162,7 @@ public class RecordDownloader extends AsyncTask {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (fragments.size() == 7){
+                if (fragments.size() == 8){
                     reloadUserData();
                 }
                 else

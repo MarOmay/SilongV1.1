@@ -12,6 +12,7 @@ public class Pet {
     private int age;
     private int size;
     private Bitmap photo;
+    private String lastModified;
     private boolean liked;
 
     public Pet() {
@@ -79,6 +80,14 @@ public class Pet {
 
     public void setPhoto(Bitmap photo) {
         this.photo = photo;
+    }
+
+    public String getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(String lastModified) {
+        this.lastModified = lastModified;
     }
 
     public boolean isLiked() {
