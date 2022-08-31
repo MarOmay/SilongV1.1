@@ -49,4 +49,6 @@ dependencies {
     //for gif -jepoy
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
 
+    //for StepView -jepoy
+    implementation 'com.github.baoyachi:StepView:1.9'
 }

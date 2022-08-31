@@ -346,6 +346,9 @@ public class Homepage extends AppCompatActivity {
             AccountStatusChecker accountStatusChecker = new AccountStatusChecker(Homepage.this);
             accountStatusChecker.execute();
         }
+        //add ni jepoy para matest lang sa silong mismo
+        Intent i = new Intent(Homepage.this, Timeline.class);
+        startActivity(i);
     }
 
     private BroadcastReceiver mAvatarReceiver = new BroadcastReceiver() {

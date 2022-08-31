@@ -111,4 +111,25 @@
 
     <string name="requestDeactivationMessage">Deactivating your account means...\n\n-You may no longer view the adoption listing.\n-Your data and account will not be completely deleted from the database.\n
     -You cannot create another account under the same email address.\n-and Activating your account again will require approval from the administrators.\n\nDo you want to continue?\n</string>
+
+    <!--for timeline-->
+    <string-array name="steps">
+        <item>Send Request</item>
+        <item>Awaiting Approval</item>
+        <item>Request Approved</item>
+        <item>Set Appointment</item>
+        <item>Appointment Confirmed</item>
+        <item>Adoption Successful</item>
+    </string-array>
+
+    <string name="congrats">Congratulations!</string>
+    <string name="sendReqBody">Your request is under review by the City Veterinary Office. Please wait for approval status within 1 to 3 working days.</string>
+    <string name="awaitingBody">We have received your request. Please wait for approval status within 1 to 3 working days.</string>
+    <string name="reqApprovedHeader">Your request has been APPROVED!</string>
+    <string name="reqApprovedBody">Please set an appointment for your City Veterinary Office visit.</string>
+    <string name="setAppointmentHeader">Checking the Clinic\'s availability on </string>
+    <string name="appointmentConfirmedHeader">Appointment Confirmed!</string>
+    <string name="appointmentConfirmedBody1">Your appointment is on </string>
+    <string name="appointmentConfirmedBody2">\n\nPlease bring the following:\n\n\t- 2x2 ID Picture\n\t- Cage or Leash\n\t- Valid ID</string>
+    <string name="successBody">You have successfully completed the adoption process.</string>
 </resources>
