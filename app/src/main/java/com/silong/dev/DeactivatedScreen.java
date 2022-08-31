@@ -80,7 +80,7 @@ public class DeactivatedScreen extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(DeactivatedScreen.this, "Request not sent.", Toast.LENGTH_SHORT).show();
-                                messageTv.setText(e.getMessage());
+                                messageTv.setText("Request failed.");
                                 Log.d("DEBUGGER>>>", e.getMessage());
                             }
                         });

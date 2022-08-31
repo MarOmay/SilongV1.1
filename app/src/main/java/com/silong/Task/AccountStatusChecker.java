@@ -32,7 +32,7 @@ public class AccountStatusChecker extends AsyncTask {
         try{
             mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
             mReference = mDatabase.getReference("accountSummary/" + UserData.userID);
-            mReference.addValueEventListener(new ValueEventListener() {
+            mReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try {
