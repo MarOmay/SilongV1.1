@@ -2,6 +2,7 @@ package com.silong.dev;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.BroadcastReceiver;
@@ -11,6 +12,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ import com.silong.Operation.Utility;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DeactivatedScreen extends AppCompatActivity {
 
@@ -65,7 +69,7 @@ public class DeactivatedScreen extends AppCompatActivity {
         if (Utility.internetConnection(getApplicationContext())){
             try {
                 Map<String, Object> map = new HashMap<>();
-                map.put("type", "activation");
+                map.put("date", Utility.dateToday());
                 map.put("reason", message);
 
                 mReference = mDatabase.getReference("accountStatusRequests");
@@ -74,6 +78,18 @@ public class DeactivatedScreen extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(getApplicationContext(), "Please wait for an admin to review your request.", Toast.LENGTH_LONG).show();
+                                try{
+                                    Timer timer = new Timer();
+                                    timer.schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            restartApp();
+                                        }
+                                    }, 3000);
+                                }
+                                catch (Exception e){
+                                    Log.d("LogIn", e.getMessage());
+                                }
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -94,6 +110,12 @@ public class DeactivatedScreen extends AppCompatActivity {
         else {
             Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void restartApp(){
+        Intent i = new Intent(DeactivatedScreen.this, Splash.class);
+        startActivity(i);
+        finish();
     }
 
     private BroadcastReceiver mRequestActivation = new BroadcastReceiver() {
