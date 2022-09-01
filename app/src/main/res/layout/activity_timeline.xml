@@ -36,7 +36,7 @@
                 android:gravity="center"
                 android:paddingHorizontal="10dp">
 
-                <com.baoyachi.stepview.VerticalStepView
+                <com.silong.CustomView.CustomStepView
                     android:id="@+id/timelineStepview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

@@ -1,7 +1,6 @@
 package com.silong.dev;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -20,12 +19,19 @@ import android.widget.Toast;
 
 import com.baoyachi.stepview.VerticalStepView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.silong.CustomView.CustomStepView;
 import com.silong.CustomView.ExitDialog;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class Timeline extends AppCompatActivity {
+
+    //timeline stages
+    public static final int SEND_REQUEST = 0;
+    public static final int AWAITING_APPROVAL = 1;
+    public static final int REQUEST_APPROVED = 2;
+    public static final int SET_APPOINTMENT = 3;
+    public static final int APPOINTMENT_CONFIRMED = 4;
+    public static final int ADOPTION_SUCCESSFUL = 5;
+    public static final int FINISHED = 6;
 
     DrawerLayout timelineDrawer;
     ImageView filterImgview, menuImgview, closeDrawerBtn;
@@ -51,7 +57,7 @@ public class Timeline extends AppCompatActivity {
         closeDrawerBtn = (ImageView) findViewById(R.id.closeDrawerBtn);
         timelineHeader = (TextView) findViewById(R.id.timelineHeader);
         timelineBody = (TextView) findViewById(R.id.timelineBody);
-        timelineStepView = (VerticalStepView) findViewById(R.id.timelineStepview);
+        timelineStepView = (CustomStepView) findViewById(R.id.timelineStepview);
         timelineCancelLayout = (LinearLayout) findViewById(R.id.timelineCancelLayout);
         timelineSetAppLayout = (LinearLayout) findViewById(R.id.timelineSetAppLayout);
         timelineHomeLayout = (LinearLayout) findViewById(R.id.timelineHomeLayout);
@@ -71,26 +77,7 @@ public class Timeline extends AppCompatActivity {
         timelineHeader.setText(R.string.congrats);
         timelineBody.setText(R.string.sendReqBody);
 
-        //StepView
-        List<String> sources = Arrays.asList(getResources().getStringArray(R.array.steps));
-
-        timelineStepView.reverseDraw(false)
-                .setStepViewTexts(sources)
-                .setLinePaddingProportion(0.65f)
-                //complete
-                .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(this, R.color.pink))
-                .setStepViewComplectedTextColor(ContextCompat.getColor(this, R.color.black))
-                .setStepsViewIndicatorCompleteIcon(getDrawable(R.drawable.task_complete))
-                //uncompleted
-                .setStepViewUnComplectedTextColor(ContextCompat.getColor(this, R.color.gray))
-                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(this,R.color.gray))
-                .setStepsViewIndicatorAttentionIcon(getDrawable(R.drawable.task_ongoing))
-                //default
-                .setStepsViewIndicatorDefaultIcon(getDrawable(R.drawable.task_icon))
-                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(this, R.color.gray))
-                .setTextSize(13);
-
-        timelineStepView.setStepsViewIndicatorComplectingPosition(0);
+        setCurrentStage(FINISHED);
 
         populateMenu();
 
@@ -131,6 +118,10 @@ public class Timeline extends AppCompatActivity {
 
         avatar.setImageBitmap(UserData.photo);
         name.setText(UserData.firstName + " " + UserData.lastName);
+    }
+
+    private void setCurrentStage(int stage){
+        timelineStepView.setStepsViewIndicatorComplectingPosition(stage);
     }
 
     private BroadcastReceiver mLogoutReceiver = new BroadcastReceiver() {
