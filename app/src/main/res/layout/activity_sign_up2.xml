@@ -107,7 +107,7 @@
             android:layout_height="120dp"
             android:layout_marginVertical="10dp"
             android:gravity="start"
-            android:hint="Address"
+            android:hint="House No./ Street/ Subdivision"
             android:inputType="textMultiLine"
             android:paddingVertical="20dp" />
 
