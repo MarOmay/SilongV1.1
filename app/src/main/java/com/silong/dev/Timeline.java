@@ -4,16 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baoyachi.stepview.VerticalStepView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.silong.CustomView.ExitDialog;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +39,9 @@ public class Timeline extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         getSupportActionBar().hide();
+
+        //Receive logout trigger
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLogoutReceiver, new IntentFilter("logout-user"));
 
         timelineDrawer = (DrawerLayout) findViewById(R.id.timelineDrawer);
         View view = findViewById(R.id.headerLayout);
@@ -82,6 +92,8 @@ public class Timeline extends AppCompatActivity {
 
         timelineStepView.setStepsViewIndicatorComplectingPosition(0);
 
+        populateMenu();
+
     }
 
     public void onPressedMenu(View view){
@@ -105,6 +117,40 @@ public class Timeline extends AppCompatActivity {
     public void onEditProfilePressed(View view){
         Intent i = new Intent(Timeline.this, EditProfile.class);
         startActivity(i);
+        EditProfile.FORBID_DEACTIVATION = true;
+    }
+
+    public void onPressedLogout(View view){
+        ExitDialog exitDialog = new ExitDialog(Timeline.this);
+        exitDialog.show();
+    }
+
+    private void populateMenu(){
+        ImageView avatar = findViewById(R.id.avatarImgview);
+        TextView name = findViewById(R.id.usernameTv);
+
+        avatar.setImageBitmap(UserData.photo);
+        name.setText(UserData.firstName + " " + UserData.lastName);
+    }
+
+    private BroadcastReceiver mLogoutReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Log out user
+            UserData.logout();
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(Timeline.this, "Logging out...", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(Timeline.this, Splash.class);
+            startActivity(i);
+            finish();
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLogoutReceiver);
+        super.onDestroy();
     }
 
 }

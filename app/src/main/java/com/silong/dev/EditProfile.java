@@ -39,6 +39,8 @@ import java.io.BufferedInputStream;
 
 public class EditProfile extends AppCompatActivity {
 
+    public static boolean FORBID_DEACTIVATION = false;
+
     private static final int PICK_IMAGE = 1;
 
     EditText newGenderEt, newAddressEt, newBirthdayEt, newContactEt;
@@ -89,11 +91,19 @@ public class EditProfile extends AppCompatActivity {
     }
 
     public void onPressedRequestDeactivation(View view){
+        if (FORBID_DEACTIVATION){
+            Toast.makeText(getApplicationContext(), "Pending adoption detected.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         RequestDeactivationDialog requestDeactivationDialog = new RequestDeactivationDialog(EditProfile.this);
         requestDeactivationDialog.show();
     }
 
     public void onPressedRequestDeletion(View view){
+        if (FORBID_DEACTIVATION){
+            Toast.makeText(getApplicationContext(), "Pending adoption detected.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         AccountDeletionDialog requestDeletionDialog = new AccountDeletionDialog(EditProfile.this);
         requestDeletionDialog.show();
     }

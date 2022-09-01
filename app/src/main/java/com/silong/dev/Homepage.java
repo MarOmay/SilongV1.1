@@ -199,6 +199,7 @@ public class Homepage extends AppCompatActivity {
     public void onEditProfilePressed(View view){
         Intent i = new Intent(Homepage.this, EditProfile.class);
         startActivity(i);
+        EditProfile.FORBID_DEACTIVATION = false;
     }
 
     private void checkAccountStatus(){
