@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -78,18 +79,7 @@ public class DeactivatedScreen extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(getApplicationContext(), "Please wait for an admin to review your request.", Toast.LENGTH_LONG).show();
-                                try{
-                                    Timer timer = new Timer();
-                                    timer.schedule(new TimerTask() {
-                                        @Override
-                                        public void run() {
-                                            restartApp();
-                                        }
-                                    }, 3000);
-                                }
-                                catch (Exception e){
-                                    Log.d("LogIn", e.getMessage());
-                                }
+                                restartApp(3);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -112,10 +102,24 @@ public class DeactivatedScreen extends AppCompatActivity {
         }
     }
 
-    private void restartApp(){
-        Intent i = new Intent(DeactivatedScreen.this, Splash.class);
-        startActivity(i);
-        finish();
+    private void restartApp(int seconds){
+        seconds *= 1000;
+        try{
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    FirebaseAuth.getInstance().signOut();
+                    UserData.logout();
+                    Intent i = new Intent(DeactivatedScreen.this, Splash.class);
+                    startActivity(i);
+                    finish();
+                }
+            }, seconds);
+        }
+        catch (Exception e){
+            Log.d("LogIn", e.getMessage());
+        }
     }
 
     private BroadcastReceiver mRequestActivation = new BroadcastReceiver() {
@@ -127,10 +131,11 @@ public class DeactivatedScreen extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
+        /*Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        startActivity(intent);*/
+        restartApp(0);
     }
 
     @Override
