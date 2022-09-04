@@ -294,37 +294,6 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="300dp"
-                android:layout_height="0.5dp"
-                android:background="@color/lightgray"
-                android:layout_marginVertical="15dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Show only liked pets."
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/likedOnlySwitch"
-                    android:onClick="onPressedLiked"
-                    android:paddingEnd="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.5" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout

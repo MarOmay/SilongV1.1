@@ -3,6 +3,7 @@ package com.silong.dev;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.BroadcastReceiver;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.baoyachi.stepview.VerticalStepView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.silong.CustomView.AppointmentDatePickerFragment;
 import com.silong.CustomView.CustomStepView;
 import com.silong.CustomView.ExitDialog;
 
@@ -71,8 +73,8 @@ public class Timeline extends AppCompatActivity {
         headerTitle.setText("Progress");
 
         //Timeline Layout initial displays
-        timelineCancelLayout.setVisibility(View.VISIBLE);
-        timelineSetAppLayout.setVisibility(View.GONE);
+        timelineCancelLayout.setVisibility(View.GONE);
+        timelineSetAppLayout.setVisibility(View.VISIBLE);
         timelineHomeLayout.setVisibility(View.GONE);
         timelineHeader.setText(R.string.congrats);
         timelineBody.setText(R.string.sendReqBody);
@@ -110,6 +112,11 @@ public class Timeline extends AppCompatActivity {
     public void onPressedLogout(View view){
         ExitDialog exitDialog = new ExitDialog(Timeline.this);
         exitDialog.show();
+    }
+
+    public void onPressedSetAppointment(View view){
+        DialogFragment newFragment = new AppointmentDatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     private void populateMenu(){

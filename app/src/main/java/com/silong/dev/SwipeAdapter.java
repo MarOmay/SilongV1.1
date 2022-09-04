@@ -59,11 +59,7 @@ public class SwipeAdapter extends BaseAdapter {
             ImageView animalFace = convertView.findViewById(R.id.animalFace);
             TextView petColor = convertView.findViewById(R.id.petColor);
 
-            ImageView heartIcon = convertView.findViewById(R.id.heartIcon);
-
             Pet p = pets.get(index);
-
-            attachLikeListener(heartIcon, p);
 
             imageSwipe.setImageBitmap(p.getPhoto());
             genderSign.setImageResource(p.getGender() == Gender.MALE ? R.drawable.gendermale : R.drawable.genderfemale);
@@ -85,9 +81,6 @@ public class SwipeAdapter extends BaseAdapter {
             color.replace(" ", " / ");
 
             petColor.setText(color);
-
-            if (p.isLiked())
-                heartIcon.setColorFilter(ContextCompat.getColor(context,R.color.red ), android.graphics.PorterDuff.Mode.MULTIPLY);
 
         }
         catch (Exception e){

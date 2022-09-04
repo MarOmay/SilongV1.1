@@ -120,6 +120,7 @@
 
             <!-- Set Appointment Button-->
             <Button
+                android:onClick="onPressedSetAppointment"
                 android:id="@+id/timelineSetAppBtn"
                 style="@style/pinkButton_style"
                 android:layout_width="350dp"

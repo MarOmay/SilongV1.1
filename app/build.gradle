@@ -51,4 +51,10 @@ dependencies {
 
     //for StepView -jepoy
     implementation 'com.github.baoyachi:StepView:1.9'
+
+    //material date/time picker -jepoy
+    implementation ('com.wdullaer:materialdatetimepicker:4.2.3') {
+        exclude group: 'androidx.appcompat'
+        exclude group: 'androidx.recyclerview'
+    }
 }

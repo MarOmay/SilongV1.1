@@ -1,7 +1,6 @@
 package com.silong.dev;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -11,9 +10,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,40 +18,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.material.chip.Chip;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.ExitDialog;
-import com.silong.CustomView.FilterDialog;
 import com.silong.CustomView.HomepageExitDialog;
-import com.silong.CustomView.LoadingDialog;
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetAge;
-import com.silong.EnumClass.PetSize;
-import com.silong.EnumClass.PetStatus;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Pet;
-import com.silong.Object.User;
-import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
-import com.silong.Task.PetStatusUpdater;
-import com.silong.Task.SyncPetRecord;
 import com.yalantis.library.Koloda;
 import com.yalantis.library.KolodaListener;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Homepage extends AppCompatActivity {
 
@@ -88,7 +67,6 @@ public class Homepage extends AppCompatActivity {
     TextView headerTitle, editProfileTv;
     ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn;
     Button applyBtn, aboutOfficeBtn, aboutUsBtn,exitBtn;
-    ImageView heartIcon;
     Koloda koloda;
 
     ImageView avatarImgview;
@@ -142,7 +120,6 @@ public class Homepage extends AppCompatActivity {
         menuImgview = (ImageView) findViewById(R.id.menuImgview);
         koloda = findViewById(R.id.koloda);
         applyBtn = (Button) findViewById(R.id.applyBtn);
-        heartIcon = (ImageView) findViewById(R.id.heartIcon);
         closeDrawerBtn = (ImageView) findViewById(R.id.closeDrawerBtn);
         aboutOfficeBtn = (Button) findViewById(R.id.aboutOfficeBtn);
         aboutUsBtn = (Button) findViewById(R.id.aboutUsBtn);

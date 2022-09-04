@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemKoloda"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
-    android:id="@+id/itemKoloda"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -26,15 +26,15 @@
                 android:id="@+id/imageSwipe"
                 android:layout_width="fill_parent"
                 android:layout_height="500dp"
+                android:background="@color/lightgray"
                 android:scaleType="centerCrop"
-                android:src="@drawable/circlelogo_white"
-                android:background="@color/lightgray"/>
+                android:src="@drawable/circlelogo_white" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                android:weightSum="2"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:weightSum="2">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -49,20 +49,20 @@
                         android:id="@+id/genderSign"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/genderfemale"/>
+                        android:src="@drawable/genderfemale" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:weightSum="3"
                     android:layout_gravity="bottom"
+                    android:layout_weight="1"
                     android:gravity="bottom"
                     android:orientation="horizontal"
                     android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp">
+                    android:paddingVertical="15dp"
+                    android:weightSum="3">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -74,47 +74,22 @@
                             android:id="@+id/animalFace"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/dogface"/>
+                            android:src="@drawable/dogface" />
 
                         <TextView
-                            android:paddingStart="3dp"
-                            android:shadowColor="@color/darkgray"
-                            android:shadowRadius="5"
                             android:id="@+id/petColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingStart="3dp"
+                            android:shadowColor="@color/darkgray"
+                            android:shadowRadius="5"
                             android:text="Age / Size / Color"
                             android:textColor="@color/whitey"
-                            android:textSize="18sp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_weight="2"
-                        android:layout_height="wrap_content"
-                        android:gravity="end|center">
-
-                        <ImageView
-                            android:id="@+id/heartIcon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:clickable="true"
-                            android:src="@drawable/hearticon"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <!--<com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:id="@+id/image"
-                    android:backgroundTint="@color/nighty"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/two"
-                    app:shapeAppearanceOverlay="@style/Shape"/>-->
 
             </LinearLayout>
 

@@ -25,7 +25,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.85"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:background="@drawable/no_results"
+            android:backgroundTint="@color/gray">
 
             <com.yalantis.library.Koloda
                 android:id="@+id/koloda"
