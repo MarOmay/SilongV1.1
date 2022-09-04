@@ -52,10 +52,22 @@ public class Filter extends AppCompatActivity {
 
     public void onPressedDog(View view){
         Homepage.DOG = dogChip.isChecked();
+        if (!dogChip.isChecked()){
+            puppyChip.setText("KITTEN");
+        }
+        else {
+            puppyChip.setText("PUPPY");
+        }
     }
 
     public void onPressedCat(View view){
         Homepage.CAT = catChip.isChecked();
+        if (dogChip.isChecked()){
+            puppyChip.setText("PUPPY");
+        }
+        else {
+            puppyChip.setText("KITTEN");
+        }
     }
 
     public void onPressedPuppy(View view){
