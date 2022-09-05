@@ -44,7 +44,7 @@ public class PetStatusUpdater extends AsyncTask {
                         public void onSuccess(Void unused) {
 
                             DatabaseReference tempReference = mDatabase.getReference().child("recordSummary").child(petID);
-                            tempReference.setValue(active ? PetStatus.ACTIVE : null);
+                            tempReference.setValue(PetStatus.ACTIVE);
 
                             sendBroadcast(SUCCESS);
                         }

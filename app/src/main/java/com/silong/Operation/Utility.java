@@ -1,14 +1,24 @@
 package com.silong.Operation;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+
+import androidx.core.app.NotificationCompat;
+
+import com.silong.dev.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,6 +54,32 @@ public class Utility {
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
         Date date = new Date();
         return formatter.format(date);
+    }
+
+    public void showNotification(Context context, String title, String message) {
+        //SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager.getInstance(context);
+        Intent intent = new Intent(context, context.getClass());
+        int reqCode = 101;
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
+        String CHANNEL_ID = "channel_name";// The id of the channel.
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.silong_user_app_icon)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentIntent(pendingIntent);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Channel Name";// The user-visible name of the channel.
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+        notificationManager.notify(reqCode, notificationBuilder.build()); // 0 is the request code, it should be unique id
+
+        Log.d("showNotification", "showNotification: " + reqCode);
     }
 
 }

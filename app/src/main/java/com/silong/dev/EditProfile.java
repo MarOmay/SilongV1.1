@@ -306,7 +306,7 @@ public class EditProfile extends AppCompatActivity {
 
     private void restartApp(){
         //Log out user
-        UserData.logout();
+        UserData.logout(EditProfile.this);
         mAuth.signOut();
         Intent i = new Intent(EditProfile.this, Splash.class);
         startActivity(i);

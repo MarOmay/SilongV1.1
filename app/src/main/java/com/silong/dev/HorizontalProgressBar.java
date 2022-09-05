@@ -16,6 +16,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.database.DataSnapshot;
 import com.silong.Task.PetCounter;
 import com.silong.Task.RecordVerifier;
+import com.silong.Task.SyncAdoptionHistory;
 import com.silong.Task.SyncPetRecord;
 
 public class HorizontalProgressBar extends AppCompatActivity {
@@ -71,9 +72,13 @@ public class HorizontalProgressBar extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             try {
+
                 //run sync module
                 SyncPetRecord syncPetRecord = new SyncPetRecord(HorizontalProgressBar.this);
                 syncPetRecord.execute();
+
+                //SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this);
+                //syncAdoptionHistory.execute();
 
                 String total = intent.getStringExtra("count");
                 verifyRecordCount(Integer.parseInt(total));

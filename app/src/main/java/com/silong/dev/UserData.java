@@ -37,7 +37,7 @@ public class UserData { //removed: extends User
     public static boolean accountStatus;
     public static int adoptionCounter;
     public static Address address = new Address();
-    public static ArrayList<Adoption> adoptionHistory;
+    public static ArrayList<Adoption> adoptionHistory = new ArrayList<>();
     public static ArrayList<Chat> chatHistory;
     public static ArrayList<Favorite> likedPet;
 
@@ -48,11 +48,16 @@ public class UserData { //removed: extends User
 
     }
 
-    public static void logout(){
+    public static void logout(Activity activity){
         //Delete user-related local files
         Homepage.USERDATA.delete();
         Homepage.AVATARDATA.delete();
         //Many other to be added later
+
+        for (File file : activity.getFilesDir().listFiles()){
+            if (file.getAbsolutePath().contains("adoption-"))
+                file.delete();
+        }
 
         //Empty static variables at runtime
         UserData.userID = "";
@@ -107,7 +112,7 @@ public class UserData { //removed: extends User
             bufferedReader.close();
         }
         catch (Exception e){
-            Log.d("UserData", e.getMessage());
+            Log.d("UserData", " " + e.getMessage());
         }
 
         //Populate Bitmap variable
@@ -118,48 +123,6 @@ public class UserData { //removed: extends User
         }catch (Exception e){
             Log.d("UserData", e.getMessage());
         }
-
-        //Populate Chats
-        String sChats = "";
-        if ((sChats = readFile(new Homepage().CHATDATA)) != null) {
-            String[] aChats = sChats.split("\n");
-            for (String temp : aChats){
-                String[] items = temp.split(";");
-                Chat tempChat = new Chat();
-                for (String item : items){
-                    String[] arr = item.split(":");
-                    switch (arr[0]){
-                        case "id": tempChat.setId(Integer.parseInt(arr[1])); break;
-                        case "adminEmail": tempChat.setAdminEmail(arr[1]);break;
-                        case "date": tempChat.setDate(arr[1]);break;
-                        case "time": tempChat.setTime(arr[1]);break;
-                        case "content": tempChat.setContent(arr[1]);break;
-                    }
-                }
-                chatHistory.add(tempChat);
-            }
-        }//App should be able to run even if chats is empty
-
-        //Poplate Adoptions
-        String sAdoption = "";
-        if ((sAdoption = readFile(new Homepage().CHATDATA)) != null) {
-            String[] aAdoption = sAdoption.split("\n");
-            for (String temp : aAdoption){
-                String[] items = temp.split(";");
-                Adoption tempAdoption = new Adoption();
-                for (String item : items){
-                    String[] arr = item.split(":");
-                    switch (arr[0]){
-                        case "petID": tempAdoption.setPetID(Integer.parseInt(arr[1])); break;
-                        case "dateRequested": tempAdoption.setDateRequested(arr[1]); break;
-                        case "appointmentDate": tempAdoption.setAppointmentDate(arr[1]); break;
-                        case "status": tempAdoption.setStatus(Integer.parseInt(arr[1])); break;
-                        case "dateReleased": tempAdoption.setDateReleased(arr[1]); break;
-                    }
-                }
-                adoptionHistory.add(tempAdoption);
-            }
-        }//App should be able to run even if adoptions is empty
 
     }
 
@@ -218,6 +181,64 @@ public class UserData { //removed: extends User
         }
         catch (Exception e){
             Log.d("AdminData-pR", e.getMessage());
+        }
+    }
+
+    public static void populateAdoptions(Activity activity){
+        //Clear current ArrayList to avoid duplicate entries
+        adoptionHistory.clear();
+
+        /* Fetch info from APP-SPECIFIC file, then populate static variables */
+
+        try{
+            ArrayList<File> adoptions = new ArrayList<File>();
+
+            for (File file : activity.getFilesDir().listFiles()){
+                if (file.getAbsolutePath().contains("adoption-")){
+                    adoptions.add(file);
+                }
+            }
+
+            //read each account info
+            for (File record : adoptions){
+                Adoption adoption = new Adoption();
+
+                //Read basic info
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(record));
+                String line;
+                while ((line = bufferedReader.readLine()) != null){
+                    line = line.replace(";","");
+
+                    String [] temp = line.split(":");
+                    switch (temp[0]){
+                        case "petID": adoption.setPetID(temp[1]); break;
+                        case "status": adoption.setStatus(Integer.parseInt(temp[1])); break;
+                        case "dateRequested": adoption.setDateRequested(temp[1]); break;
+                        case "appointmentDate": adoption.setAppointmentDate(temp[1]); break;
+                        case "dateReleased": adoption.setDateReleased(temp[1]); break;
+                    }
+
+                }
+                bufferedReader.close();
+
+                //Read avatar
+                try{
+                    adoption.setPhoto(BitmapFactory.decodeFile(activity.getFilesDir() + "/adoptionpic-" + adoption.getPetID()));
+                }
+                catch (Exception e){
+                    Log.d("AdminData-pA", e.getMessage());
+                }
+
+                Log.d("DEBUGGER>>>", adoption.getPetID());
+                Log.d("DEBUGGER>>>", adoption.getDateRequested());
+                Log.d("DEBUGGER>>>", "" + adoption.getStatus());
+
+                adoptionHistory.add(adoption);
+            }
+
+        }
+        catch (Exception e){
+            Log.d("AdminData-pA", e.getMessage());
         }
     }
 
@@ -317,6 +338,65 @@ public class UserData { //removed: extends User
         }
 
         return pet;
+    }
+
+    public static Pet getPet(String id) {
+        for (Pet p : UserData.pets){
+            if (p.getPetID().equals(id))
+                return p;
+        }
+        return null;
+    }
+
+    public static Adoption fetchAdoptionFromLocal(Activity activity, String uid){
+        Adoption adoption = new Adoption();
+
+        try{
+            File file = new File(activity.getFilesDir(), "adoption-" + uid);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = bufferedReader.readLine()) != null){
+                line = line.replace(";","");
+
+                String [] temp = line.split(":");
+                switch (temp[0]){
+                    case "petID": adoption.setPetID(temp[1]); break;
+                    case "status": adoption.setStatus(Integer.parseInt(temp[1])); break;
+                    case "dateRequested": adoption.setDateRequested(temp[1]); break;
+                    case "appointmentDate": adoption.setAppointmentDate(temp[1]); break;
+                    case "dateReleased": adoption.setDateReleased(temp[1]); break;
+                }
+
+            }
+            bufferedReader.close();
+        }
+        catch (Exception e){
+            Log.d("UserData-fAFL", e.getMessage());
+        }
+
+        return adoption;
+    }
+
+    public static void writeAdoptionToLocal(Context context, String filename, String desc, String content){
+        //Check if file exists
+        File file = new File(context.getFilesDir() + "/adoption-" + filename);
+        if (!file.exists()){
+            try{
+                FileOutputStream fileOuputStream = context.openFileOutput("adoption-" + filename, Context.MODE_PRIVATE);
+            }
+            catch (Exception e){
+                Log.d("UserData-wATL0", e.getMessage());
+            }
+        }
+        //Create local storage copy of pet profile
+        try (FileOutputStream fileOutputStream = context.openFileOutput( "adoption-" + filename, Context.MODE_APPEND)) {
+            String data = desc + ":" + content + ";\n";
+            fileOutputStream.write(data.getBytes());
+            fileOutputStream.flush();
+        }
+        catch (Exception e){
+            Log.d("UserData-wATL1", e.getMessage());
+        }
     }
 
 }

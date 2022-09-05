@@ -1,5 +1,7 @@
 package com.silong.CustomView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -7,8 +9,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.silong.dev.R;
+import com.silong.dev.Timeline;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
@@ -41,6 +45,8 @@ public class AppointmentTimePickerFragment extends DialogFragment implements Tim
         tpd.setMinTime(8, 60, 60);
         tpd.setMaxTime(16, 60, 60);
         tpd.show(requireFragmentManager(), "Datepickerdialog");
+
+        tpd.setCancelable(false);
     }
 
     @Override
@@ -49,7 +55,10 @@ public class AppointmentTimePickerFragment extends DialogFragment implements Tim
         String time = String.format("%02d:%02d %s", (hour == 12 || hour == 0) ? 12 : hour % 12, minute, isPM ? "PM" : "AM");
         tpd = null;
         Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
+        Timeline.CHOSEN_TIME = time;
         this.dismiss();
+
+        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent("schedule-chosen"));
     }
 
 }

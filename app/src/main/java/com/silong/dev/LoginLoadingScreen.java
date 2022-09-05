@@ -270,7 +270,38 @@ public class LoginLoadingScreen extends AppCompatActivity {
                 }
             });
 
-            //insert adoption history
+            //pending adoption
+            DatabaseReference adoptionRef = database.getReference().child("adoptionRequest").child(uid);
+            adoptionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    try {
+                        String dateRquested = snapshot.child("dateRequested").getValue().toString();
+                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateRequested", dateRquested);
+
+                        String petID = snapshot.child("petID").getValue().toString();
+                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "petID", petID);
+
+                        String status = snapshot.child("status").getValue().toString();
+                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "status", status);
+
+                        String appointmentDate = snapshot.child("appointmentDate").getValue().toString();
+                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "appointmentDate", appointmentDate);
+
+                        String dateReleased = snapshot.child("dateReleased").getValue().toString();
+                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateReleased", dateReleased);
+                    }
+                    catch (Exception e){
+                        Log.d("DEBUGGER>>>", e.getMessage());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
             //insert chat history
             //insert liked pet
 

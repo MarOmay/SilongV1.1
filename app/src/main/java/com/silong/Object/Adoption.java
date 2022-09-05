@@ -1,29 +1,24 @@
 package com.silong.Object;
 
+import android.graphics.Bitmap;
+
 public class Adoption {
 
-    private int petID;
+    private String petID;
     private String dateRequested;
     private String appointmentDate;
     private int status;
     private String dateReleased;
+    private Bitmap photo;
 
     public Adoption() {
     }
 
-    public Adoption(int petID, String dateRequested, String appointmentDate, int status, String dateReleased) {
-        this.petID = petID;
-        this.dateRequested = dateRequested;
-        this.appointmentDate = appointmentDate;
-        this.status = status;
-        this.dateReleased = dateReleased;
-    }
-
-    public int getPetID() {
+    public String getPetID() {
         return petID;
     }
 
-    public void setPetID(int petID) {
+    public void setPetID(String petID) {
         this.petID = petID;
     }
 
@@ -57,5 +52,13 @@ public class Adoption {
 
     public void setDateReleased(String dateReleased) {
         this.dateReleased = dateReleased;
+    }
+
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
     }
 }

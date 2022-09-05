@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silong.dev.DeactivatedScreen;
+import com.silong.dev.Homepage;
 import com.silong.dev.UserData;
 
 public class AccountStatusChecker extends AsyncTask {
@@ -44,7 +45,8 @@ public class AccountStatusChecker extends AsyncTask {
                             activity.finish();
                         }
                         else {
-                            sendBroadcast("account-status-active");
+                            if (Homepage.BEGIN_APPLY)
+                                sendBroadcast("account-status-active");
                         }
                     }
                     catch (Exception e){

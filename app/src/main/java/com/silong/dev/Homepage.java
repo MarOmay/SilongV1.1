@@ -20,13 +20,17 @@ import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.HomepageExitDialog;
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetAge;
 import com.silong.EnumClass.PetType;
+import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
 import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
@@ -34,6 +38,7 @@ import com.yalantis.library.Koloda;
 import com.yalantis.library.KolodaListener;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class Homepage extends AppCompatActivity {
@@ -75,11 +80,15 @@ public class Homepage extends AppCompatActivity {
     private ArrayList<Pet> tempPetList = new ArrayList<>();
     private Pet CURRENT_PET = new Pet();
 
+    public static boolean BEGIN_APPLY = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         getSupportActionBar().hide();
+
+        BEGIN_APPLY = false;
 
         //Initialize Files
         USERDATA = new File(getFilesDir(),"user.dat");
@@ -130,9 +139,27 @@ public class Homepage extends AppCompatActivity {
         usernameTv = findViewById(R.id.usernameTv);
 
         UserData.populate(this);
+
+        //check pending adoption request
+        UserData.populateAdoptions(Homepage.this);
+        if (UserData.adoptionHistory.size() > 0){
+            for (Adoption adoption : UserData.adoptionHistory){
+                Log.d("DEBUGGER>>>", "A-status " + adoption.getStatus());
+                if (adoption.getStatus() == Timeline.DECLINED || adoption.getStatus() == Timeline.CANCELLED)
+                    continue;
+                else {
+                    Log.d("DEBUGGER>>>", "Goto Timeline" + adoption.getStatus());
+                    Intent intent = new Intent(Homepage.this, Timeline.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        }
+
         checkAccountStatus();
         loadKoloda();
         setKolodaListener();
+
     }
 
     public void onPressedFilter(View view){
@@ -329,12 +356,42 @@ public class Homepage extends AppCompatActivity {
 
     public void onPressedApply(View view){
         if (Utility.internetConnection(getApplicationContext())){
+            BEGIN_APPLY = true;
             AccountStatusChecker accountStatusChecker = new AccountStatusChecker(Homepage.this);
             accountStatusChecker.execute();
+
         }
-        //add ni jepoy para matest lang sa silong mismo
-        Intent i = new Intent(Homepage.this, Timeline.class);
-        startActivity(i);
+    }
+
+    private void gotoTimeline(){
+        try {
+
+            Log.d("DEBUGGER>>>", "P: " + CURRENT_PET.getPetID());
+            Log.d("DEBUGGER>>>", "C: " + CURRENT_PET.getColor());
+
+
+
+            FileOutputStream fileOuputStream = openFileOutput("adoption-" + Utility.dateToday(), Context.MODE_PRIVATE);
+            try (FileOutputStream fileOutputStream = openFileOutput( "adoption-" + Utility.dateToday(), Context.MODE_APPEND)) {
+                String data = "status:0;\npetID:" + CURRENT_PET.getPetID() + ";";
+                data += "\ndateRequested:" + Utility.dateToday() + ";\n";
+                fileOutputStream.write(data.getBytes());
+                fileOutputStream.flush();
+            }
+            catch (Exception e){
+                Log.d("Homepage-mBA", e.getMessage());
+                Toast.makeText(getApplicationContext(), "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+
+            //launch timeline
+            Intent gotoTimeline = new Intent(Homepage.this, Timeline.class);
+            startActivity(gotoTimeline);
+            Homepage.this.finish();
+
+        }
+        catch (Exception e){
+            Log.d("Homepage-mBA", "Invalid trigger");
+        }
     }
 
     private BroadcastReceiver mAvatarReceiver = new BroadcastReceiver() {
@@ -356,7 +413,7 @@ public class Homepage extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             //Log out user
             avatarImgview.setImageResource(R.drawable.circlelogo_white);
-            UserData.logout();
+            UserData.logout(Homepage.this);
             mAuth.signOut();
             Toast.makeText(Homepage.this, "Logging out...", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(Homepage.this, Splash.class);
@@ -368,23 +425,29 @@ public class Homepage extends AppCompatActivity {
     private BroadcastReceiver mBeginApplication = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            try {
 
-                Log.d("DEBUGGER>>>", "P: " + CURRENT_PET.getPetID());
-                Log.d("DEBUGGER>>>", "C: " + CURRENT_PET.getColor());
+            //confirm if there's pending application
+            DatabaseReference tempRef = mDatabase.getReference().child("adoptionRequest");
+            tempRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    boolean processing = false;
+                    for (DataSnapshot snap : snapshot.getChildren()){
+                        if (snap.child("petID").getValue().toString().equals(CURRENT_PET.getPetID())){
+                            Toast.makeText(getApplicationContext(), "Pet currently being processed.", Toast.LENGTH_SHORT).show();
+                            processing = true;
+                        }
+                    }
 
-                //launch timeline
-                //check pet status
-                //if petStatus != active, goto Homepage
-                //inform users
-                //else, PetStatusUpdater petStatusUpdater = new PetStatusUpdater(Homepage.this, CURRENT_PET.getPetID(), false);
-                //write file indicator
-                //write all database updates
+                    if (!processing)
+                        gotoTimeline();
+                }
 
-            }
-            catch (Exception e){
-                Log.d("Homepage-mBA", "Invalid trigger");
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
         }
     };

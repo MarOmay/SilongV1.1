@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.LoadingDialog;
+import com.silong.Object.Admin;
 import com.silong.Object.Pet;
 import com.silong.Operation.Utility;
 import com.silong.dev.HorizontalProgressBar;
@@ -66,11 +67,14 @@ public class SyncPetRecord extends AsyncTask {
                                 String lastModified = snapshot.getValue().toString();
                                 Log.d("DEBUGGER>>>", "cur " + tempPet.getLastModified());
                                 Log.d("DEBUGGER>>>", "new " + lastModified);
-                                if (!tempPet.getLastModified().equals(lastModified)){
-                                    //delete local record, to rewrite new record
-                                    file.delete();
-                                    fetchRecordFromCloud(snap.getKey());
+                                if (tempPet.getLastModified() != null){
+                                    if (!tempPet.getLastModified().equals(lastModified)){
+                                        //delete local record, to rewrite new record
+                                        file.delete();
+                                        fetchRecordFromCloud(snap.getKey());
+                                    }
                                 }
+
                             }
 
                             @Override

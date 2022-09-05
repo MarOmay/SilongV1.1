@@ -1,5 +1,6 @@
 package com.silong.CustomView;
 
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -9,10 +10,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.silong.dev.R;
+import com.silong.dev.Timeline;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AppointmentDatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -65,15 +69,21 @@ public class AppointmentDatePickerFragment extends DialogFragment implements Dat
 
         dpd.show(requireFragmentManager(), "Datepickerdialog");
 
+        dpd.setCancelable(false);
+
     }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int month, int day) {
-        String date = "You picked the following date: " + day + "/" + (++month) + "/" + year;
-        dpd = null;
+        String dayS = (day <10 ? "0" : "") + day;
+        String monthS = ((++month) < 10 ? "0" : "") + month;
+        String date = monthS + "-" + dayS + "-" + year;
+
         Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
+        dpd = null;
         DialogFragment timeFragment = new AppointmentTimePickerFragment();
         timeFragment.show(getFragmentManager(), "timePicker");
+        Timeline.CHOSEN_DATE = date;
         this.dismiss();
     }
 }

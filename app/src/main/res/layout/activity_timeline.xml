@@ -89,6 +89,7 @@
             <!-- Cancel Button-->
             <Button
                 android:id="@+id/timelineCancelBtn"
+                android:onClick="onPressedCancel"
                 style="@style/pinkButton_style"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
@@ -111,6 +112,7 @@
             <!-- Cancel Button-->
             <Button
                 android:id="@+id/timelineSetAppCancelBtn"
+                android:onClick="onPressedCancel"
                 style="@style/orangeButton_style"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"

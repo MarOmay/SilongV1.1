@@ -110,7 +110,7 @@ public class DeactivatedScreen extends AppCompatActivity {
                 @Override
                 public void run() {
                     FirebaseAuth.getInstance().signOut();
-                    UserData.logout();
+                    UserData.logout(DeactivatedScreen.this);
                     Intent i = new Intent(DeactivatedScreen.this, Splash.class);
                     startActivity(i);
                     finish();
