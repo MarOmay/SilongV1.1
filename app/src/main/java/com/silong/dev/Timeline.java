@@ -268,14 +268,16 @@ public class Timeline extends AppCompatActivity {
                 timelineSetAppLayout.setVisibility(View.GONE);
                 timelineHomeLayout.setVisibility(View.GONE);
                 timelineHeader.setText(R.string.setAppointmentHeader);
-                timelineBody.setText("on " + ADOPTION.getAppointmentDate());
+                timelineBody.setText("on " + ADOPTION.getAppointmentDate().replace("*",":"));
                 break;
             case APPOINTMENT_CONFIRMED:
                 timelineCancelLayout.setVisibility(View.GONE);
                 timelineSetAppLayout.setVisibility(View.GONE);
                 timelineHomeLayout.setVisibility(View.GONE);
                 timelineHeader.setText(R.string.appointmentConfirmedHeader);
-                timelineBody.setText(R.string.appointmentConfirmedBody1 + " " + ADOPTION.getAppointmentDate() + "\n" + R.string.appointmentConfirmedBody2);
+                String body1 = getResources().getString(R.string.appointmentConfirmedBody1);
+                String body2 = getResources().getString(R.string.appointmentConfirmedBody2);
+                timelineBody.setText(body1 + " " + ADOPTION.getAppointmentDate().replace("*",":") + body2);
                 break;
             case ADOPTION_SUCCESSFUL:
                 timelineCancelLayout.setVisibility(View.GONE);

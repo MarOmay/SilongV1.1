@@ -145,7 +145,9 @@ public class Homepage extends AppCompatActivity {
         if (UserData.adoptionHistory.size() > 0){
             for (Adoption adoption : UserData.adoptionHistory){
                 Log.d("DEBUGGER>>>", "A-status " + adoption.getStatus());
-                if (adoption.getStatus() == Timeline.DECLINED || adoption.getStatus() == Timeline.CANCELLED)
+                if (adoption.getStatus() == Timeline.DECLINED ||
+                        adoption.getStatus() == Timeline.CANCELLED ||
+                        adoption.getStatus() == Timeline.FINISHED)
                     continue;
                 else {
                     Log.d("DEBUGGER>>>", "Goto Timeline" + adoption.getStatus());

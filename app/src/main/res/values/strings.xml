@@ -127,9 +127,9 @@
     <string name="awaitingBody">We have received your request. Please wait for approval status within 1 to 3 working days.</string>
     <string name="reqApprovedHeader">Your request has been APPROVED!</string>
     <string name="reqApprovedBody">Please set an appointment for your City Veterinary Office visit.</string>
-    <string name="setAppointmentHeader">Checking the Clinic\'s availability on </string>
+    <string name="setAppointmentHeader">Checking the Clinic\'s availability </string>
     <string name="appointmentConfirmedHeader">Appointment Confirmed!</string>
     <string name="appointmentConfirmedBody1">Your appointment is on </string>
-    <string name="appointmentConfirmedBody2">\n\nPlease bring the following:\n\n\t- 2x2 ID Picture\n\t- Cage or Leash\n\t- Valid ID</string>
+    <string name="appointmentConfirmedBody2">\n\nPlease bring the following:\n\n\t- 2x2 ID Picture\n\t- Cage or Leash (Kulungan o Tali)\n\t- Valid ID</string>
     <string name="successBody">You have successfully completed the adoption process.</string>
 </resources>
