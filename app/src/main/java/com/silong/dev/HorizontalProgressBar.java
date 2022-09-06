@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.database.DataSnapshot;
+import com.silong.Operation.Utility;
 import com.silong.Task.PetCounter;
 import com.silong.Task.RecordVerifier;
 import com.silong.Task.SyncAdoptionHistory;
@@ -39,6 +40,13 @@ public class HorizontalProgressBar extends AppCompatActivity {
 
         linearProgressIndicator = findViewById(R.id.progressBar);
         horizontalProgressTv = (TextView) findViewById(R.id.horizontalProgressTv);
+
+        //check internet connection
+        if (!Utility.internetConnection(HorizontalProgressBar.this)){
+            Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
+            horizontalProgressTv.setText("No internet connection.");
+            return;
+        }
 
         //get total record count from RTDB
         PetCounter petCounter = new PetCounter(this);

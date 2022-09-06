@@ -152,16 +152,13 @@ public class ProcessSignUp extends AppCompatActivity {
         map.put("contact", USER.contact);
         map.put("photo", USER.getPhotoAsString());
         map.put("accountStatus", true);
-        map.put("adoptionCounter", 0);
         Address address = USER.getAddress();
         map.put("address/addressLine", address.getAddressLine());
         map.put("address/barangay", address.getBarangay());
         map.put("address/municipality", address.getMunicipality());
         map.put("address/province", address.getProvince());
         map.put("address/zipcode", address.getZipcode());
-        map.put("adoptionHistory", 0);
         map.put("chatHistory", 0);
-        map.put("likedPet", 0);
         map.put("created", Utility.dateToday());
 
         mReference.updateChildren(map)

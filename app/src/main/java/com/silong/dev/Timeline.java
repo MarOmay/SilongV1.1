@@ -134,6 +134,10 @@ public class Timeline extends AppCompatActivity {
 
     }
 
+    public void onPressedMessage(View view){
+        Utility.gotoMessenger(Timeline.this);
+    }
+
     public void onPressedMenu(View view){
         timelineDrawer.openDrawer(GravityCompat.END);
     }
@@ -164,8 +168,28 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void onPressedSetAppointment(View view){
+        //check internet connection
+        if (!Utility.internetConnection(Timeline.this)){
+            Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         DialogFragment newFragment = new AppointmentDatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void onPressedHome(View view){
+        //check internet connection
+        if (!Utility.internetConnection(Timeline.this)){
+            Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mReference = null;
+        mReference = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
+        mReference.setValue(null);
+        updateLocalStatus(FINISHED);
+        exitTimeline();
     }
 
     private void populateMenu(){
@@ -177,6 +201,12 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void onPressedCancel(View view){
+        //check internet connection
+        if (!Utility.internetConnection(Timeline.this)){
+            Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         LoadingDialog loadingDialog = new LoadingDialog(Timeline.this);
         loadingDialog.startLoadingDialog();
 
@@ -190,18 +220,9 @@ public class Timeline extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        //update local copy
-                        try (FileOutputStream fileOutputStream = Timeline.this.openFileOutput( "adoption-" + ADOPTION.getDateRequested(), Context.MODE_APPEND)) {
-                            String data = "status:" + CANCELLED + ";\n";
-                            fileOutputStream.write(data.getBytes());
-                            fileOutputStream.flush();
-                        }
-                        catch (Exception e){
-                            Log.d("DEBUGGER>>>", e.getMessage());
-                            Toast.makeText(getApplicationContext(), "Can't update adoption-.", Toast.LENGTH_SHORT).show();
-                        }
+                        updateLocalStatus(CANCELLED);
 
-                        //return to HorizontalProgressBar
+                        //return to Splash
                         loadingDialog.dismissLoadingDialog();
                         Intent intent = new Intent(Timeline.this, Splash.class);
                         startActivity(intent);
@@ -254,8 +275,6 @@ public class Timeline extends AppCompatActivity {
                 break;
 
             case REQUEST_APPROVED:
-                Toast.makeText(this, "Request approved", Toast.LENGTH_SHORT).show();
-                //updateRTDBStatus(SET_APPOINTMENT);
                 timelineCancelLayout.setVisibility(View.GONE);
                 timelineSetAppLayout.setVisibility(View.VISIBLE);
                 timelineHomeLayout.setVisibility(View.GONE);
@@ -270,6 +289,7 @@ public class Timeline extends AppCompatActivity {
                 timelineHeader.setText(R.string.setAppointmentHeader);
                 timelineBody.setText("on " + ADOPTION.getAppointmentDate().replace("*",":"));
                 break;
+
             case APPOINTMENT_CONFIRMED:
                 timelineCancelLayout.setVisibility(View.GONE);
                 timelineSetAppLayout.setVisibility(View.GONE);
@@ -279,16 +299,29 @@ public class Timeline extends AppCompatActivity {
                 String body2 = getResources().getString(R.string.appointmentConfirmedBody2);
                 timelineBody.setText(body1 + " " + ADOPTION.getAppointmentDate().replace("*",":") + body2);
                 break;
+
             case ADOPTION_SUCCESSFUL:
                 timelineCancelLayout.setVisibility(View.GONE);
                 timelineSetAppLayout.setVisibility(View.GONE);
                 timelineHomeLayout.setVisibility(View.VISIBLE);
                 timelineHeader.setText(R.string.congrats);
                 timelineBody.setText(R.string.successBody);
+                archiveAdoption();
                 break;
+
             case FINISHED:
-                exitTimeline();
+                mReference = null;
+                mReference = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
+                mReference.setValue(null)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                //go back to HorizontalProgressBar
+                                exitTimeline();
+                            }
+                        });
                 break;
+
             case DECLINED:
                 Toast.makeText(this, "Request declined", Toast.LENGTH_SHORT).show();
                 break;
@@ -327,16 +360,7 @@ public class Timeline extends AppCompatActivity {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        //update adoption- file
-                                        try (FileOutputStream fileOutputStream = Timeline.this.openFileOutput( "adoption-" + ADOPTION.getDateRequested(), Context.MODE_APPEND)) {
-                                            String data = "status:" + AWAITING_APPROVAL + ";\n";
-                                            fileOutputStream.write(data.getBytes());
-                                            fileOutputStream.flush();
-                                        }
-                                        catch (Exception e){
-                                            Log.d("DEBUGGER>>>", e.getMessage());
-                                            Toast.makeText(getApplicationContext(), "Can't update adoption-.", Toast.LENGTH_SHORT).show();
-                                        }
+                                        updateLocalStatus(AWAITING_APPROVAL);
                                         restartTimeline();
                                     }
                                 });
@@ -368,16 +392,7 @@ public class Timeline extends AppCompatActivity {
                 if (snapshot.getValue() != null){
 
                     int status = Integer.valueOf(snapshot.getValue().toString());
-                    //update adoption- file
-                    try (FileOutputStream fileOutputStream = Timeline.this.openFileOutput( "adoption-" + ADOPTION.getDateRequested(), Context.MODE_APPEND)) {
-                        String data = "status:" + status + ";\n";
-                        fileOutputStream.write(data.getBytes());
-                        fileOutputStream.flush();
-                    }
-                    catch (Exception e){
-                        Log.d("DEBUGGER>>>", e.getMessage());
-                        Toast.makeText(getApplicationContext(), "Can't update adoption-.", Toast.LENGTH_SHORT).show();
-                    }
+                    updateLocalStatus(status);
 
                     Log.d("DEBUGGER>>>", "Status: " + status);
 
@@ -400,11 +415,38 @@ public class Timeline extends AppCompatActivity {
         });
     }
 
+    private void archiveAdoption(){
+        DatabaseReference tempRef = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory").child(ADOPTION.getPetID());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("dateRequested", ADOPTION.getDateRequested());
+        map.put("status", 6);
+
+        tempRef.updateChildren(map);
+
+        //tempRef = mDatabase.getReference().child("adoptionRequest").child(UserData.userID).child("status");
+        //tempRef.setValue("6");
+
+    }
+
     private void exitTimeline(){
         //return to HorizontalProgressBar
         Intent intent = new Intent(Timeline.this, HorizontalProgressBar.class);
         startActivity(intent);
         finish();
+    }
+
+    private void updateLocalStatus(int status){
+        //update adoption- file
+        try (FileOutputStream fileOutputStream = Timeline.this.openFileOutput( "adoption-" + ADOPTION.getDateRequested(), Context.MODE_APPEND)) {
+            String data = "status:" + status + ";\n";
+            fileOutputStream.write(data.getBytes());
+            fileOutputStream.flush();
+        }
+        catch (Exception e){
+            Log.d("DEBUGGER>>>", e.getMessage());
+            Toast.makeText(getApplicationContext(), "Can't update adoption-.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private BroadcastReceiver mScheduleSelected = new BroadcastReceiver() {

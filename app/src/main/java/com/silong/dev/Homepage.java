@@ -171,7 +171,7 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void onPressedMessage(View view){
-
+        Utility.gotoMessenger(Homepage.this);
     }
 
     public void onPressedMenu(View view){
@@ -362,6 +362,9 @@ public class Homepage extends AppCompatActivity {
             AccountStatusChecker accountStatusChecker = new AccountStatusChecker(Homepage.this);
             accountStatusChecker.execute();
 
+        }
+        else {
+            Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
         }
     }
 

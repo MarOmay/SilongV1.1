@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -54,6 +55,14 @@ public class Utility {
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
         Date date = new Date();
         return formatter.format(date);
+    }
+
+    public static void gotoMessenger(Activity activity){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setPackage("com.facebook.orca");
+        intent.setData(Uri.parse("https://m.me/"+"CityVetOfficeCSJDM"));
+        activity.startActivity(intent);
     }
 
     public void showNotification(Context context, String title, String message) {

@@ -131,5 +131,8 @@
     <string name="appointmentConfirmedHeader">Appointment Confirmed!</string>
     <string name="appointmentConfirmedBody1">Your appointment is on </string>
     <string name="appointmentConfirmedBody2">\n\nPlease bring the following:\n\n\t- 2x2 ID Picture\n\t- Cage or Leash (Kulungan o Tali)\n\t- Valid ID</string>
-    <string name="successBody">You have successfully completed the adoption process.</string>
+    <string name="successBody">You have successfully completed the adoption process.
+        \n\nNOTICE:\nPlease be informed that a household can only adopt at most two dogs or any number of cats as long as the pets\' welfare are guaranteed.
+        \n\nPAUNAWA: \nAng bawat pamilya ay maaari lamang mag-ampon ng hanggang dalawang aso o higit pang bilang ng pusa hangga\'t masisiguro ang kapakanan ng mga alagang hayop.</string>
+
 </resources>
