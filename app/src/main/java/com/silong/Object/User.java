@@ -16,6 +16,7 @@ public class User implements Serializable {
     public String contact;
     public Bitmap photo;
     public String photoAsString;
+    public String lastModified;
     public boolean accountStatus;
     public int adoptionCounter;
     public Address address;
@@ -113,6 +114,14 @@ public class User implements Serializable {
 
     public void setPhotoAsString(String photoAsString) {
         this.photoAsString = photoAsString;
+    }
+
+    public String getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(String lastModified) {
+        this.lastModified = lastModified;
     }
 
     public boolean getAccountStatus() {

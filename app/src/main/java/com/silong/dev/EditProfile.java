@@ -165,6 +165,8 @@ public class EditProfile extends AppCompatActivity {
             Log.d("EP", "contact +25");
         }
 
+        updateLastModified();
+
         if (pendingChanges){
             Toast.makeText(this, "Saving changes...", Toast.LENGTH_SHORT).show();
             pendingChanges = false;
@@ -231,6 +233,11 @@ public class EditProfile extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(onFailureListener);
+    }
+
+    private void updateLastModified(){
+        mReference = mDatabase.getReference("Users").child(UserData.userID).child("lastModified");
+        mReference.setValue(Utility.dateToday() + " " + Utility.timeNow());
     }
 
     private void deactivateAccount(boolean restart){

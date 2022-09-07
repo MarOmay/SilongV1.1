@@ -57,6 +57,12 @@ public class Utility {
         return formatter.format(date);
     }
 
+    public static String timeNow(){
+        SimpleDateFormat formatter = new SimpleDateFormat("HH*mm*ss");
+        Date date = new Date();
+        return formatter.format(date);
+    }
+
     public static void gotoMessenger(Activity activity){
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
