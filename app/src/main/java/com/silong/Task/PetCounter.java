@@ -38,6 +38,8 @@ public class PetCounter extends AsyncTask {
                     int counter = 0;
                     for (DataSnapshot snap : snapshot.getChildren()){
                         Log.d("DEBUGGER>>>", snap.getKey());
+                        if (snap.getKey().equals("null"))
+                            continue;
                         counter++;
                     }
                     HorizontalProgressBar.snapshot = snapshot;

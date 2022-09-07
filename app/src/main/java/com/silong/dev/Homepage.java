@@ -444,8 +444,29 @@ public class Homepage extends AppCompatActivity {
                         }
                     }
 
-                    if (!processing)
-                        gotoTimeline();
+                    if (!processing){
+                        DatabaseReference recordRef = mDatabase.getReference().child("recordSummary");
+                        recordRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                boolean listed = false;
+                                for (DataSnapshot ds : snapshot.getChildren()){
+                                    if (ds.getKey().equals(CURRENT_PET.getPetID()))
+                                        listed = true;
+                                }
+                                if (listed)
+                                    gotoTimeline();
+                                else
+                                    Toast.makeText(Homepage.this, "Pet no longer available.", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(Homepage.this, "Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
                 }
 
                 @Override

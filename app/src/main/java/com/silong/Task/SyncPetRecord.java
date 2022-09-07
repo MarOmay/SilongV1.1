@@ -36,6 +36,7 @@ public class SyncPetRecord extends AsyncTask {
         this.activity = activity;
     }
 
+    boolean skip = false;
     @Override
     protected Object doInBackground(Object[] objects) {
 
@@ -43,12 +44,20 @@ public class SyncPetRecord extends AsyncTask {
             return null;
 
         try {
+            ArrayList<String> keys = new ArrayList<>();
             ArrayList<String> list = new ArrayList<>();
             for (DataSnapshot snap : HorizontalProgressBar.snapshot.getChildren()){
+
+                if (snap.getKey().equals("null") || snap.getKey() == null){
+                    continue;
+                }
+
+                keys.add("pet-" + snap.getKey());
 
                 Log.d("DEBUGGER>>>", "SPR: key-" + snap.getKey());
 
                 File file = new File(activity.getFilesDir(), "pet-" + snap.getKey());
+
                 if (file.exists()){
                     //Check if status of local record matches
                     Pet tempPet = UserData.fetchRecordFromLocal(activity, snap.getKey());
@@ -64,6 +73,11 @@ public class SyncPetRecord extends AsyncTask {
                         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.getValue() == null){
+                                    skip = true;
+                                    return;
+                                }
+
                                 String lastModified = snapshot.getValue().toString();
                                 Log.d("DEBUGGER>>>", "cur " + tempPet.getLastModified());
                                 Log.d("DEBUGGER>>>", "new " + lastModified);
@@ -88,8 +102,32 @@ public class SyncPetRecord extends AsyncTask {
                 else {
                     fetchRecordFromCloud(snap.getKey());
                 }
-                list.add("pet-" + snap.getKey());
+
+                list.add(snap.getKey());
             }
+
+            //get pet- files only
+            ArrayList<File> petFiles = new ArrayList<>();
+            File [] files = activity.getFilesDir().listFiles();
+            for (File file : files){
+                if (file.getAbsolutePath().contains("pet-"))
+                    petFiles.add(file);
+            }
+
+            for (File petFile : petFiles){
+                boolean found = false;
+                for (String key : keys){
+                    File tempFile = new File(activity.getFilesDir(), key);
+                    if (petFile.getAbsolutePath().equals(tempFile.getAbsolutePath()))
+                        found = true;
+                }
+
+                //remove file if not found in key
+                if (!found)
+                    petFile.delete();
+            }
+
+
             //delete local copy of deleted accounts
             cleanLocalRecord(list, "pet-");
             UserData.populateRecords(activity);
@@ -97,58 +135,6 @@ public class SyncPetRecord extends AsyncTask {
         catch (Exception e){
             Log.d("SPR-dIB", e.getMessage());
         }
-
-        /*if (Utility.internetConnection(activity)){
-            //Get all pet records
-            mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
-            mReference = mDatabase.getReference("Pets");
-            mReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    try{
-                        //Get all User uid
-                        ArrayList<String> list = new ArrayList<>();
-                        for (DataSnapshot snap : snapshot.getChildren()){
-
-                            //skip counter to avoid error
-                            if (snap.getKey().equals("counter"))
-                                continue;
-
-                            File file = new File(activity.getFilesDir(), "pet-" + snap.getKey());
-                            if (file.exists()){
-                                //Check if status of local record matches
-                                Pet tempPet = UserData.fetchRecordFromLocal(activity, snap.getKey());
-                                if (tempPet.getStatus() != Integer.valueOf(snap.getValue().toString())){
-                                    //delete local record, to rewrite new record
-                                    file.delete();
-                                    fetchRecordFromCloud(snap.getKey());
-                                }
-                            }
-                            else {
-                                fetchRecordFromCloud(snap.getKey());
-                            }
-                            list.add("pet-" + snap.getKey());
-                        }
-                        //delete local copy of deleted accounts
-                        cleanLocalRecord(list, "pet-");
-                        UserData.populateRecords(activity);
-                    }
-                    catch (Exception e){
-                        Log.d("Homepage-fAR", e.getMessage());
-                    }
-                    UserData.populateRecords(activity);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    UserData.populateRecords(activity);
-                }
-            });
-        }
-        else {
-            Toast.makeText(activity, "No internet connection.", Toast.LENGTH_SHORT).show();
-            UserData.populateRecords(activity);
-        }*/
         return null;
     }
 
