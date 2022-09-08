@@ -1,6 +1,7 @@
 package com.silong.Task;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -13,6 +14,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
+import com.silong.Object.User;
+import com.silong.Operation.ImageProcessor;
 import com.silong.dev.HorizontalProgressBar;
 import com.silong.dev.UserData;
 
@@ -41,6 +44,31 @@ public class SyncAdoptionHistory extends AsyncTask {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshotF = snapshot;
+
+                try {
+                    for (DataSnapshot snap : snapshotF.getChildren()){
+
+                        //skip if key is null
+                        if (snap == null || snap.getKey().equals("null") || snap.getKey() == null)
+                            continue;
+
+                        //key is petID
+                        Log.d("DEBUGGER>>>", "SAH: key-" + snap.getKey());
+
+                        File file = new File(activity.getFilesDir(), "adoption-" + snap.getKey());
+                        if (!file.exists()){
+                            String key = snap.getKey();
+                            String dateReq = snap.child("dateRequested").getValue().toString();
+                            String status =  snap.child("status").getValue().toString();
+                            fetchAdoptionFromCloud(key, dateReq, status);
+                        }
+
+                    }
+                    UserData.populateAdoptions(activity);
+                }
+                catch (Exception e){
+                    Log.d("SAH-dIB", e.getMessage());
+                }
             }
 
             @Override
@@ -49,37 +77,49 @@ public class SyncAdoptionHistory extends AsyncTask {
             }
         });
 
-        try {
-            for (DataSnapshot snap : snapshotF.getChildren()){
 
-                //key is dateRequested
-                Log.d("DEBUGGER>>>", "SAH: key-" + snap.getKey());
-
-                File file = new File(activity.getFilesDir(), "adoption-" + snap.getKey());
-                if (file.exists()){
-                    //Check if status of local record matches
-                    Adoption tempAdoption = UserData.fetchAdoptionFromLocal(activity, snap.getKey());
-                    if (!String.valueOf(tempAdoption.getStatus()).equals(snap.getValue().toString()) ){
-                        //delete local record, to rewrite new record
-                        file.delete();
-                        fetchAdoptionFromCloud(snap.getKey());
-                    }
-
-                }
-                else {
-                    fetchAdoptionFromCloud(snap.getKey());
-                }
-            }
-            UserData.populateAdoptions(activity);
-        }
-        catch (Exception e){
-            Log.d("SPR-dIB", e.getMessage());
-        }
         return null;
     }
 
-    private void fetchAdoptionFromCloud(String id){
-        //RecordDownloader downloader = new RecordDownloader(activity, id);
-        //downloader.execute();
+    private void fetchAdoptionFromCloud(String id, String dateRequested, String status){
+        DatabaseReference tempRef = mDatabase.getReference().child("Pets").child(id);
+        tempRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                try {
+                    String gender = snapshot.child("gender").getValue().toString();
+                    String type = snapshot.child("type").getValue().toString();
+                    String age = snapshot.child("age").getValue().toString();
+                    String color = snapshot.child("color").getValue().toString();
+                    String size = snapshot.child("size").getValue().toString();
+                    String photo = snapshot.child("photo").getValue().toString();
+
+                    UserData.writeAdoptionToLocal(activity, id, "petID", id);
+                    UserData.writeAdoptionToLocal(activity, id, "gender", gender);
+                    UserData.writeAdoptionToLocal(activity, id, "type", type);
+                    UserData.writeAdoptionToLocal(activity, id, "age", age);
+                    UserData.writeAdoptionToLocal(activity, id, "color", color);
+                    UserData.writeAdoptionToLocal(activity, id, "size", size);
+                    UserData.writeAdoptionToLocal(activity, id, "dateRequested", dateRequested);
+                    UserData.writeAdoptionToLocal(activity, id, "status", status);
+
+                    Bitmap bitmap = new ImageProcessor().toBitmap(photo);
+                    new ImageProcessor().saveToLocal(activity, bitmap, "adoptionpic-" + id);
+
+                    UserData.populateAdoptions(activity);
+
+                }
+                catch (Exception e){
+                    Log.d("SAH-fAFC", e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

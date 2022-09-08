@@ -85,9 +85,6 @@ public class HorizontalProgressBar extends AppCompatActivity {
                 SyncPetRecord syncPetRecord = new SyncPetRecord(HorizontalProgressBar.this);
                 syncPetRecord.execute();
 
-                //SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this);
-                //syncAdoptionHistory.execute();
-
                 String total = intent.getStringExtra("count");
                 verifyRecordCount(Integer.parseInt(total));
             }

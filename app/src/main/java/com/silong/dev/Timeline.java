@@ -235,6 +235,13 @@ public class Timeline extends AppCompatActivity {
                     }
                 });
 
+        //archive to user's RTDB
+        DatabaseReference tempRef2 = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory").child(PET.getPetID());
+        Map<String, Object> map = new HashMap<>();
+        map.put("dateRequested", ADOPTION.getDateRequested());
+        map.put("status", Timeline.CANCELLED);
+        tempRef2.updateChildren(map);
+
     }
 
     private void refreshTimeline(){
@@ -390,6 +397,11 @@ public class Timeline extends AppCompatActivity {
     private void watchRTDBStatus(){
         Log.d("DEBUGGER>>>", "watchRTDBStatus: started");
         Log.d("DEBUGGER>>>", "id : " + UserData.userID);
+
+        if (UserData.userID.equals("null") || UserData.userID == null){
+            return;
+        }
+
         mReference = mDatabase.getReference().child("adoptionRequest").child(UserData.userID).child("status");
         mReference.addValueEventListener(new ValueEventListener() {
             @Override

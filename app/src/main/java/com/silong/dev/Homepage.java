@@ -32,8 +32,10 @@ import com.silong.EnumClass.PetAge;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
+import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
+import com.silong.Task.SyncAdoptionHistory;
 import com.yalantis.library.Koloda;
 import com.yalantis.library.KolodaListener;
 
@@ -157,6 +159,10 @@ public class Homepage extends AppCompatActivity {
                 }
             }
         }
+
+        //sync adoption record
+        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this);
+        syncAdoptionHistory.execute();
 
         checkAccountStatus();
         loadKoloda();
@@ -380,8 +386,20 @@ public class Homepage extends AppCompatActivity {
             try (FileOutputStream fileOutputStream = openFileOutput( "adoption-" + Utility.dateToday(), Context.MODE_APPEND)) {
                 String data = "status:0;\npetID:" + CURRENT_PET.getPetID() + ";";
                 data += "\ndateRequested:" + Utility.dateToday() + ";\n";
+                data += "gender:" + CURRENT_PET.getGender() + "\n";
+                data += "type:" + CURRENT_PET.getType() + "\n";
+                data += "age:" + CURRENT_PET.getAge() + "\n";
+                data += "size:" + CURRENT_PET.getSize() + "\n";
+                data += "color:" + CURRENT_PET.getColor() + "\n";
                 fileOutputStream.write(data.getBytes());
                 fileOutputStream.flush();
+
+                new ImageProcessor().saveToLocal(getApplicationContext(), CURRENT_PET.getPhoto(), "adoptionpic-" + CURRENT_PET.getPetID());
+
+                //launch timeline
+                Intent gotoTimeline = new Intent(Homepage.this, Timeline.class);
+                startActivity(gotoTimeline);
+                Homepage.this.finish();
             }
             catch (Exception e){
                 Log.d("Homepage-mBA", e.getMessage());
@@ -439,8 +457,13 @@ public class Homepage extends AppCompatActivity {
                     boolean processing = false;
                     for (DataSnapshot snap : snapshot.getChildren()){
                         if (snap.child("petID").getValue().toString().equals(CURRENT_PET.getPetID())){
-                            Toast.makeText(getApplicationContext(), "Pet currently being processed.", Toast.LENGTH_SHORT).show();
-                            processing = true;
+                            if (snap.child("status").getValue().toString().equals("7"))
+                                processing = false;
+                            else {
+                                Toast.makeText(getApplicationContext(), "Pet currently being processed.", Toast.LENGTH_SHORT).show();
+                                processing = true;
+                            }
+
                         }
                     }
 

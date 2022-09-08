@@ -1,16 +1,18 @@
 package com.silong.dev;
 
+import android.graphics.Bitmap;
+
 public class HistoryData {
 
     private String genderType;
     private String estAge;
     private String petColor;
     private String estSize;
-    private Integer petPic;
+    private Bitmap petPic;
     private String adoptDate;
-    private String adoptStat;
+    private int adoptStat;
 
-    public HistoryData(Integer petPic, String genderType, String estAge, String petColor, String estSize, String adoptDate, String adoptStat) {
+    public HistoryData(Bitmap petPic, String genderType, String estAge, String petColor, String estSize, String adoptDate, int adoptStat) {
         this.petPic = petPic;
         this.genderType = genderType;
         this.estAge = estAge;
@@ -52,11 +54,11 @@ public class HistoryData {
         this.estSize = estSize;
     }
 
-    public Integer getPetPic() {
+    public Bitmap getPetPic() {
         return petPic;
     }
 
-    public void setPetPic(Integer petPic) {
+    public void setPetPic(Bitmap petPic) {
         this.petPic = petPic;
     }
 
@@ -68,11 +70,11 @@ public class HistoryData {
         this.adoptDate = adoptDate;
     }
 
-    public String getAdoptStat() {
+    public int getAdoptStat() {
         return adoptStat;
     }
 
-    public void setAdoptStat(String adoptStat) {
+    public void setAdoptStat(int adoptStat) {
         this.adoptStat = adoptStat;
     }
 

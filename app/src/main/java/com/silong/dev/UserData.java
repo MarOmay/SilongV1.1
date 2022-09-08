@@ -55,7 +55,7 @@ public class UserData { //removed: extends User
         //Many other to be added later
 
         for (File file : activity.getFilesDir().listFiles()){
-            if (file.getAbsolutePath().contains("adoption-"))
+            if (file.getAbsolutePath().contains("adoption-") || file.getAbsolutePath().contains("adoptionpic-"))
                 file.delete();
         }
 
@@ -212,6 +212,11 @@ public class UserData { //removed: extends User
                     String [] temp = line.split(":");
                     switch (temp[0]){
                         case "petID": adoption.setPetID(temp[1]); break;
+                        case "gender": adoption.setGender(Integer.parseInt(temp[1])); break;
+                        case "type": adoption.setType(Integer.parseInt(temp[1])); break;
+                        case "age": adoption.setAge(Integer.parseInt(temp[1])); break;
+                        case "size": adoption.setSize(Integer.parseInt(temp[1])); break;
+                        case "color": adoption.setColor(temp[1]); break;
                         case "status": adoption.setStatus(Integer.parseInt(temp[1])); break;
                         case "dateRequested": adoption.setDateRequested(temp[1]); break;
                         case "appointmentDate": adoption.setAppointmentDate(temp[1]); break;
@@ -229,11 +234,19 @@ public class UserData { //removed: extends User
                     Log.d("AdminData-pA", e.getMessage());
                 }
 
-                Log.d("DEBUGGER>>>", adoption.getPetID());
+                Log.d("DEBUGGER>>>", "AH " + adoption.getPetID());
                 Log.d("DEBUGGER>>>", adoption.getDateRequested());
                 Log.d("DEBUGGER>>>", "" + adoption.getStatus());
 
-                adoptionHistory.add(adoption);
+                //check duplicate
+                boolean found = false;
+                for (Adoption adpt : adoptionHistory){
+                    if (adpt.getPetID().equals(adoption.getPetID()))
+                        found = true;
+                }
+
+                if (!found)
+                    adoptionHistory.add(adoption);
             }
 
         }

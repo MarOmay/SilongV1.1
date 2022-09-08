@@ -11,6 +11,12 @@ public class Adoption {
     private String dateReleased;
     private Bitmap photo;
 
+    private int gender;
+    private int type;
+    private int age;
+    private String color;
+    private int size;
+
     public Adoption() {
     }
 
@@ -60,5 +66,45 @@ public class Adoption {
 
     public void setPhoto(Bitmap photo) {
         this.photo = photo;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

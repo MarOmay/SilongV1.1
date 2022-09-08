@@ -1,6 +1,8 @@
 package com.silong.dev;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,21 +34,49 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final HistoryData historyDataList = historyData[position];
-        holder.petPic.setImageResource(historyDataList.getPetPic());
-        holder.genderType.setText(historyDataList.getGenderType());
-        holder.estAge.setText(historyDataList.getEstAge());
-        holder.petColor.setText(historyDataList.getPetColor());
-        holder.estSize.setText(historyDataList.getEstSize());
-        holder.adoptDate.setText(historyDataList.getAdoptDate());
-        holder.adoptStat.setText(historyDataList.getAdoptStat());
+        try {
+            final HistoryData historyDataList = historyData[position];
+            holder.petPic.setImageBitmap(historyDataList.getPetPic());
+            holder.genderType.setText(historyDataList.getGenderType());
+            holder.estAge.setText(historyDataList.getEstAge());
+            holder.petColor.setText(historyDataList.getPetColor());
+            holder.estSize.setText(historyDataList.getEstSize());
+            holder.adoptDate.setText(historyDataList.getAdoptDate());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, historyDataList.getGenderType(), Toast.LENGTH_SHORT).show();
+            String status = "";
+            switch (historyDataList.getAdoptStat()){
+                case Timeline.SEND_REQUEST:
+                case Timeline.AWAITING_APPROVAL:
+                case Timeline.REQUEST_APPROVED:
+                case Timeline.SET_APPOINTMENT:
+                case Timeline.APPOINTMENT_CONFIRMED:
+                    holder.adoptStat.setTextColor(Color.YELLOW);
+                    status = "PENDING";
+                    break;
+
+                case Timeline.ADOPTION_SUCCESSFUL:
+                case Timeline.FINISHED:
+                    holder.adoptStat.setTextColor(Color.GREEN);
+                    status = "ADOPTION SUCCESSFUL";
+                    break;
+
+                case Timeline.CANCELLED:
+                    holder.adoptStat.setTextColor(Color.RED);
+                    status = "CANCELLED";
+                    break;
+                case Timeline.DECLINED:
+                    holder.adoptStat.setTextColor(Color.RED);
+                    status = "DECLINED";
+                    break;
             }
-        });
+
+            holder.adoptStat.setText(status);
+        }
+        catch (Exception e){
+            holder.itemView.setVisibility(View.GONE);
+            Log.d("HistoryAdapter", e.getMessage());
+        }
+
     }
 
     @Override
