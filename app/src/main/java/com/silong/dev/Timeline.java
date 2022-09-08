@@ -146,6 +146,11 @@ public class Timeline extends AppCompatActivity {
         timelineDrawer.closeDrawer(GravityCompat.END);
     }
 
+    public void onPressedAdoptionHistory(View view){
+        Intent i = new Intent(Timeline.this, AdoptionHistory.class);
+        startActivity(i);
+    }
+
     public void onPressedAboutOffice(View view){
         Intent i = new Intent(Timeline.this, AboutTheOffice.class);
         startActivity(i);

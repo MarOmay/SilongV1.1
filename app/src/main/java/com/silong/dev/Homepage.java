@@ -178,9 +178,9 @@ public class Homepage extends AppCompatActivity {
         drawerLayout.openDrawer(GravityCompat.END);
     }
 
-
     public void onPressedAdoptionHistory(View view){
-
+        Intent i = new Intent(Homepage.this, AdoptionHistory.class);
+        startActivity(i);
     }
 
     public void onPressedAboutOffice(View view){
