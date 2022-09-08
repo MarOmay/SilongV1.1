@@ -15,11 +15,11 @@ public class ExitDialog extends MaterialAlertDialogBuilder {
 
     public ExitDialog(@NonNull Context context) {
         super(context);
-        super.setTitle(Html.fromHtml("<b>"+"Exit"+"</b>"));
+        super.setTitle(Html.fromHtml("<b>"+"Logout"+"</b>"));
         super.setIcon(context.getDrawable(R.drawable.circlelogo_gradient));
         super.setBackground(context.getDrawable(R.drawable.dialog_bg));
-        super.setMessage("Are you sure you want to exit the app?\nThis will log you out of your account.\n");
-        super.setPositiveButton(Html.fromHtml("<b>"+"LOGOUT"+"</b>"), new DialogInterface.OnClickListener() {
+        super.setMessage("Are you sure you want to logout from your account?\n");
+        super.setPositiveButton(Html.fromHtml("<b>"+"YES"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent("logout-user");
