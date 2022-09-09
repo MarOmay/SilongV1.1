@@ -103,18 +103,42 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/forgotPassword"
-            android:onClick="onPressedForgotPassword"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="20dp"
-            android:clickable="true"
-            android:text="Forgot Password?"
-            android:textColor="@color/pink"
-            android:textSize="15sp"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:onClick="onPressedForgotPassword"
+                android:id="@+id/forgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="end"
+                android:textAlignment="textEnd"
+                android:clickable="true"
+                android:text="Forgot Password?"
+                android:textColor="@color/pink"
+                android:textSize="15sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/helpTv"
+                android:onClick="onPressedHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:text="Self-Help Center"
+                android:textColor="@color/pink"
+                android:textSize="15sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

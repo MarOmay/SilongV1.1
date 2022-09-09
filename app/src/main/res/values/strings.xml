@@ -135,4 +135,9 @@
         \n\nNOTICE:\nPlease be informed that a household can only adopt at most two dogs or any number of cats as long as the pets\' welfare are guaranteed.
         \n\nPAUNAWA: \nAng bawat pamilya ay maaari lamang mag-ampon ng hanggang dalawang aso o higit pang bilang ng pusa hangga\'t masisiguro ang kapakanan ng mga alagang hayop.</string>
 
+    <!-- For Help Center -->
+    <string name="body1">Yes, the pets that are available for adoption are in good health and have undergone tests by the City Veterinary Office. </string>
+    <string name="body2">There are no costs involved, but be sure you have the necessary prerequisites.</string>
+    <string name="body3">For dogs, there is a limit of two that can be adopted, but there is no limit on cats.</string>
+
 </resources>

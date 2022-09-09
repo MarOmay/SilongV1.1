@@ -54,7 +54,7 @@ public class LogIn extends AppCompatActivity {
 
     Button signUp, logIn;
     EditText tfloginEmail, tfloginPassword;
-    TextView forgotPass;
+    TextView forgotPass, helpTv;
     static boolean passwordVisible = false;
     int ctr = 0;
     ImageView showHideIv;
@@ -97,6 +97,7 @@ public class LogIn extends AppCompatActivity {
         logIn = (Button) findViewById(R.id.btnLogin);
         forgotPass = (TextView) findViewById(R.id.forgotPassword);
         showHideIv = (ImageView) findViewById(R.id.showHideIv);
+        helpTv = (TextView) findViewById(R.id.helpTv);
 
         //For auto-fill after registration
         try {
@@ -173,6 +174,11 @@ public class LogIn extends AppCompatActivity {
         //Get email
         EmailPrompt emailPrompt = new EmailPrompt(LogIn.this);
         emailPrompt.show();
+    }
+
+    public void onPressedHelp(View view){
+        Intent i = new Intent(LogIn.this, Help.class);
+        startActivity(i);
     }
 
     private void attemptLogin(String email, String password){

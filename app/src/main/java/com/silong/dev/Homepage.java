@@ -189,6 +189,11 @@ public class Homepage extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void onPressedHelp(View view){
+        Intent i = new Intent(Homepage.this, Help.class);
+        startActivity(i);
+    }
+
     public void onPressedAboutOffice(View view){
         Intent i = new Intent(Homepage.this, AboutTheOffice.class);
         startActivity(i);

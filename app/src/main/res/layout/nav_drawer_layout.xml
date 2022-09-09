@@ -130,17 +130,38 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="bottom|end"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:paddingBottom="15dp"
+            android:weightSum="2">
 
             <Button
-                android:id="@+id/exitBtn"
-                style="@style/circleExitButton_style"
+                android:onClick="onPressedHelp"
+                android:id="@+id/helpBtn"
+                style="@style/transpaButton_style"
+                android:drawableLeft="@drawable/ic_baseline_help_outline_24"
+                android:drawableTint="@color/black"
+                android:text="SELF HELP"
+                android:textSize="11sp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="3dp"
+                tools:ignore="SpeakableTextPresentCheck"
+                android:stateListAnimator="@null"/>
+
+            <Button
                 android:onClick="onPressedLogout"
-                android:layout_width="60dp"
-                android:layout_height="70dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:id="@+id/exitBtn"
+                style="@style/pinkButton_style"
+                android:drawableLeft="@drawable/ic_round_exit_to_app_24"
+                android:drawableTint="@color/whitey"
+                android:text="LOGOUT"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginStart="3dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>

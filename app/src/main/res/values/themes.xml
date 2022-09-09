@@ -58,6 +58,33 @@
         <item name="android:inputType">text</item>
     </style>
 
+    <style name="search_style">
+        <item name="android:background">@color/lightgray</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:hint">Search</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="search_bg_style">
+        <item name="android:height">60dp</item>
+        <item name="android:width">340dp</item>
+        <item name="android:backgroundTint">@color/lightgray</item>
+    </style>
+
+    <style name="transpaButton_style">
+        <item name="android:width">340dp</item>
+        <item name="android:height">60dp</item>
+        <item name="android:backgroundTint">#00000000</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="cornerRadius">50dp</item>
+    </style>
+
     <style name="pinkButton_style">
         <item name="android:width">340dp</item>
         <item name="android:height">60dp</item>

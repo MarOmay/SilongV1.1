@@ -151,6 +151,11 @@ public class Timeline extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void onPressedHelp(View view){
+        Intent i = new Intent(Timeline.this, Help.class);
+        startActivity(i);
+    }
+
     public void onPressedAboutOffice(View view){
         Intent i = new Intent(Timeline.this, AboutTheOffice.class);
         startActivity(i);

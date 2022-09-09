@@ -8,7 +8,6 @@
         <entry key="..\:/Users/Alex/Desktop/Silong/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/Alex/Desktop/Silong/app/src/main/res/layout/activity_main2.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/drawable/gradient_bg.xml" value="0.12" />
-        <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_adoption_history.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_deactivated_screen.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_extra_loading_screen.xml" value="0.10989583333333333" />
@@ -23,11 +22,11 @@
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_terms_conditions.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_timeline.xml" value="0.19519927536231885" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/drop_down_items.xml" value="0.25" />
-        <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/history_list_layout.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/item_koloda.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/nav_drawer_layout.xml" value="0.25" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/drawable-v24/dialog_bg.xml" value="0.2455" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/drawable-v24/ic_baseline_calendar_today_24.xml" value="0.2455" />
+        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/drawable-v24/ic_baseline_help_outline_24.xml" value="0.1985" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/drawable-v24/ic_round_arrow_back_ios_24.xml" value="0.2455" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/drawable-v24/ic_round_camera_alt_24.xml" value="0.2455" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/drawable-v24/ic_round_chevron_right_24.xml" value="0.2455" />
@@ -37,10 +36,12 @@
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/drawable-v24/tf_background.xml" value="0.2455" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/drawable/gradient_bg.xml" value="0.2455" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_about_us.xml" value="0.21052631578947367" />
+        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_adoption_history.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_dashboard.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_edit_profile.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_extra_loading_screen.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_header.xml" value="0.21052631578947367" />
+        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_help.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_homepage.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_log_in.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_main.xml" value="0.21784420289855072" />
@@ -52,8 +53,10 @@
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_timeline.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/drop_down_items.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/filter_layout.xml" value="0.21052631578947367" />
+        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/help_list_item.xml" value="0.21052631578947367" />
+        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/history_list_layout.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/item_koloda.xml" value="0.21052631578947367" />
-        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/nav_drawer_layout.xml" value="0.264" />
+        <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/nav_drawer_layout.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.121" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/mipmap-hdpi/ic_launcher.xml" value="0.2455" />
         <entry key="..\:/Users/richard/AndroidStudioProjects/Silong/app/src/main/res/drawable-v24/dialog_bg.xml" value="0.1945" />
