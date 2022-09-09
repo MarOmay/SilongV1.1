@@ -107,20 +107,9 @@ public class Homepage extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
         //Receive logout trigger
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mLogoutReceiver, new IntentFilter("logout-user"));
-
-        //Receive drawer avatar trigger
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mAvatarReceiver, new IntentFilter("update-avatar"));
-
-        //Receive drawer name trigger
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mNameReceiver, new IntentFilter("update-name"));
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLogoutReceiver, new IntentFilter("logout-user"));
         //Receive trigger from ASC task initiated by Apply button
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mBeginApplication, new IntentFilter("account-status-active"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBeginApplication, new IntentFilter("account-status-active"));
 
         //Initialize layout views
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -141,6 +130,11 @@ public class Homepage extends AppCompatActivity {
         usernameTv = findViewById(R.id.usernameTv);
 
         UserData.populate(this);
+
+        avatarImgview.setImageBitmap(UserData.photo);
+        usernameTv.setText(UserData.firstName + " " + UserData.lastName);
+
+        Toast.makeText(getApplicationContext(), "Welcome, " + UserData.firstName + "!", Toast.LENGTH_SHORT).show();
 
         //check pending adoption request
         UserData.populateAdoptions(Homepage.this);
@@ -181,6 +175,8 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void onPressedMenu(View view){
+        avatarImgview.setImageBitmap(UserData.photo);
+        usernameTv.setText(UserData.firstName + " " + UserData.lastName);
         drawerLayout.openDrawer(GravityCompat.END);
     }
 
@@ -422,20 +418,6 @@ public class Homepage extends AppCompatActivity {
         }
     }
 
-    private BroadcastReceiver mAvatarReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            avatarImgview.setImageBitmap(UserData.photo);
-        }
-    };
-
-    private BroadcastReceiver mNameReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            usernameTv.setText(UserData.firstName + " " + UserData.lastName);
-        }
-    };
-
     private BroadcastReceiver mLogoutReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -522,8 +504,6 @@ public class Homepage extends AppCompatActivity {
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mBeginApplication);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLogoutReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mAvatarReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mNameReceiver);
         super.onDestroy();
     }
 }

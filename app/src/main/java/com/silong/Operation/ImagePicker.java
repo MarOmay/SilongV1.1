@@ -8,8 +8,6 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
-import com.silong.dev.MainActivity;
-
 public class ImagePicker {
 
     private final int PERMISSION_REQUEST_STORAGE = 0;
@@ -52,7 +50,7 @@ public class ImagePicker {
         //Check permissions
         if(ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             Toast.makeText(activity.getApplicationContext(), "Silong needs READ access to upload photo", Toast.LENGTH_LONG).show();
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MainActivity.READ_EXTERNAL_STORAGE_REQUEST);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
             return false;
         }
 

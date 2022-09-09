@@ -70,22 +70,75 @@ public class LoginLoadingScreen extends AppCompatActivity {
             new ImageProcessor().saveToLocal(getApplicationContext(), "userID", UserData.userID);
 
             //Get account status, if deactivated notify user
-            databaseReferenceUser.child("accountStatus").addValueEventListener(new ValueEventListener() {
+            databaseReferenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    try{
-                        UserData.accountStatus = (Boolean) snapshot.getValue();
+                    try {
+                        UserData.accountStatus = (Boolean) snapshot.child("accountStatus").getValue();
+                        UserData.email = snapshot.child("email").getValue().toString();
+                        UserData.firstName = snapshot.child("firstName").getValue().toString();
+                        UserData.lastName = snapshot.child("lastName").getValue().toString();
+                        UserData.birthday = snapshot.child("birthday").getValue().toString();
+                        UserData.gender = Integer.parseInt(snapshot.child("gender").getValue().toString());
+                        UserData.contact = snapshot.child("contact").getValue().toString();
+                        String photo = snapshot.child("photo").getValue().toString();
+                        UserData.address.setAddressLine(snapshot.child("address").child("addressLine").getValue().toString());
+                        UserData.address.setBarangay(snapshot.child("address").child("barangay").getValue().toString());
+                        UserData.address.setMunicipality(snapshot.child("address").child("municipality").getValue().toString());
+                        UserData.address.setProvince(snapshot.child("address").child("province").getValue().toString());
+                        UserData.address.setZipcode(Integer.parseInt(snapshot.child("address").child("zipcode").getValue().toString()));
+
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "accountStatus", UserData.accountStatus?"true":"false");
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "email", UserData.email);
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "firstName", UserData.firstName);
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "lastName", UserData.lastName);
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "birthday", UserData.birthday);
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "gender", UserData.gender+"");
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "contact", UserData.contact);
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "adoptionCounter", UserData.adoptionCounter+"");
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "addressLine", UserData.address.getAddressLine());
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "barangay", UserData.address.getBarangay());
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "municipality", UserData.address.getMunicipality());
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "province", UserData.address.getProvince());
+                        new ImageProcessor().saveToLocal(getApplicationContext(), "zipcode", UserData.address.getZipcode()+"");
+
+                        //Create avatar
+                        Bitmap bitmap = new ImageProcessor().toBitmap(photo);
+                        UserData.photo = bitmap;
+                        new ImageProcessor().saveToLocal(getApplicationContext(), bitmap, "avatar.dat");
+
+                        downloadAdoption(uid);
+
+                        //Send broadcast
+                        Intent updateA = new Intent("update-avatar");
+                        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(updateA);
+
+                        //Send broadcast
+                        Intent updateN = new Intent("update-name");
+                        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(updateN);
+
+                        //Send broadcast
+                        Intent intent = new Intent("update-name");
+                        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+
                         if (!UserData.accountStatus) {
                             //Notify User that the account is deactivated
-                            Intent intent = new Intent(LoginLoadingScreen.this, DeactivatedScreen.class);
+                            Intent gotoDeact = new Intent(LoginLoadingScreen.this, DeactivatedScreen.class);
                             intent.putExtra("uid", UserData.userID);
-                            startActivity(intent);
+                            startActivity(gotoDeact);
                             finish();
                         }
-                        new ImageProcessor().saveToLocal(getApplicationContext(), "accountStatus", UserData.accountStatus?"true":"false");
+
+                        UserData.populate(LoginLoadingScreen.this);
+
+                        //Once all data is retrieved, route user to Homepage
+                        Intent gotoHPB = new Intent(LoginLoadingScreen.this, HorizontalProgressBar.class);
+                        startActivity(gotoHPB);
+                        finish();
+
                     }
                     catch (Exception e){
-                        Log.d("LLS", e.getMessage());
+                        Log.d("DEBUGGER>>>", e.getMessage());
                         Intent i = new Intent(LoginLoadingScreen.this, Splash.class);
                         startActivity(i);
                         finish();
@@ -98,222 +151,41 @@ public class LoginLoadingScreen extends AppCompatActivity {
                 }
             });
 
-            //else, get all the other info
-            databaseReferenceUser.child("email").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.email = snapshot.getValue().toString();
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "email", UserData.email);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("firstName").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.firstName = snapshot.getValue().toString();
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "firstName", UserData.firstName);
-                    //Send broadcast
-                    Intent intent = new Intent("update-name");
-                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-                    Toast.makeText(getApplicationContext(), "Welcome, " + UserData.firstName + "!", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("lastName").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.lastName = snapshot.getValue().toString();
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "lastName", UserData.lastName);
-                    //Send broadcast
-                    Intent intent = new Intent("update-name");
-                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("birthday").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.birthday = snapshot.getValue().toString();
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "birthday", UserData.birthday);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("gender").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.gender = Integer.parseInt(snapshot.getValue().toString());
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "gender", UserData.gender+"");
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("contact").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.contact = snapshot.getValue().toString();
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "contact", UserData.contact);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("photo").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String photo = snapshot.getValue().toString();
-                    //Create avatar
-                    Bitmap bitmap = new ImageProcessor().toBitmap(photo);
-                    UserData.photo = bitmap;
-                    new ImageProcessor().saveToLocal(getApplicationContext(), bitmap, "avatar.dat");
-                    //Send broadcast
-                    Intent intent = new Intent("update-avatar");
-                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("adoptionCounter").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.adoptionCounter = Integer.parseInt(snapshot.getValue().toString());
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "adoptionCounter", UserData.adoptionCounter+"");
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-            databaseReferenceUser.child("address").child("addressLine").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.address.setAddressLine(snapshot.getValue().toString());
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "addressLine", UserData.address.getAddressLine());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("address").child("barangay").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.address.setBarangay(snapshot.getValue().toString());
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "barangay", UserData.address.getBarangay());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("address").child("municipality").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.address.setMunicipality(snapshot.getValue().toString());
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "municipality", UserData.address.getMunicipality());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("address").child("province").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.address.setProvince(snapshot.getValue().toString());
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "province", UserData.address.getProvince());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReferenceUser.child("address").child("zipcode").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserData.address.setZipcode(Integer.parseInt(snapshot.getValue().toString()));
-                    new ImageProcessor().saveToLocal(getApplicationContext(), "zipcode", UserData.address.getZipcode()+"");
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-            //pending adoption
-            DatabaseReference adoptionRef = database.getReference().child("adoptionRequest").child(uid);
-            adoptionRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    try {
-                        String dateRquested = snapshot.child("dateRequested").getValue().toString();
-                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateRequested", dateRquested);
-
-                        String petID = snapshot.child("petID").getValue().toString();
-                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "petID", petID);
-
-                        String status = snapshot.child("status").getValue().toString();
-                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "status", status);
-
-                        String appointmentDate = snapshot.child("appointmentDate").getValue().toString();
-                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "appointmentDate", appointmentDate);
-
-                        String dateReleased = snapshot.child("dateReleased").getValue().toString();
-                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateReleased", dateReleased);
-                    }
-                    catch (Exception e){
-                        Log.d("DEBUGGER>>>", e.getMessage());
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-            //insert chat history
-            //insert liked pet
-
-            //Once all data is retrieved, route user to Homepage
-            Intent intent = new Intent(LoginLoadingScreen.this, HorizontalProgressBar.class);
-            startActivity(intent);
-            finish();
-
         }
         else{
             Toast.makeText(this, "Account can't be resolved. (LLS)", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void downloadAdoption(String uid){
+        //pending adoption
+        DatabaseReference adoptionRef = database.getReference().child("adoptionRequest").child(uid);
+        adoptionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    String dateRquested = snapshot.child("dateRequested").getValue().toString();
+                    String petID = snapshot.child("petID").getValue().toString();
+                    String status = snapshot.child("status").getValue().toString();
+                    String appointmentDate = snapshot.child("appointmentDate").getValue().toString();
+                    String dateReleased = snapshot.child("dateReleased").getValue().toString();
+
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateRequested", dateRquested);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "petID", petID);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "status", status);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "appointmentDate", appointmentDate);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateReleased", dateReleased);
+                }
+                catch (Exception e){
+                    Log.d("DEBUGGER>>>", e.getMessage());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
