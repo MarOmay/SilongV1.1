@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<articles>
+
+    <article>
+        <title>Test 1</title>
+        <body>Body ito</body>
+    </article>
+
+    <article>
+        <title>Test 2</title>
+        <body>Body rin ito</body>
+    </article>
+
+    <article>
+        <title>Test 3</title>
+        <body>lorem ipsum dolor sit amet</body>
+    </article>
+
+</articles>

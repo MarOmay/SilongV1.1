@@ -35,11 +35,21 @@ public class FaqsAdapter extends RecyclerView.Adapter<FaqsAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull FaqsAdapter.MyViewHolder holder, int position) {
 
         Faqs faqs = faqsArrayList.get(position);
-        holder.headingTv.setText(faqs.heading);
-        holder.bodyTv.setText(faqs.body);
 
-        boolean isVisible = faqs.visibility;
-        holder.expandedLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        if (Help.KEYWORD.length() == 0 ||
+                faqs.heading.toLowerCase().contains(Help.KEYWORD) ||
+                faqs.body.toLowerCase().contains(Help.KEYWORD)){
+
+            holder.headingTv.setText(faqs.heading);
+            holder.bodyTv.setText(faqs.body);
+
+            boolean isVisible = faqs.visibility;
+            holder.expandedLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        }
+        else{
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+        }
 
     }
 
