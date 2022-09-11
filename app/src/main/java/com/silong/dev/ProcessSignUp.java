@@ -158,7 +158,6 @@ public class ProcessSignUp extends AppCompatActivity {
         map.put("address/municipality", address.getMunicipality());
         map.put("address/province", address.getProvince());
         map.put("address/zipcode", address.getZipcode());
-        map.put("chatHistory", 0);
         map.put("lastModified", Utility.dateToday() + " " + Utility.timeNow());
         map.put("created", Utility.dateToday());
 

@@ -134,8 +134,6 @@ public class Homepage extends AppCompatActivity {
         avatarImgview.setImageBitmap(UserData.photo);
         usernameTv.setText(UserData.firstName + " " + UserData.lastName);
 
-        Toast.makeText(getApplicationContext(), "Welcome, " + UserData.firstName + "!", Toast.LENGTH_SHORT).show();
-
         //check pending adoption request
         UserData.populateAdoptions(Homepage.this);
         if (UserData.adoptionHistory.size() > 0){
