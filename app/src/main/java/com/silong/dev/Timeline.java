@@ -232,20 +232,26 @@ public class Timeline extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         updateLocalStatus(CANCELLED);
 
-                        //return to Splash
-                        loadingDialog.dismissLoadingDialog();
-                        Intent intent = new Intent(Timeline.this, Splash.class);
-                        startActivity(intent);
-                        Timeline.this.finish();
+                        //archive to user's RTDB
+                        DatabaseReference tempRef2 = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory").child(PET.getPetID());
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("dateRequested", ADOPTION.getDateRequested());
+                        map.put("status", Timeline.CANCELLED);
+                        tempRef2.updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                //return to Splash
+                                loadingDialog.dismissLoadingDialog();
+                                Intent intent = new Intent(Timeline.this, Splash.class);
+                                startActivity(intent);
+                                Timeline.this.finish();
+
+                            }
+                        });
+
                     }
                 });
-
-        //archive to user's RTDB
-        DatabaseReference tempRef2 = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory").child(PET.getPetID());
-        Map<String, Object> map = new HashMap<>();
-        map.put("dateRequested", ADOPTION.getDateRequested());
-        map.put("status", Timeline.CANCELLED);
-        tempRef2.updateChildren(map);
 
     }
 

@@ -170,20 +170,20 @@ public class LoginLoadingScreen extends AppCompatActivity {
                     String petID = snapshot.child("petID").getValue().toString();
                     String status = snapshot.child("status").getValue().toString();
 
-                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "dateRequested", dateRquested);
-                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "petID", petID);
-                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "status", status);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateRequested", dateRquested);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "petID", petID);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "status", status);
 
                     try {
                         String appointmentDate = snapshot.child("appointmentDate").getValue().toString();
-                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "appointmentDate", appointmentDate);
+                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "appointmentDate", appointmentDate);
                     }catch (Exception e){
                         Log.d("DEBUGGER>>>", "No appointment yet.");
                     }
 
                     try {
                         String dateReleased = snapshot.child("dateReleased").getValue().toString();
-                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "dateReleased", dateReleased);
+                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateReleased", dateReleased);
                     }catch (Exception e){
                         Log.d("DEBUGGER>>>", "No dateReleased yet.");
                     }
