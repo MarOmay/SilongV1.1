@@ -221,8 +221,11 @@ public class Timeline extends AppCompatActivity {
         loadingDialog.startLoadingDialog();
 
         //set pet status to active
-        PetStatusUpdater petStatusUpdater = new PetStatusUpdater(Timeline.this, ADOPTION.getPetID(), true);
-        petStatusUpdater.execute();
+        DatabaseReference tempRefStatus = mDatabase.getReference().child("Pets").child(ADOPTION.getPetID()).child("status");
+        tempRefStatus.setValue(PetStatus.ACTIVE);
+
+        DatabaseReference tempReference = mDatabase.getReference().child("recordSummary").child(ADOPTION.getPetID());
+        tempReference.setValue(PetStatus.ACTIVE);
 
         //set request to null in RTDB
         DatabaseReference tempRef = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
@@ -232,8 +235,10 @@ public class Timeline extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         updateLocalStatus(CANCELLED);
 
+                        Log.d("DEBUGGER>>>", "Cancellation ADOPTION.getPetID(): " + ADOPTION.getPetID());
+
                         //archive to user's RTDB
-                        DatabaseReference tempRef2 = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory").child(PET.getPetID());
+                        DatabaseReference tempRef2 = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory").child(ADOPTION.getPetID());
                         Map<String, Object> map = new HashMap<>();
                         map.put("dateRequested", ADOPTION.getDateRequested());
                         map.put("status", Timeline.CANCELLED);
