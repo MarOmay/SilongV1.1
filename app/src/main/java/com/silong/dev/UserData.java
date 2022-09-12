@@ -203,6 +203,8 @@ public class UserData { //removed: extends User
             for (File record : adoptions){
                 Adoption adoption = new Adoption();
 
+                Log.d("DEBUGGER>>>", "Adoption file: " + record.getAbsolutePath());
+
                 //Read basic info
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(record));
                 String line;

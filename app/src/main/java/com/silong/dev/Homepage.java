@@ -362,7 +362,12 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void onPressedApply(View view){
-        if (Utility.internetConnection(getApplicationContext())){
+
+        if (koloda.getAdapter() == null){
+            Toast.makeText(this, "No pet selected.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if (Utility.internetConnection(getApplicationContext())){
             BEGIN_APPLY = true;
             AccountStatusChecker accountStatusChecker = new AccountStatusChecker(Homepage.this);
             accountStatusChecker.execute();

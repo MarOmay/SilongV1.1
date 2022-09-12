@@ -403,7 +403,7 @@ public class Timeline extends AppCompatActivity {
         Log.d("DEBUGGER>>>", "watchRTDBStatus: started");
         Log.d("DEBUGGER>>>", "id : " + UserData.userID);
 
-        if (UserData.userID.equals("null") || UserData.userID == null){
+        if (UserData.userID == null){
             return;
         }
 

@@ -160,22 +160,33 @@ public class LoginLoadingScreen extends AppCompatActivity {
 
     private void downloadAdoption(String uid){
         //pending adoption
-        DatabaseReference adoptionRef = database.getReference().child("adoptionRequest").child(uid);
+        DatabaseReference adoptionRef = database.getReference("adoptionRequest").child(uid);
         adoptionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("DEBUGGER>>>","downloading adoption...");
                 try {
                     String dateRquested = snapshot.child("dateRequested").getValue().toString();
                     String petID = snapshot.child("petID").getValue().toString();
                     String status = snapshot.child("status").getValue().toString();
-                    String appointmentDate = snapshot.child("appointmentDate").getValue().toString();
-                    String dateReleased = snapshot.child("dateReleased").getValue().toString();
 
-                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateRequested", dateRquested);
-                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "petID", petID);
-                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "status", status);
-                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "appointmentDate", appointmentDate);
-                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateReleased", dateReleased);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "dateRequested", dateRquested);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "petID", petID);
+                    UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "status", status);
+
+                    try {
+                        String appointmentDate = snapshot.child("appointmentDate").getValue().toString();
+                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "appointmentDate", appointmentDate);
+                    }catch (Exception e){
+                        Log.d("DEBUGGER>>>", "No appointment yet.");
+                    }
+
+                    try {
+                        String dateReleased = snapshot.child("dateReleased").getValue().toString();
+                        UserData.writeAdoptionToLocal(LoginLoadingScreen.this, petID, "dateReleased", dateReleased);
+                    }catch (Exception e){
+                        Log.d("DEBUGGER>>>", "No dateReleased yet.");
+                    }
                 }
                 catch (Exception e){
                     Log.d("DEBUGGER>>>", e.getMessage());
