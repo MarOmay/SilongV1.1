@@ -446,15 +446,21 @@ public class Homepage extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     boolean processing = false;
                     for (DataSnapshot snap : snapshot.getChildren()){
-                        if (snap.child("petID").getValue().toString().equals(CURRENT_PET.getPetID())){
-                            if (snap.child("status").getValue().toString().equals("7"))
-                                processing = false;
-                            else {
-                                Toast.makeText(getApplicationContext(), "Pet currently being processed.", Toast.LENGTH_SHORT).show();
-                                processing = true;
-                            }
+                        try{
+                            if (snap.child("petID").getValue().toString().equals(CURRENT_PET.getPetID())){
+                                if (snap.child("status").getValue().toString().equals("7"))
+                                    processing = false;
+                                else {
+                                    Toast.makeText(getApplicationContext(), "Pet currently being processed.", Toast.LENGTH_SHORT).show();
+                                    processing = true;
+                                }
 
+                            }
                         }
+                        catch (Exception e){
+                            Log.d("DEBUGGER>>>", "mBeginApplication - " + e.getMessage());
+                        }
+
                     }
 
                     if (!processing){
