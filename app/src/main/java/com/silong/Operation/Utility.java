@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
@@ -64,11 +65,30 @@ public class Utility {
     }
 
     public static void gotoMessenger(Activity activity){
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setPackage("com.facebook.orca");
-        intent.setData(Uri.parse("https://m.me/"+"CityVetOfficeCSJDM"));
-        activity.startActivity(intent);
+
+        try{
+            //open FB messenger
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setPackage("com.facebook.orca");
+            intent.setData(Uri.parse("https://m.me/"+"CityVetOfficeCSJDM"));
+            activity.startActivity(intent);
+        }
+        catch (Exception e){
+
+            //open FB page
+            try {
+                //using fb app
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href=https://www.facebook.com/CityVetOfficeCSJDM"));
+                activity.startActivity(intent);
+            }
+            catch (Exception ex){
+                //using browser
+                activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/CityVetOfficeCSJDM")));
+            }
+
+        }
+
     }
 
     public void showNotification(Context context, String title, String message) {

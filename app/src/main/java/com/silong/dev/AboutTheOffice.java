@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class AboutTheOffice extends AppCompatActivity {
 
@@ -23,8 +24,16 @@ public class AboutTheOffice extends AppCompatActivity {
     }
 
     public void onPressedFB(View view){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href=https://www.facebook.com/CityVetOfficeCSJDM"));
-        startActivity(intent);
+        try {
+            //open fb page using fb app
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href=https://www.facebook.com/CityVetOfficeCSJDM"));
+            startActivity(intent);
+        }
+        catch (Exception e){
+            //open fb page using browser
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/CityVetOfficeCSJDM")));
+        }
+
     }
 
     public void back(View view){
