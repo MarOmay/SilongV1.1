@@ -384,8 +384,6 @@ public class Homepage extends AppCompatActivity {
             Log.d("DEBUGGER>>>", "P: " + CURRENT_PET.getPetID());
             Log.d("DEBUGGER>>>", "C: " + CURRENT_PET.getColor());
 
-
-
             FileOutputStream fileOuputStream = openFileOutput("adoption-" + Utility.dateToday(), Context.MODE_PRIVATE);
             try (FileOutputStream fileOutputStream = openFileOutput( "adoption-" + Utility.dateToday(), Context.MODE_APPEND)) {
                 String data = "status:0;\npetID:" + CURRENT_PET.getPetID() + ";";

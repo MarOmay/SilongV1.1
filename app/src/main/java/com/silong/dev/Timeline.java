@@ -284,7 +284,10 @@ public class Timeline extends AppCompatActivity {
         PET = UserData.getPet(ADOPTION.getPetID());
 
         CURRENT_STAGE = ADOPTION.getStatus();
+
+        timelineStepView.setVisibility(View.INVISIBLE);
         timelineStepView.setStepsViewIndicatorComplectingPosition(CURRENT_STAGE +1);
+        timelineStepView.setVisibility(View.VISIBLE);
         Log.d("DEBUGGER>>>", "Setting timeline to " + CURRENT_STAGE);
 
         switch (CURRENT_STAGE){
@@ -369,48 +372,24 @@ public class Timeline extends AppCompatActivity {
     }
 
     private void checkPetStatus(String petID){
-        mReference = mDatabase.getReference().child("recordSummary").child(petID);
-        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    String status = snapshot.getValue().toString();
-                    if (status == null){
-                        Toast.makeText(Timeline.this, "Pet is no longer available.", Toast.LENGTH_SHORT).show();
+
+        //write to RTDB
+        DatabaseReference tempRef = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", "1");
+        map.put("dateRequested", Utility.dateToday());
+        map.put("petID", ADOPTION.getPetID());
+
+        tempRef.updateChildren(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        updateLocalStatus(AWAITING_APPROVAL);
+                        //restartTimeline();
+                        refreshTimeline();
                     }
-                    else if (status.equals(String.valueOf(PetStatus.ACTIVE))){
+                });
 
-                        //write to RTDB
-                        mReference = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("status", "1");
-                        map.put("dateRequested", Utility.dateToday());
-                        map.put("petID", ADOPTION.getPetID());
-
-                        mReference.updateChildren(map)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        updateLocalStatus(AWAITING_APPROVAL);
-                                        restartTimeline();
-                                    }
-                                });
-
-                    }
-                    else {
-                        Toast.makeText(Timeline.this, "Pet is no longer available.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch (Exception e){
-                    Log.d("Timeline-cPS", e.getMessage());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     private void watchRTDBStatus(){
@@ -438,7 +417,8 @@ public class Timeline extends AppCompatActivity {
                         return;
                     }
                     else if (ADOPTION.getStatus() != status){
-                        restartTimeline();
+                        //restartTimeline();
+                        refreshTimeline();
                     }
 
                 }
@@ -459,9 +439,6 @@ public class Timeline extends AppCompatActivity {
         map.put("status", 6);
 
         tempRef.updateChildren(map);
-
-        //tempRef = mDatabase.getReference().child("adoptionRequest").child(UserData.userID).child("status");
-        //tempRef.setValue("6");
 
     }
 
