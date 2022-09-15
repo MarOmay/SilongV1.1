@@ -362,7 +362,16 @@ public class EditProfile extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please select a 1x1 picture less than 1MB.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                newPictureIv.setImageBitmap(bitmap);
+
+                bitmap = new ImageProcessor().tempCompress(bitmap);
+
+                try {
+                    newPictureIv.setImageBitmap(bitmap);
+                }
+                catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Please select a picture less than 1MB.", Toast.LENGTH_SHORT).show();
+                }
+
             }
             catch (Exception e){
                 Toast.makeText(getApplicationContext(), "Unable to choose file", Toast.LENGTH_SHORT).show();

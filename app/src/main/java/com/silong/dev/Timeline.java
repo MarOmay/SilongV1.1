@@ -61,7 +61,7 @@ public class Timeline extends AppCompatActivity {
     public static final int DECLINED = 7;
 
     DrawerLayout timelineDrawer;
-    ImageView filterImgview, menuImgview, closeDrawerBtn;
+    ImageView filterImgview, menuImgview, closeDrawerBtn, avatarImgview;
     TextView headerTitle, timelineHeader, timelineBody;
     VerticalStepView timelineStepView;
     LinearLayout timelineCancelLayout, timelineSetAppLayout, timelineHomeLayout;
@@ -120,6 +120,8 @@ public class Timeline extends AppCompatActivity {
         timelineHeader.setText(R.string.congrats);
         timelineBody.setText(R.string.sendReqBody);
 
+        avatarImgview = findViewById(R.id.avatarImgview);
+
         watchRTDBStatus();
 
         populateMenu();
@@ -139,6 +141,7 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void onPressedMenu(View view){
+        avatarImgview.setImageBitmap(UserData.photo);
         timelineDrawer.openDrawer(GravityCompat.END);
     }
 
