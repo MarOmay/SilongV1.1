@@ -131,7 +131,15 @@ public class SignUp2 extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please select a 1x1 picture less than 1MB.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ivPicture.setImageBitmap(bmp);
+
+                bmp = new ImageProcessor().tempCompress(bmp);
+
+                try {
+                    ivPicture.setImageBitmap(bmp);
+                }
+                catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Please select a picture less than 1MB.", Toast.LENGTH_SHORT).show();
+                }
             }
             catch (Exception e){
                 Toast.makeText(getApplicationContext(), "Unable to choose file", Toast.LENGTH_SHORT).show();
