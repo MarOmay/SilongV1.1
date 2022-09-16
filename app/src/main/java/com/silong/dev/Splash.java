@@ -49,7 +49,7 @@ public class Splash extends AppCompatActivity {
                     i = new Intent(Splash.this, HorizontalProgressBar.class);
                 }
                 else {
-                    i = new Intent(Splash.this, LogIn.class);
+                    i = new Intent(Splash.this, OnBoarding.class);
                 }
                 startActivity(i);
                 overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);

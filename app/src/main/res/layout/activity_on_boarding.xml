@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/nighty"
+    android:orientation="vertical"
+    android:weightSum="3"
+    tools:context=".OnBoarding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.4"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp">
+
+
+        <TextView
+            android:paddingEnd="15dp"
+            android:id="@+id/onBoardSkipTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onSkipPressed"
+            android:text="SKIP"
+            android:textStyle="bold"
+            android:textAlignment="textEnd"
+            android:textColor="@color/pink"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/slideViewPager"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.35"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:alpha="0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|start">
+
+            <Button
+                android:id="@+id/onBoardBackBtn"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/indicatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingEnd="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|end">
+
+            <Button
+                android:id="@+id/onBoardNextBtn"
+                style="@style/circleNextButton_style"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:onClick="onNextPressed" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

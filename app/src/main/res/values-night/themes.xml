@@ -118,7 +118,7 @@
         <item name="iconTint">@color/whitey</item>
         <item name="iconGravity">start</item>
         <item name="iconSize">40dp</item>
-        <item name="android:paddingStart">11dp</item>
+        <item name="android:paddingStart">7dp</item>
     </style>
 
     <style name="circleExitButton_style" parent="Widget.MaterialComponents.Button">
