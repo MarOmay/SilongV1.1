@@ -13,7 +13,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.silong.dev.R;
-import com.silong.dev.TermsConditions;
+import com.silong.dev.TermsOfUse;
 
 public class TnCDialog extends MaterialAlertDialogBuilder {
 
@@ -35,7 +35,7 @@ public class TnCDialog extends MaterialAlertDialogBuilder {
         tnc_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, TermsConditions.class);
+                Intent i = new Intent(context, TermsOfUse.class);
                 context.startActivity(i);
             }
         });

@@ -70,19 +70,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="2"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.35"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingVertical="10dp">
 
             <ImageView
                 android:layout_width="300dp"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/name_logo_white" />
 
@@ -93,49 +94,35 @@
                 android:text="@string/aboutOffice"
                 android:textAlignment="center"
                 android:textColor="@color/whitey"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/developed"
-                android:textAlignment="center"
-                android:textColor="@color/whitey"
-                android:textSize="15sp" />
+                android:textSize="13sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.65"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/developed"
+                android:textAlignment="center"
+                android:textColor="@color/whitey"
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:backgroundTint="@color/whitey"
-                    app:cardCornerRadius="100dp">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/bulsu_logo" />
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:layout_marginHorizontal="20dp"
                     android:backgroundTint="@color/whitey"
                     app:cardCornerRadius="100dp">
@@ -143,6 +130,21 @@
                     <ImageView
                         android:layout_width="65dp"
                         android:layout_height="65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/bulsu_logo" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:backgroundTint="@color/whitey"
+                    app:cardCornerRadius="100dp">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/bulsu_logo_sarm" />
 
@@ -153,7 +155,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:text="DEVELOPERS"
                 android:textAlignment="center"
                 android:textColor="@color/whitey"
@@ -170,9 +172,20 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:onClick="onTouPressed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:text="Terms of Use"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:textColor="@color/whitey"
+                android:layout_marginTop="40dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="January 20XX"
                 android:textAlignment="center"
                 android:textColor="@color/whitey"

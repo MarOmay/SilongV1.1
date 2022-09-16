@@ -2,6 +2,7 @@ package com.silong.dev;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,5 +41,10 @@ public class AboutUs extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+    public void onTouPressed(View view){
+        Intent i = new Intent(AboutUs.this, TermsOfUse.class);
+        startActivity(i);
     }
 }
