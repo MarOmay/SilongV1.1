@@ -19,7 +19,7 @@ public class TnCDialog extends MaterialAlertDialogBuilder {
 
     public TnCDialog(@NonNull Context context) {
         super(context);
-        super.setTitle(Html.fromHtml("<b>"+"Terms and Conditions"+"</b>"));
+        super.setTitle(Html.fromHtml("<b>"+"Terms of Use"+"</b>"));
         super.setIcon(context.getDrawable(R.drawable.circlelogo_gradient));
         super.setBackground(context.getDrawable(R.drawable.dialog_bg));
         super.setMessage(context.getResources().getString(R.string.msg));
@@ -28,7 +28,7 @@ public class TnCDialog extends MaterialAlertDialogBuilder {
         tnc_layout.setOrientation(LinearLayout.VERTICAL);
         tnc_layout.setVerticalGravity(10);
         TextView tnc_tv = new TextView(context);
-        tnc_tv.setText("Terms and Conditions");
+        tnc_tv.setText("Terms of Use");
         tnc_tv.setTextColor(context.getResources().getColor(R.color.purple_700));
         tnc_tv.setPadding(60,0,0,0);
         tnc_layout.addView(tnc_tv);

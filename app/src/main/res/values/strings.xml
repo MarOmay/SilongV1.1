@@ -77,7 +77,7 @@
         <item>Bulacan</item>
     </string-array>
 
-    <string name="msg">\nBy clicking SUBMIT you have accepted and agreed to all of our Terms and Conditions.\n</string>
+    <string name="msg">\nBy clicking SUBMIT you have accepted and agreed to all of our Terms of Use.\n</string>
 
     <string-array name="Gender">
         <item>Male</item>
