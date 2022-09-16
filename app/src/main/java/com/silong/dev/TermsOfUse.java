@@ -60,7 +60,7 @@ public class TermsOfUse extends AppCompatActivity {
 
             TextView textBody = new TextView(this);
             textBody.setTextSize(15);
-            textBody.setTextColor(getResources().getColor(R.color.darkgray));
+            textBody.setTextColor(getResources().getColor(R.color.black));
             textBody.setText(termsBody[i]);
 
             termsLayout.addView(textHeading);
