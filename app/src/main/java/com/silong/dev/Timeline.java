@@ -208,6 +208,8 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void onPressedCancel(View view){
+        Log.d("DEBUGGER>>>", "Cancellation triggered oPC");
+
         //check internet connection
         if (!Utility.internetConnection(Timeline.this)){
             Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
@@ -286,6 +288,7 @@ public class Timeline extends AppCompatActivity {
 
         switch (CURRENT_STAGE){
             case SEND_REQUEST:
+                Log.d("DEBUGGER>>>", "Updating status of " + ADOPTION.getPetID());
                 updatePetStatus(ADOPTION.getPetID());
                 timelineCancelLayout.setVisibility(View.VISIBLE);
                 timelineSetAppLayout.setVisibility(View.GONE);
@@ -366,7 +369,12 @@ public class Timeline extends AppCompatActivity {
     }
 
     private void updatePetStatus(String petID){
+        if (petID == null){
+            return;
+        }
 
+        Log.d("DEBUGGER>>>", "TRACK petID: (uPS) " + petID);
+        Log.d("DEBUGGER>>>", "TRACK getPetID: (uPS) " + ADOPTION.getPetID());
         //write to RTDB
         DatabaseReference tempRef = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
         Map<String, Object> map = new HashMap<>();
@@ -412,6 +420,7 @@ public class Timeline extends AppCompatActivity {
                     }
                     else if (ADOPTION.getStatus() != status){
                         //restartTimeline();
+                        mReference = null;
                         refreshTimeline();
                     }
 

@@ -194,7 +194,7 @@ public class UserData { //removed: extends User
             ArrayList<File> adoptions = new ArrayList<File>();
 
             for (File file : activity.getFilesDir().listFiles()){
-                if (file.getAbsolutePath().contains("adoption-")){
+                if (file.getAbsolutePath().contains("adoption-") && !file.getAbsolutePath().contains("null")){
                     adoptions.add(file);
                 }
             }

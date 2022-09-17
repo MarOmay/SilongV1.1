@@ -34,6 +34,7 @@ public class PetStatusUpdater extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] objects) {
+        Log.d("DEBUGGER>>>", "Cancellation triggered PSU-dIB");
         try {
             mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
             mReference = mDatabase.getReference().child("Pets").child(petID).child("status");
