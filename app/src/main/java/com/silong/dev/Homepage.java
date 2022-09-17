@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.silong.CustomView.ApplyDialog;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.HomepageExitDialog;
 import com.silong.EnumClass.Gender;
@@ -373,8 +374,8 @@ public class Homepage extends AppCompatActivity {
         }
         else if (Utility.internetConnection(getApplicationContext())){
             BEGIN_APPLY = true;
-            AccountStatusChecker accountStatusChecker = new AccountStatusChecker(Homepage.this);
-            accountStatusChecker.execute();
+            ApplyDialog applyDialog = new ApplyDialog(Homepage.this);
+            applyDialog.show();
 
         }
         else {

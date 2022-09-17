@@ -36,6 +36,7 @@ import com.silong.EnumClass.PetStatus;
 import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
 import com.silong.Operation.Utility;
+import com.silong.Task.SyncAdoptionHistory;
 
 import java.io.FileOutputStream;
 import java.util.HashMap;
@@ -393,6 +394,7 @@ public class Timeline extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         updateLocalStatus(AWAITING_APPROVAL);
+                        updateRemoteStatus(AWAITING_APPROVAL);
                         //restartTimeline();
                         refreshTimeline();
                     }
@@ -416,6 +418,7 @@ public class Timeline extends AppCompatActivity {
 
                     int status = Integer.valueOf(snapshot.getValue().toString());
                     updateLocalStatus(status);
+                    updateRemoteStatus(status);
 
                     Log.d("DEBUGGER>>>", "Status: " + status);
 
@@ -469,6 +472,13 @@ public class Timeline extends AppCompatActivity {
             Log.d("DEBUGGER>>>", e.getMessage());
             Toast.makeText(getApplicationContext(), "Can't update adoption-.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void updateRemoteStatus(int status){
+        DatabaseReference remoteRef = mDatabase.getReference().child("Users").child(UserData.userID)
+                .child("adoptionHistory").child(String.valueOf(ADOPTION.getPetID())).child("status");
+
+        remoteRef.setValue(status);
     }
 
     private BroadcastReceiver mScheduleSelected = new BroadcastReceiver() {
