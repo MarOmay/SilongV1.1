@@ -36,16 +36,10 @@ import com.silong.EnumClass.PetStatus;
 import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
 import com.silong.Operation.Utility;
-import com.silong.Task.PetStatusUpdater;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Timeline extends AppCompatActivity {
 
@@ -292,7 +286,7 @@ public class Timeline extends AppCompatActivity {
 
         switch (CURRENT_STAGE){
             case SEND_REQUEST:
-                checkPetStatus(ADOPTION.getPetID());
+                updatePetStatus(ADOPTION.getPetID());
                 timelineCancelLayout.setVisibility(View.VISIBLE);
                 timelineSetAppLayout.setVisibility(View.GONE);
                 timelineHomeLayout.setVisibility(View.GONE);
@@ -371,7 +365,7 @@ public class Timeline extends AppCompatActivity {
         finish();
     }
 
-    private void checkPetStatus(String petID){
+    private void updatePetStatus(String petID){
 
         //write to RTDB
         DatabaseReference tempRef = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
