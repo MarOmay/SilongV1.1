@@ -38,18 +38,18 @@ public class OnBoarding extends AppCompatActivity {
         xslideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
         xDotLayout = (LinearLayout) findViewById(R.id.indicatorLayout);
 
-        viewPagerAdapter =  new ViewPagerAdapter(this);
+        viewPagerAdapter = new ViewPagerAdapter(this);
         xslideViewPager.setAdapter(viewPagerAdapter);
         setUpIndicator(0);
         xslideViewPager.addOnPageChangeListener(viewListener);
 
     }
 
-    public void setUpIndicator(int position){
+    public void setUpIndicator(int position) {
         dots = new TextView[3];
         xDotLayout.removeAllViews();
 
-        for ( int i = 0 ; i < dots.length ; i++ ){
+        for (int i = 0; i < dots.length; i++) {
             dots[i] = new TextView(this);
             dots[i].setText(Html.fromHtml("&#8226"));
             dots[i].setTextSize(35);
@@ -71,9 +71,9 @@ public class OnBoarding extends AppCompatActivity {
 
             setUpIndicator(position);
 
-            if ( position < 2){
+            if (position < 2) {
                 nextBtn.setVisibility(View.INVISIBLE);
-            }else{
+            } else {
                 nextBtn.setVisibility(View.VISIBLE);
             }
         }
@@ -84,27 +84,24 @@ public class OnBoarding extends AppCompatActivity {
         }
     };
 
-    private int getItem(int i){
+    private int getItem(int i) {
         return xslideViewPager.getCurrentItem() + 1;
     }
 
-    public void onNextPressed(View view){
-        if ( getItem(0) < 3){
-            xslideViewPager.setCurrentItem(getItem(1),true);
-        }else{
-            Intent i = new Intent(OnBoarding.this, LogIn.class);
-            startActivity(i);
-            finish();
-        }
-    }
-
-    public void onSkipPressed(View view){
+    public void onNextPressed(View view) {
         Intent i = new Intent(OnBoarding.this, LogIn.class);
         startActivity(i);
         finish();
     }
 
-    private void checkFirstOpen(){
+    public void onSkipPressed(View view) {
+        Intent i = new Intent(OnBoarding.this, LogIn.class);
+        startActivity(i);
+        finish();
+    }
+
+    private void checkFirstOpen() {
+
         Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
 
@@ -112,7 +109,6 @@ public class OnBoarding extends AppCompatActivity {
             Intent intent = new Intent(OnBoarding.this, LogIn.class);
             startActivity(intent);
             finish();
-
         }
 
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isFirstRun",
