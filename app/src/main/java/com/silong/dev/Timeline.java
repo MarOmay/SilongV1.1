@@ -387,8 +387,8 @@ public class Timeline extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         updateLocalStatus(AWAITING_APPROVAL);
-                        //restartTimeline();
-                        refreshTimeline();
+                        restartTimeline();
+                        //refreshTimeline();
                     }
                 });
 
@@ -419,9 +419,9 @@ public class Timeline extends AppCompatActivity {
                         return;
                     }
                     else if (ADOPTION.getStatus() != status){
-                        //restartTimeline();
-                        mReference = null;
-                        refreshTimeline();
+                        restartTimeline();
+                        //mReference = null;
+                        //refreshTimeline();
                     }
 
                 }
