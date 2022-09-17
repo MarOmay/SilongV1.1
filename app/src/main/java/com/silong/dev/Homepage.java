@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +44,8 @@ import com.yalantis.library.KolodaListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Homepage extends AppCompatActivity {
 
@@ -379,42 +383,60 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void gotoTimeline(){
-        try {
 
-            Log.d("DEBUGGER>>>", "P: " + CURRENT_PET.getPetID());
-            Log.d("DEBUGGER>>>", "C: " + CURRENT_PET.getColor());
+        Map<String, Object> newHist = new HashMap<>();
+        newHist.put("dateRequested", Utility.dateToday());
+        newHist.put("status", 0);
 
-            FileOutputStream fileOuputStream = openFileOutput("adoption-" + Utility.dateToday(), Context.MODE_PRIVATE);
-            try (FileOutputStream fileOutputStream = openFileOutput( "adoption-" + Utility.dateToday(), Context.MODE_APPEND)) {
-                String data = "status:0;\npetID:" + CURRENT_PET.getPetID() + ";";
-                data += "\ndateRequested:" + Utility.dateToday() + ";\n";
-                data += "gender:" + CURRENT_PET.getGender() + "\n";
-                data += "type:" + CURRENT_PET.getType() + "\n";
-                data += "age:" + CURRENT_PET.getAge() + "\n";
-                data += "size:" + CURRENT_PET.getSize() + "\n";
-                data += "color:" + CURRENT_PET.getColor() + "\n";
-                fileOutputStream.write(data.getBytes());
-                fileOutputStream.flush();
+        DatabaseReference histRef = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory").child(String.valueOf(CURRENT_PET.getPetID()));
+        histRef.updateChildren(newHist)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-                new ImageProcessor().saveToLocal(getApplicationContext(), CURRENT_PET.getPhoto(), "adoptionpic-" + CURRENT_PET.getPetID());
+                        try {
 
-                Log.d("DEBUGGER>>>", "to file: " + data);
-                UserData.populateAdoptions(Homepage.this);
+                            UserData.deleteAdoptionByID(Homepage.this, CURRENT_PET.getPetID());
 
-                //launch timeline
-                Intent gotoTimeline = new Intent(Homepage.this, Timeline.class);
-                startActivity(gotoTimeline);
-                Homepage.this.finish();
-            }
-            catch (Exception e){
-                Log.d("Homepage-mBA", e.getMessage());
-                Toast.makeText(getApplicationContext(), "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
-            }
+                            Log.d("DEBUGGER>>>", "P: " + CURRENT_PET.getPetID());
+                            Log.d("DEBUGGER>>>", "C: " + CURRENT_PET.getColor());
 
-        }
-        catch (Exception e){
-            Log.d("Homepage-mBA", "Invalid trigger");
-        }
+                            FileOutputStream fileOuputStream = openFileOutput("adoption-" + Utility.dateToday(), Context.MODE_PRIVATE);
+                            try (FileOutputStream fileOutputStream = openFileOutput( "adoption-" + Utility.dateToday(), Context.MODE_APPEND)) {
+                                String data = "status:0;\npetID:" + CURRENT_PET.getPetID() + ";";
+                                data += "\ndateRequested:" + Utility.dateToday() + ";\n";
+                                data += "gender:" + CURRENT_PET.getGender() + "\n";
+                                data += "type:" + CURRENT_PET.getType() + "\n";
+                                data += "age:" + CURRENT_PET.getAge() + "\n";
+                                data += "size:" + CURRENT_PET.getSize() + "\n";
+                                data += "color:" + CURRENT_PET.getColor() + "\n";
+                                fileOutputStream.write(data.getBytes());
+                                fileOutputStream.flush();
+
+                                new ImageProcessor().saveToLocal(getApplicationContext(), CURRENT_PET.getPhoto(), "adoptionpic-" + CURRENT_PET.getPetID());
+
+                                Log.d("DEBUGGER>>>", "to file: " + data);
+                                UserData.populateAdoptions(Homepage.this);
+
+                                //launch timeline
+                                Intent gotoTimeline = new Intent(Homepage.this, Timeline.class);
+                                startActivity(gotoTimeline);
+                                Homepage.this.finish();
+                            }
+                            catch (Exception e){
+                                Log.d("Homepage-mBA", e.getMessage());
+                                Toast.makeText(getApplicationContext(), "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                        catch (Exception e){
+                            Log.d("Homepage-mBA", "Invalid trigger");
+                        }
+
+
+                    }
+                });
+
     }
 
     private BroadcastReceiver mLogoutReceiver = new BroadcastReceiver() {

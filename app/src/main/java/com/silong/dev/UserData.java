@@ -257,6 +257,33 @@ public class UserData { //removed: extends User
         }
     }
 
+    public static void deleteAdoptionByID(Activity activity, String petID){
+        for (File file : activity.getFilesDir().listFiles()){
+            if (file.getAbsolutePath().contains("adoption-")){
+                String id = "";
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null){
+                        line = line.replace(";","");
+
+                        String [] temp = line.split(":");
+                        switch (temp[0]){
+                            case "petID": id = temp[1]; break;
+                        }
+                    }
+                }
+                catch (Exception e){
+                    Log.d("DEBUGGER>>>", "Exception occured reading " + file.getAbsolutePath());
+                }
+
+                if (petID.equals(id)){
+                    file.delete();
+                }
+            }
+        }
+    }
+
     private static String readFile(File file){
 
         /* READS THE CONTENTS OF A FILE */
