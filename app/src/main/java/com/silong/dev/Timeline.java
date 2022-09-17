@@ -236,23 +236,11 @@ public class Timeline extends AppCompatActivity {
 
                         Log.d("DEBUGGER>>>", "Cancellation ADOPTION.getPetID(): " + ADOPTION.getPetID());
 
-                        //archive to user's RTDB
-                        DatabaseReference tempRef2 = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory").child(ADOPTION.getPetID());
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("dateRequested", ADOPTION.getDateRequested());
-                        map.put("status", Timeline.CANCELLED);
-                        tempRef2.updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-
-                                //return to Splash
-                                loadingDialog.dismissLoadingDialog();
-                                Intent intent = new Intent(Timeline.this, Splash.class);
-                                startActivity(intent);
-                                Timeline.this.finish();
-
-                            }
-                        });
+                        //return to Splash
+                        loadingDialog.dismissLoadingDialog();
+                        Intent intent = new Intent(Timeline.this, Splash.class);
+                        startActivity(intent);
+                        Timeline.this.finish();
 
                     }
                 });
@@ -262,6 +250,7 @@ public class Timeline extends AppCompatActivity {
     private void refreshTimeline(){
         UserData.populateAdoptions(Timeline.this);
         for (Adoption adoption : UserData.adoptionHistory){
+            Log.d("DEBUGGER>>>", "Adoption on device: " + adoption.getDateRequested() + " petID: " + adoption.getPetID() + " status: " + adoption.getStatus());
             switch (adoption.getStatus()){
                 case SEND_REQUEST:
                 case AWAITING_APPROVAL:
@@ -276,6 +265,8 @@ public class Timeline extends AppCompatActivity {
             exitTimeline();
             return;
         }
+
+        Log.d("DEBUGGER>>>", "Final Adoption on device: " + ADOPTION.getDateRequested() + " petID: " + ADOPTION.getPetID());
 
         PET = UserData.getPet(ADOPTION.getPetID());
 
@@ -387,8 +378,8 @@ public class Timeline extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         updateLocalStatus(AWAITING_APPROVAL);
-                        restartTimeline();
-                        //refreshTimeline();
+                        //restartTimeline();
+                        refreshTimeline();
                     }
                 });
 
@@ -419,9 +410,9 @@ public class Timeline extends AppCompatActivity {
                         return;
                     }
                     else if (ADOPTION.getStatus() != status){
-                        restartTimeline();
-                        //mReference = null;
-                        //refreshTimeline();
+                        //restartTimeline();
+                        mReference = null;
+                        refreshTimeline();
                     }
 
                 }

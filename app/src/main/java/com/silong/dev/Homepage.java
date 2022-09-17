@@ -398,6 +398,9 @@ public class Homepage extends AppCompatActivity {
 
                 new ImageProcessor().saveToLocal(getApplicationContext(), CURRENT_PET.getPhoto(), "adoptionpic-" + CURRENT_PET.getPetID());
 
+                Log.d("DEBUGGER>>>", "to file: " + data);
+                UserData.populateAdoptions(Homepage.this);
+
                 //launch timeline
                 Intent gotoTimeline = new Intent(Homepage.this, Timeline.class);
                 startActivity(gotoTimeline);
@@ -407,11 +410,6 @@ public class Homepage extends AppCompatActivity {
                 Log.d("Homepage-mBA", e.getMessage());
                 Toast.makeText(getApplicationContext(), "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
             }
-
-            //launch timeline
-            Intent gotoTimeline = new Intent(Homepage.this, Timeline.class);
-            startActivity(gotoTimeline);
-            Homepage.this.finish();
 
         }
         catch (Exception e){
