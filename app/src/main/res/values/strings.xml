@@ -93,9 +93,15 @@
 
     <string name="vision">A healthy and productive animal populace in the city thru the initiative and support of our local government to safeguard animal health promote animal welfare, assure public safety on safe and wholesome meat and a community aware on responsible pet ownership.</string>
 
+    <string name="goal">An increasing level of animal protection against priority diseases as well as to assure public safety and protection thru meat inspection and awareness on the importance of rabies and also to promote scientific livestock and poultry production.</string>
+
     <string name="operatingHrs">Mondays to Saturdays\n8:00 AM to 5:00 PM</string>
 
-    <string name="contacts">Phone Numbers:\n0933-995-6566 / 0966-318-1892\n\nTelephone Number:\n(044) 3065341\n\nE-mail:\ncityvet20@yahoo.com</string>
+    <string name="phone">Phone Numbers:\n0933-995-6566 / 0966-318-1892</string>
+
+    <string name="telephone">Telephone Number:\n(044) 3065341</string>
+
+    <string name="email">E-mail:\ncityvet20@yahoo.com</string>
 
     <string name="location">Motorpool, Productivity Center\nBrgy. Sapang Palay Proper\nCity of San Jose del Monte, Bulacan</string>
 

@@ -107,15 +107,6 @@
                 android:textAlignment="center"/>
 
             <TextView
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/aboutOffice"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textAlignment="center"/>
-
-            <TextView
                 android:layout_marginTop="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -156,6 +147,24 @@
                 android:layout_marginTop="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Goal"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/pastelGreen"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/goal"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Operating Hours &amp; Days"
                 android:textAlignment="center"
                 android:textSize="16sp"
@@ -181,9 +190,30 @@
                 android:textColor="@color/pastelGreen"/>
 
             <TextView
+                android:id="@+id/phoneTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/contacts"
+                android:text="@string/phone"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/telephoneTv"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/telephone"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/emailTv"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textAlignment="center"/>
