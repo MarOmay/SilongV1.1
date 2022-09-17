@@ -191,6 +191,7 @@
 
             <TextView
                 android:id="@+id/phoneTv"
+                android:onClick="onPressedPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/phone"
@@ -200,6 +201,7 @@
 
             <TextView
                 android:id="@+id/telephoneTv"
+                android:onClick="onPressedTele"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -210,6 +212,7 @@
 
             <TextView
                 android:id="@+id/emailTv"
+                android:onClick="onPressedEmail"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
