@@ -89,12 +89,14 @@ public class OnBoarding extends AppCompatActivity {
     }
 
     public void onNextPressed(View view) {
+        setNotFirstRun();
         Intent i = new Intent(OnBoarding.this, LogIn.class);
         startActivity(i);
         finish();
     }
 
     public void onSkipPressed(View view) {
+        setNotFirstRun();
         Intent i = new Intent(OnBoarding.this, LogIn.class);
         startActivity(i);
         finish();
@@ -111,6 +113,9 @@ public class OnBoarding extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    private void setNotFirstRun(){
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isFirstRun",
                 false).apply();
     }
