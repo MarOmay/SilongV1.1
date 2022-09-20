@@ -35,6 +35,7 @@ import com.silong.EnumClass.PetAge;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
+import com.silong.Operation.EmailNotif;
 import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
@@ -158,8 +159,8 @@ public class Homepage extends AppCompatActivity {
         }
 
         //sync adoption record
-        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this);
-        syncAdoptionHistory.execute();
+        //SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this);
+        //syncAdoptionHistory.execute();
 
         checkAccountStatus();
         loadKoloda();

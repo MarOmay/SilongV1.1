@@ -45,12 +45,12 @@ public class RecordVerifier extends AsyncTask {
             public void run() {
                 Log.d("DEBUGGER>>>", "Entered loop: " + System.currentTimeMillis() + " - cur: " + UserData.pets.size());
                 //check if processing time is more than 30secs
-                /*if (System.currentTimeMillis()-startTime > 5000){
+                if (System.currentTimeMillis()-startTime > 5000){
                     Log.d("DEBUGGER>>>", "timed out");
                     sendBroadcast("RV-download-complete");
                     //end task
                     return;
-                }*/
+                }
 
                 if (UserData.pets.size() == total)
                     sendBroadcast("RV-download-complete");

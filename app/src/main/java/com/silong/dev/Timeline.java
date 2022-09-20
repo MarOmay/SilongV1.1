@@ -35,6 +35,7 @@ import com.silong.CustomView.ExitDialog;
 import com.silong.EnumClass.PetStatus;
 import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
+import com.silong.Operation.EmailNotif;
 import com.silong.Operation.Utility;
 import com.silong.Task.SyncAdoptionHistory;
 
@@ -245,6 +246,9 @@ public class Timeline extends AppCompatActivity {
                         tempRef2.updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+
+                                EmailNotif emailNotif = new EmailNotif(UserData.email, Timeline.CANCELLED, ADOPTION);
+                                emailNotif.sendNotif();
 
                                 //delete local copy of current adoption
                                 UserData.deleteAdoptionByID(Timeline.this, ADOPTION.getPetID());
