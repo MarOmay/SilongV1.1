@@ -81,6 +81,7 @@ public class Homepage extends AppCompatActivity {
     ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn;
     Button applyBtn, aboutOfficeBtn, aboutUsBtn,exitBtn;
     Koloda koloda;
+    ImageView infoIcon;
 
     ImageView avatarImgview;
     TextView usernameTv;
@@ -131,6 +132,7 @@ public class Homepage extends AppCompatActivity {
         aboutUsBtn = (Button) findViewById(R.id.aboutUsBtn);
         exitBtn = (Button) findViewById(R.id.exitBtn);
         editProfileTv = (TextView) findViewById(R.id.editProfileTv);
+        infoIcon = (ImageView) findViewById(R.id.infoIcon);
 
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
