@@ -20,6 +20,7 @@ public class EmailNotif {
 
     private String EMAIL = "silong.sjdm@gmail.com";
     private String PASSWORD = "lbbpxdnxbsfjnsim";
+    private String SENDER = "Silong Support";
     private String HOST = "smtp.gmail.com";
     private String PORT = "465";
 
@@ -73,6 +74,8 @@ public class EmailNotif {
             MimeMessage mimeMessage = new MimeMessage(session);
 
             mimeMessage.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(RECEIVER)));
+
+            mimeMessage.setFrom(new InternetAddress(EMAIL, SENDER));
 
             mimeMessage.setSubject(SUBJECT);
 
