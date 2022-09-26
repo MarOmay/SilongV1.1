@@ -251,7 +251,7 @@ public class EditProfile extends AppCompatActivity {
                         public void onSuccess(Void unused) {
                             //disable in summary
                             mReference = mDatabase.getReference("accountSummary").child(UserData.userID);
-                            mReference.setValue(restart ? false : null)
+                            mReference.setValue(restart ? false : "deleted")
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
