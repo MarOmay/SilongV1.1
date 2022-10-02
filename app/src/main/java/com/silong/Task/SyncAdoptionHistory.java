@@ -52,6 +52,11 @@ public class SyncAdoptionHistory extends AsyncTask {
                         if (snap == null || snap.getKey().equals("null") || snap.getKey() == null)
                             continue;
 
+                        //skip if status is pending
+                        int tempStatus = Integer.parseInt(snap.child("status").getValue().toString());
+                        if (tempStatus > 0 && tempStatus < 7)
+                            return;
+
                         //key is petID
                         Log.d("DEBUGGER>>>", "SAH: key-" + snap.getKey());
 

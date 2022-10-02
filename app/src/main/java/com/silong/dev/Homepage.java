@@ -161,8 +161,8 @@ public class Homepage extends AppCompatActivity {
         }
 
         //sync adoption record
-        //SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this);
-        //syncAdoptionHistory.execute();
+        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this);
+        syncAdoptionHistory.execute();
 
         checkAccountStatus();
         loadKoloda();
