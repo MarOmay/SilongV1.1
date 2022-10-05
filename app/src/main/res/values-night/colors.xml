@@ -12,15 +12,15 @@
     <color name="whitey">#FFFFFFFF</color>
 
     <!-- custom colors -->
-    <color name="pink">#fb528b</color>
-    <color name="darkpink">#d81c60</color>
-    <color name="orange">#ff8e21</color>
+    <color name="pink">#DC5281</color>
+    <color name="darkpink">#D13B71</color>
+    <color name="orange">#E49242</color>
     <color name="gray">#D5D5D2</color>
     <color name="textgray">#b0b3b8</color>
     <color name="lightgray">#252627</color>
     <color name="darkgray">#3d3d39</color>
-    <color name="green">#04d428</color>
-    <color name="red">#e6080B</color>
+    <color name="green">#61A86D</color>
+    <color name="red">#C8595A</color>
     <color name="pastelGreen">#55ab55</color>
 
     <!-- much more custome colors DO NOT REMOVE OR CHANGE -->
