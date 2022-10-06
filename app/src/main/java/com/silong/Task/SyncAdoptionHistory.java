@@ -54,7 +54,7 @@ public class SyncAdoptionHistory extends AsyncTask {
 
                         //skip if status is pending
                         int tempStatus = Integer.parseInt(snap.child("status").getValue().toString());
-                        if (tempStatus > 0 && tempStatus < 7)
+                        if (tempStatus > 0 && tempStatus < 6)
                             return;
 
                         //key is petID
