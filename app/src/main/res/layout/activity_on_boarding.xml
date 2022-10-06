@@ -12,38 +12,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.4"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp">
-
-
-        <TextView
-            android:paddingEnd="15dp"
-            android:id="@+id/onBoardSkipTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onSkipPressed"
-            android:text="SKIP"
-            android:textStyle="bold"
-            android:textAlignment="textEnd"
-            android:textColor="@color/pink"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_weight="0.25"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/slideViewPager"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
 
     </LinearLayout>
 
@@ -57,16 +34,16 @@
         android:weightSum="3">
 
         <LinearLayout
-            android:alpha="0"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:alpha="0"
             android:gravity="center|start">
 
             <Button
                 android:id="@+id/onBoardBackBtn"
                 android:layout_width="60dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -74,19 +51,18 @@
             android:id="@+id/indicatorLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
-
 
         </LinearLayout>
 
         <LinearLayout
-            android:paddingEnd="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center|end">
+            android:gravity="center|end"
+            android:paddingEnd="15dp">
 
             <Button
                 android:id="@+id/onBoardNextBtn"
@@ -96,6 +72,27 @@
                 android:onClick="onNextPressed" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.40"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp">
+
+        <TextView
+            android:id="@+id/onBoardSkipTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onSkipPressed"
+            android:text="SKIP"
+            android:textAlignment="center"
+            android:textColor="@color/pink"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

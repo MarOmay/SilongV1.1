@@ -145,7 +145,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="40dp"
+        android:paddingBottom="10dp"
         android:paddingHorizontal="20dp"
         android:gravity="center|bottom"
         android:orientation="vertical">
@@ -156,17 +156,18 @@
             android:onClick="onPressedLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:text="log in" />
 
         <Button
             android:id="@+id/btnSignup"
-            style="@style/orangeButton_style"
+            style="@style/transpaButton_style"
             android:onClick="onPressedSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="sign up" />
+            android:text="sign up"
+            android:textColor="@color/pink"
+            android:stateListAnimator="@null"/>
 
     </LinearLayout>
 
