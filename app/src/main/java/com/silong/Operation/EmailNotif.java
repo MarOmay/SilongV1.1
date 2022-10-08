@@ -31,11 +31,19 @@ public class EmailNotif {
     private String BODY;
     private String RECEIVER;
 
+    //for timeline use only
     public EmailNotif (String email, int status, Adoption adoption){
         this.RECEIVER = email;
         this.STATUS = status;
         this.ADOPTION = adoption;
         setContent(this.STATUS);
+    }
+
+    //for OTP use only
+    public EmailNotif (String email, String otp){
+        SUBJECT = "Silong | One-time PIN";
+        BODY = "Hi,\nHere is your one-time PIN: " + otp + "\n\n- Your Silong Team";
+        RECEIVER = email;
     }
 
     private void setContent(int status){

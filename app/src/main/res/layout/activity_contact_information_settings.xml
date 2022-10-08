@@ -105,11 +105,13 @@
 
                 <EditText
                     android:id="@+id/newEmailEt"
+                    android:onClick="onPressedEmail"
                     style="@style/textField_style"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="10dp"
                     android:hint="Email Address"
+                    android:focusable="false"
                     android:inputType="textEmailAddress" />
 
             </LinearLayout>
@@ -128,6 +130,7 @@
 
         <Button
             android:id="@+id/contactSaveChangesBtn"
+            android:onClick="onPressedSave"
             style="@style/pinkButton_style"
             android:layout_width="wrap_content"
             android:layout_height="60dp"

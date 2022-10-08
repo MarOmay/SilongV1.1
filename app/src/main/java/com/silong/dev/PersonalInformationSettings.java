@@ -106,6 +106,7 @@ public class PersonalInformationSettings extends AppCompatActivity {
             //check validity of input
             if (!InputValidator.checkName(firstname) || !InputValidator.checkName(lastname)){
                 Toast.makeText(this, "Please use a valid name", Toast.LENGTH_SHORT).show();
+                return;
             }
 
             //prepare data
@@ -180,6 +181,7 @@ public class PersonalInformationSettings extends AppCompatActivity {
 
         }
         catch (Exception e){
+            Toast.makeText(PersonalInformationSettings.this, "Failed to save changes.", Toast.LENGTH_SHORT).show();
             Utility.log("PIS.oPB: " + e.getMessage());
         }
 
