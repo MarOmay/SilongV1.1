@@ -27,11 +27,14 @@ import com.silong.CustomView.DatePickerFragment;
 import com.silong.CustomView.GenderSpinner;
 import com.silong.Operation.ImagePicker;
 import com.silong.Operation.ImageProcessor;
+import com.silong.Operation.InputValidator;
 import com.silong.Operation.Utility;
 
 import java.io.BufferedInputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.validation.Validator;
 
 public class PersonalInformationSettings extends AppCompatActivity {
 
@@ -99,6 +102,11 @@ public class PersonalInformationSettings extends AppCompatActivity {
             String lastname = newLnameEt.getText().toString();
             int gender = newGenderEt.getSelectedItem().toString().equals("Male") ? 0 : 1;
             String birthday = newBirthdayEt.getText().toString();
+
+            //check validity of input
+            if (!InputValidator.checkName(firstname) || !InputValidator.checkName(lastname)){
+                Toast.makeText(this, "Please use a valid name", Toast.LENGTH_SHORT).show();
+            }
 
             //prepare data
             Map<String, Object> map = new HashMap<>();
