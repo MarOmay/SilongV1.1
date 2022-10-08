@@ -82,6 +82,7 @@
 
                 <ImageView
                     android:id="@+id/newPictureIv"
+                    android:onClick="onPressedAvatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/lightgray"
@@ -148,13 +149,11 @@
                     android:textSize="13sp"
                     android:paddingStart="10dp"/>
 
-                <EditText
+                <com.silong.CustomView.GenderSpinner
                     android:id="@+id/newGenderEt"
-                    style="@style/textField_style"
+                    style="@style/spinner_style"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:drawableRight="@drawable/down_grey"
-                    android:drawableTint="@color/textgray"
                     android:hint="Gender"
                     android:inputType="text"
                     tools:ignore="SpeakableTextPresentCheck"
@@ -171,6 +170,7 @@
 
                 <EditText
                     android:id="@+id/newBirthdayEt"
+                    android:onClick="onPressedBirthday"
                     style="@style/textField_style"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -178,6 +178,7 @@
                     android:cursorVisible="false"
                     android:drawableRight="@drawable/ic_baseline_calendar_today_24"
                     android:drawableTint="@color/textgray"
+                    android:editable="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="Birthday"
@@ -199,6 +200,7 @@
 
         <Button
             android:id="@+id/personalSaveChangesBtn"
+            android:onClick="onPressedSave"
             style="@style/pinkButton_style"
             android:layout_width="wrap_content"
             android:layout_height="60dp"

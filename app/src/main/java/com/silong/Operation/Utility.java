@@ -64,6 +64,13 @@ public class Utility {
         return formatter.format(date);
     }
 
+    public static void log(String message){
+        if (message.length() < 1)
+            return;
+        else
+            Log.d("DEBUGGER>>>", message);
+    }
+
     public static void gotoMessenger(Activity activity){
 
         try{

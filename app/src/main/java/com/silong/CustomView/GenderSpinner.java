@@ -32,7 +32,7 @@ public class GenderSpinner extends androidx.appcompat.widget.AppCompatSpinner {
         super.setSelection(getArrayAdapter().getCount());
     }
 
-    private ArrayAdapter<String> getArrayAdapter(){
+    public ArrayAdapter<String> getArrayAdapter(){
 
         String[] gen = getResources().getStringArray(R.array.Gender);
 

@@ -22,6 +22,7 @@
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_horizontal_progress_bar.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_log_in.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_main.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_personal_information_settings.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_process_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/Silong/app/src/main/res/layout/activity_sign_up2.xml" value="0.25" />
@@ -66,14 +67,9 @@
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/layout/nav_drawer_layout.xml" value="0.264" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.121" />
         <entry key="..\:/Users/cnbelano/AndroidStudioProjects/Silong/app/src/main/res/mipmap-hdpi/ic_launcher.xml" value="0.2455" />
-        <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_account_security_settings.xml" value="0.2077922077922078" />
-        <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_address_settings.xml" value="0.21052631578947367" />
-        <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_contact_information_settings.xml" value="0.2077922077922078" />
-        <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_edit_profile.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_help.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_log_in.xml" value="0.2077922077922078" />
         <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_on_boarding.xml" value="0.21052631578947367" />
-        <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_personal_information_settings.xml" value="0.2077922077922078" />
         <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_sign_up.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/activity_sign_up2.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/StudioProjects/Silong/app/src/main/res/layout/nav_drawer_layout.xml" value="0.21052631578947367" />
