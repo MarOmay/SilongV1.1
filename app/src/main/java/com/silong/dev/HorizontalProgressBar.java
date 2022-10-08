@@ -13,12 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.silong.Operation.Utility;
 import com.silong.Task.PetCounter;
 import com.silong.Task.RecordVerifier;
 import com.silong.Task.SyncAdoptionHistory;
 import com.silong.Task.SyncPetRecord;
+
+import java.io.File;
 
 public class HorizontalProgressBar extends AppCompatActivity {
 
@@ -46,6 +49,18 @@ public class HorizontalProgressBar extends AppCompatActivity {
             Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
             horizontalProgressTv.setText("No internet connection.");
             return;
+        }
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null){
+            //remove user data
+            Homepage.USERDATA = new File(getFilesDir(),"user.dat");
+            Homepage.AVATARDATA = new File(getFilesDir(),"avatar.dat");
+            UserData.logout(HorizontalProgressBar.this);
+
+            //return to splash
+            Intent intent = new Intent(HorizontalProgressBar.this, Splash.class);
+            startActivity(intent);
+            finish();
         }
 
         //get total record count from RTDB

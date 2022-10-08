@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -128,17 +129,23 @@ public class ContactInformationSettings extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
 
-                            if (task.getResult().getSignInMethods().isEmpty()){
-                                //upload changes
-                                Intent i = new Intent("cis-post");
-                                i.putExtra("map", (Serializable) map);
-                                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
-                                loadingDialog.dismissLoadingDialog();
+                            try {
+                                if (task.getResult().getSignInMethods().isEmpty()){
+                                    //upload changes
+                                    Intent i = new Intent("cis-post");
+                                    i.putExtra("map", (Serializable) map);
+                                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
+                                    loadingDialog.dismissLoadingDialog();
+                                }
+                                else {
+                                    Toast.makeText(ContactInformationSettings.this, "Email already registered", Toast.LENGTH_SHORT).show();
+                                    loadingDialog.dismissLoadingDialog();
+                                    return;
+                                }
                             }
-                            else {
-                                Toast.makeText(ContactInformationSettings.this, "Email already registered", Toast.LENGTH_SHORT).show();
-                                loadingDialog.dismissLoadingDialog();
-                                return;
+                            catch (Exception ex){
+                                Toast.makeText(ContactInformationSettings.this, "Request failed", Toast.LENGTH_SHORT).show();
+                                Utility.log("CIS.oPS: " + ex.getMessage());
                             }
 
                         }
@@ -303,7 +310,7 @@ public class ContactInformationSettings extends AppCompatActivity {
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                AuthCredential credential = EmailAuthProvider.getCredential(UserData.email, password);
+                AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
 
                 user.reauthenticate(credential)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
