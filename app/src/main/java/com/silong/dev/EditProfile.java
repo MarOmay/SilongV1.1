@@ -66,7 +66,7 @@ public class EditProfile extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mDeactivation, new IntentFilter("deactivate-account-now"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mDeletion, new IntentFilter("delete-account-now"));
 
-        newBirthdayEt = (EditText) findViewById(R.id.newBirthdayEt);
+        /*newBirthdayEt = (EditText) findViewById(R.id.newBirthdayEt);
         newGenderEt = (EditText) findViewById(R.id.newGenderEt);
         newContactEt = (EditText) findViewById(R.id.newContactEt);
         newPictureIv = (ImageView) findViewById(R.id.newPictureIv);
@@ -79,7 +79,7 @@ public class EditProfile extends AppCompatActivity {
         newContactEt.setText(UserData.contact);
         newPictureIv.setImageBitmap(UserData.photo);
         newAddressEt.setText(UserData.address.getAddressLine());
-        barangaySpinner.setSelection(barangaySpinner.getPositionOf(UserData.address.getBarangay()));
+        barangaySpinner.setSelection(barangaySpinner.getPositionOf(UserData.address.getBarangay()));*/
     }
 
     public void onPressedPhoto(View view){
@@ -384,6 +384,26 @@ public class EditProfile extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+    public void onPersonalInformationPressed(View view){
+        Intent i = new Intent(EditProfile.this, PersonalInformationSettings.class);
+        startActivity(i);
+    }
+
+    public void onContactInformationPressed(View view){
+        Intent i = new Intent(EditProfile.this, ContactInformationSettings.class);
+        startActivity(i);
+    }
+
+    public void onAddressPressed(View view){
+        Intent i = new Intent(EditProfile.this, AddressSettings.class);
+        startActivity(i);
+    }
+
+    public void onAccountSecurityPressed(View view){
+        Intent i = new Intent(EditProfile.this, AccountSecuritySettings.class);
+        startActivity(i);
     }
 
     @Override

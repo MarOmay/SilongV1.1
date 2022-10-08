@@ -19,6 +19,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AccountSecuritySettings"
+            android:exported="false" />
+        <activity
+            android:name=".AddressSettings"
+            android:exported="false" />
+        <activity
+            android:name=".ContactInformationSettings"
+            android:exported="false" />
+        <activity
+            android:name=".PersonalInformationSettings"
+            android:exported="false" />
+        <activity
             android:name=".OnBoarding"
             android:exported="false" />
         <activity
