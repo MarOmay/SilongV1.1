@@ -70,6 +70,9 @@ public class ContactInformationSettings extends AppCompatActivity {
         newContactEt.setText(UserData.contact);
         newEmailEt.setText(UserData.email);
 
+        //hide email
+        new Utility().passwordFieldTransformer(newEmailEt, false);
+
     }
 
     public void onPressedSave(View view){
@@ -275,6 +278,7 @@ public class ContactInformationSettings extends AppCompatActivity {
                 }
                 else if (emailOTP.getOTP().equals(tempOTP)){
                     //enable edittext
+                    new Utility().passwordFieldTransformer(newEmailEt, true);
                     newEmailEt.setOnClickListener(null);
                     newEmailEt.setFocusableInTouchMode(true);
                     newEmailEt.setFocusable(true);
