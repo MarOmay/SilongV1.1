@@ -129,6 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:editable="false"
+                    android:text="San Jose del Monte City"
                     android:inputType="none"
                     android:onClick="onPressedDefault"
                     android:textColor="@color/textgray"
@@ -175,6 +176,7 @@
                         android:layout_weight="1"
                         android:editable="false"
                         android:inputType="none"
+                        android:text="Bulacan"
                         android:onClick="onPressedDefault"
                         android:textColor="@color/textgray"
                         tools:ignore="SpeakableTextPresentCheck" />
@@ -210,6 +212,7 @@
 
         <Button
             android:id="@+id/addressSaveChangesBtn"
+            android:onClick="onPressedSave"
             style="@style/pinkButton_style"
             android:layout_width="wrap_content"
             android:layout_height="60dp"

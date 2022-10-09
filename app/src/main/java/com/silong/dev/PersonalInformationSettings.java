@@ -125,6 +125,7 @@ public class PersonalInformationSettings extends AppCompatActivity {
             //check if there is something to save
             if (map.isEmpty()){
                 Toast.makeText(this, "No changes made.", Toast.LENGTH_SHORT).show();
+                loadingDialog.dismissLoadingDialog();
             }
             else {
 
