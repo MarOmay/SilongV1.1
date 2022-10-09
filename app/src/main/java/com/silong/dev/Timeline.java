@@ -169,6 +169,7 @@ public class Timeline extends AppCompatActivity {
         Intent i = new Intent(Timeline.this, EditProfile.class);
         startActivity(i);
         EditProfile.FORBID_DEACTIVATION = true;
+        AccountSecuritySettings.FORBID_DEACTIVATION = true;
     }
 
     public void onPressedLogout(View view){
