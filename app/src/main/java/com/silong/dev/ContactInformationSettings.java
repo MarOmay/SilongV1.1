@@ -200,6 +200,9 @@ public class ContactInformationSettings extends AppCompatActivity {
 
         try {
 
+            //update lastModified
+            map.put("lastModified", Utility.dateToday() + " " + Utility.timeNow());
+
             //update changes to rtdb
             mReference = mDatabase.getReference("Users").child(UserData.userID);
             mReference.updateChildren(map)

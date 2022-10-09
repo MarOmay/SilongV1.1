@@ -23,6 +23,8 @@ public class RequestDeactivationDialog extends MaterialAlertDialogBuilder {
         super.setBackground(context.getDrawable(R.drawable.dialog_bg));
         super.setMessage(context.getResources().getString(R.string.requestDeactivationMessage));
 
+        super.setCancelable(false);
+
         super.setPositiveButton(Html.fromHtml("<b>"+"YES"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

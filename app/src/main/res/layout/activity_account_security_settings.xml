@@ -84,6 +84,7 @@
 
                     <LinearLayout
                         android:id="@+id/resetPasswordBtn"
+                        android:onClick="onPressedResetPassword"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:gravity="center"
@@ -110,6 +111,7 @@
 
                     <LinearLayout
                         android:id="@+id/deactivateAccountBtn"
+                        android:onClick="onPressedDeactivate"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:gravity="center"
@@ -136,6 +138,7 @@
 
                     <LinearLayout
                         android:id="@+id/deleteAccountBtn"
+                        android:onClick="onPressedDelete"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:gravity="center"

@@ -18,9 +18,9 @@ import com.silong.dev.R;
 
 public class EmailPrompt  extends MaterialAlertDialogBuilder{
 
-    public EmailPrompt(@NonNull Context context) {
+    public EmailPrompt(@NonNull Context context, String title) {
         super(context);
-        super.setTitle(Html.fromHtml("<b>"+"Forgot Password"+"</b>"));
+        super.setTitle(Html.fromHtml("<b>"+title+"</b>"));
         super.setIcon(context.getDrawable(R.drawable.forgotpass_icon));
         super.setBackground(context.getDrawable(R.drawable.dialog_bg));
         super.setMessage("\nEnter registered email address.");
@@ -42,6 +42,8 @@ public class EmailPrompt  extends MaterialAlertDialogBuilder{
         et_recovEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         recov_layout.addView(et_recovEmail);
         super.setView(recov_layout);
+
+        super.setCancelable(false);
 
         super.setPositiveButton(Html.fromHtml("<b>"+"SUBMIT"+"</b>"), new DialogInterface.OnClickListener() {
             @Override

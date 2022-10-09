@@ -172,7 +172,7 @@ public class LogIn extends AppCompatActivity {
 
     public void onPressedForgotPassword(View view){
         //Get email
-        EmailPrompt emailPrompt = new EmailPrompt(LogIn.this);
+        EmailPrompt emailPrompt = new EmailPrompt(LogIn.this, "Forgot Password");
         emailPrompt.show();
     }
 

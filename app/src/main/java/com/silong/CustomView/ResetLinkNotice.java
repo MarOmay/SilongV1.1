@@ -19,6 +19,8 @@ public class ResetLinkNotice extends MaterialAlertDialogBuilder{
         super.setBackground(context.getDrawable(R.drawable.dialog_bg));
         super.setMessage(context.getResources().getString(R.string.accRecovMsg));
 
+        super.setCancelable(false);
+
         super.setPositiveButton(Html.fromHtml("<b>"+"OK"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
