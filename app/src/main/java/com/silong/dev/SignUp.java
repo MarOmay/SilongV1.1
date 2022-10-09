@@ -41,9 +41,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.silong.CustomView.ConfirmOTP;
 import com.silong.CustomView.DatePickerFragment;
 import com.silong.CustomView.GenderSpinner;
 import com.silong.Object.User;
+import com.silong.Operation.EmailOTP;
 import com.silong.Operation.InputValidator;
 import com.silong.Operation.Utility;
 
@@ -57,6 +59,8 @@ public class SignUp extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
+    private EmailOTP emailOTP;
 
     ImageView backButton, signUpPassHide, signUpConPassHide;
     static EditText fieldFname, fieldLname, fieldPassword, fieldConfirmpass,
@@ -79,6 +83,7 @@ public class SignUp extends AppCompatActivity {
 
         //Receive date from DatePickerFragment
         LocalBroadcastManager.getInstance(this).registerReceiver(mDate, new IntentFilter("update-date"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mOTPReceiver, new IntentFilter("otp-submit"));
 
         backButton = (ImageView) findViewById(R.id.btnBack);
         fieldDBirthday = (EditText) findViewById(R.id.tfsignupBirthday);
@@ -192,11 +197,17 @@ public class SignUp extends AppCompatActivity {
                         public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                             try{
                                 if (task.getResult().getSignInMethods().isEmpty()){
-                                    Intent i = new Intent(SignUp.this, SignUp2.class);
-                                    i.putExtra("DATA", user);
-                                    i.putExtra("PASSWORD", fieldPassword.getText().toString());
-                                    startActivity(i);
-                                    finish();
+
+                                    //send OTP
+                                    emailOTP = new EmailOTP(SignUp.this, email);
+                                    emailOTP.sendOTP();
+
+                                    Utility.log("OTP: " + emailOTP.getOTP());
+
+                                    //prompt otp
+                                    ConfirmOTP confirmOTP = new ConfirmOTP(SignUp.this);
+                                    confirmOTP.show();
+
                                 }
                                 else {
                                     //Inform user that email is in use
@@ -230,6 +241,38 @@ public class SignUp extends AppCompatActivity {
         }
     };
 
+    private BroadcastReceiver mOTPReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            try {
+
+                //get otp from user input
+                String tempOTP = intent.getStringExtra("otp");
+                if (tempOTP.length() <= 0){
+                    Toast.makeText(getApplicationContext(), "Invalid OTP", Toast.LENGTH_SHORT).show();
+                }
+                else if (emailOTP.getOTP().equals(tempOTP)){
+                    //forward to SignUp2
+                    Intent i = new Intent(SignUp.this, SignUp2.class);
+                    i.putExtra("DATA", user);
+                    i.putExtra("PASSWORD", fieldPassword.getText().toString());
+                    startActivity(i);
+                    finish();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "OTP did not match", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+            catch (Exception e){
+                Toast.makeText(getApplicationContext(), "Error processing OTP", Toast.LENGTH_SHORT).show();
+                Utility.log("SignUp.mOTPR: " + e.getMessage());
+            }
+
+        }
+    };
+
     public void back(View view){
         onBackPressed();
     }
@@ -245,6 +288,7 @@ public class SignUp extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDate);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mOTPReceiver);
     }
 
     public void onPassShowHide(View view){
