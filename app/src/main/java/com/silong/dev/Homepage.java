@@ -117,6 +117,8 @@ public class Homepage extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mLogoutReceiver, new IntentFilter("logout-user"));
         //Receive trigger from ASC task initiated by Apply button
         LocalBroadcastManager.getInstance(this).registerReceiver(mBeginApplication, new IntentFilter("account-status-active"));
+        //Loading dialog receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLoadingReceiver, new IntentFilter("toggle-loading-dialog"));
 
         //Initialize layout views
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -444,6 +446,25 @@ public class Homepage extends AppCompatActivity {
 
     }
 
+    private LoadingDialog loadingDialog = new LoadingDialog(Homepage.this);
+    private BroadcastReceiver mLoadingReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            try {
+                boolean toggle = intent.getBooleanExtra("toggle", false);
+                if (toggle)
+                    loadingDialog.startLoadingDialog();
+                else
+                    loadingDialog.dismissLoadingDialog();
+            }
+            catch (Exception e){
+                Utility.log("Homepage.mLR: " + e.getMessage());
+            }
+
+        }
+    };
+
     private BroadcastReceiver mLogoutReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -536,6 +557,7 @@ public class Homepage extends AppCompatActivity {
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mBeginApplication);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLogoutReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLoadingReceiver);
         super.onDestroy();
     }
 }

@@ -26,18 +26,21 @@ public class ConfirmOTP extends MaterialAlertDialogBuilder {
 
     private Activity activity;
     private Context context;
+    private String email;
 
     private EditText otpET;
 
-    public ConfirmOTP(@NonNull Activity activity) {
+    public ConfirmOTP(@NonNull Activity activity){//, String email) {
         super((Context) activity);
 
         this.activity = activity;
         this.context = (Context) activity;
 
+        //this.email = email;
+
         super.setBackground(activity.getDrawable(R.drawable.dialog_bg));
         super.setTitle("Confirm One-time PIN");
-        super.setMessage("Enter OTP sent to your email");
+        super.setMessage("Enter OTP sent to " + email);
 
         super.setCancelable(false);
 

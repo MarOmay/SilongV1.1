@@ -160,6 +160,7 @@ public class ProcessSignUp extends AppCompatActivity {
         map.put("address/zipcode", address.getZipcode());
         map.put("lastModified", Utility.dateToday() + " " + Utility.timeNow());
         map.put("created", Utility.dateToday());
+        map.put("cancellation", 0);
 
         mReference.updateChildren(map)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

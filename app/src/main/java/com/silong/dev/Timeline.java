@@ -37,6 +37,7 @@ import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
 import com.silong.Operation.EmailNotif;
 import com.silong.Operation.Utility;
+import com.silong.Task.CancellationCounter;
 import com.silong.Task.SyncAdoptionHistory;
 
 import java.io.FileOutputStream;
@@ -248,6 +249,11 @@ public class Timeline extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
 
+                                //increment rtdb cancellation value
+                                CancellationCounter cc = new CancellationCounter(UserData.userID);
+                                cc.execute();
+
+                                //notify user
                                 EmailNotif emailNotif = new EmailNotif(UserData.email, Timeline.CANCELLED, ADOPTION);
                                 emailNotif.sendNotif();
 

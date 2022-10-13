@@ -56,13 +56,6 @@ public class ApplyDialog extends MaterialAlertDialogBuilder {
             public void onClick(DialogInterface dialogInterface, int i) {
                 AccountStatusChecker accountStatusChecker = new AccountStatusChecker(activity);
                 accountStatusChecker.execute();
-                try{
-                    LoadingDialog loadingDialog = new LoadingDialog(activity);
-                    loadingDialog.startLoadingDialog();
-                }
-                catch (Exception e){
-                    Log.d("DEBUGGER>>>", "Failed to start LoadingDialog at ApplyDialog.");
-                }
 
             }
         });
