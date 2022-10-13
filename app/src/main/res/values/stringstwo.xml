@@ -120,4 +120,10 @@ The following information are collected and processed:\n\n
     <string name="onboarding2">Silong is a mobile Android-based app developed for the City Veterinary Office of San Jose del Monte City developed by BSIT students at Bulacan State University - Sarmiento Campus. This project aims to revolutionize the adoption process experience of the Office and its clients, and ultimately, save more lives one process at a time.</string>
     <string name="onboarding3">Owning a pet doesn\'t have to be costly! Through the Silong app, you may browse adoptable pets from the City Veterinary Office and begin the application process wherever you are. Just prepare the requirements, which can be seen on the Self Help page, and secure an appointment. You can save lives by adopting, rather than shopping.</string>
 
+    <string name="adoptionConditions1">Upon proceeding with the adoption application, I hereby abide by the conditions as stipulated in the adoption agreement, to mention;</string>
+
+    <string name="adoptionConditions2">\n\n• The Office may periodically check the condition of the animal while in the care of adopter;  \n\n• In case of any sign of illness, adopter must report and submit the animal for proper treatment to the City Veterinary Office;
+    \n\n• Adopter may not sell nor transfer the ownership of animal without permission from the City Veterinary Office;
+    \n\n• That I shall abide by the provisions of Republic Act 9482 also known as the Anti Rabies Act of 2007 and Republic Act 8485 known as Animal Welfare Act of 1998.</string>
+
 </resources>

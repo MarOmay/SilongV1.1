@@ -4,16 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.silong.Task.AccountStatusChecker;
+import com.silong.dev.AdoptionAgreement;
 import com.silong.dev.Homepage;
 import com.silong.dev.R;
+import com.silong.dev.TermsOfUse;
 
 public class ApplyDialog extends MaterialAlertDialogBuilder {
 
@@ -25,6 +31,26 @@ public class ApplyDialog extends MaterialAlertDialogBuilder {
         super.setMessage("Begin adoption application for this pet?\n" +
                 "Once an appointment is secured, please bring the following:\n" +
                 "\t- 2x2 ID Picture\n\t- Cage or Leash (Kulungan o Tali)\n\t- Valid ID");
+
+        LinearLayout applyDia_layout = new LinearLayout(context);
+        applyDia_layout.setOrientation(LinearLayout.VERTICAL);
+        applyDia_layout.setVerticalGravity(10);
+        TextView conditionsTv = new TextView(context);
+        conditionsTv.setPaintFlags(conditionsTv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        conditionsTv.setText("Adoption Agreement");
+        conditionsTv.setTextColor(context.getResources().getColor(R.color.purple_700));
+        conditionsTv.setPadding(60,40,0,0);
+        conditionsTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, AdoptionAgreement.class);
+                context.startActivity(i);
+            }
+        });
+        applyDia_layout.addView(conditionsTv);
+
+        super.setView(applyDia_layout);
+
         super.setPositiveButton(Html.fromHtml("<b>"+"APPLY"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
