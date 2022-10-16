@@ -30,7 +30,7 @@ public class DatePickerFragment extends DialogFragment
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
         c.add(Calendar.YEAR, -18);
         dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
-        long minimum = (long) (c.getTimeInMillis() - (1000 * 60 * 60 * 24 * 365.25 * 60));
+        long minimum = (long) (c.getTimeInMillis() - (1000 * 60 * 60 * 24 * 365.25 * 42));
         dialog.getDatePicker().setMinDate(minimum);
         return  dialog;
     }
