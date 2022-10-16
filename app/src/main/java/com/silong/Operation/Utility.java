@@ -27,6 +27,8 @@ import java.util.Date;
 
 public class Utility {
 
+    public static final String CLAUSE_SEPARATOR = "#CLAUSE-SEPARATOR#";
+
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
 
         Window win = activity.getWindow();

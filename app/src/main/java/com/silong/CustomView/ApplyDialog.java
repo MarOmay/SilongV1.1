@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
 import com.silong.dev.AdoptionAgreement;
 import com.silong.dev.Homepage;
@@ -32,19 +34,27 @@ public class ApplyDialog extends MaterialAlertDialogBuilder {
                 "Once an appointment is secured, please bring the following:\n" +
                 "\t- 2x2 ID Picture\n\t- Cage or Leash (Kulungan o Tali)\n\t- Valid ID");
 
+        super.setCancelable(false);
+
         LinearLayout applyDia_layout = new LinearLayout(context);
         applyDia_layout.setOrientation(LinearLayout.VERTICAL);
         applyDia_layout.setVerticalGravity(10);
         TextView conditionsTv = new TextView(context);
         conditionsTv.setPaintFlags(conditionsTv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        conditionsTv.setText("Adoption Agreement");
+        conditionsTv.setText("Subject to Adoption Agreement");
         conditionsTv.setTextColor(context.getResources().getColor(R.color.purple_700));
         conditionsTv.setPadding(60,40,0,0);
         conditionsTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, AdoptionAgreement.class);
-                context.startActivity(i);
+                if (!Utility.internetConnection(activity)){
+                    Toast.makeText(activity, "No internet connection", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent i = new Intent(context, AdoptionAgreement.class);
+                    context.startActivity(i);
+                }
+
             }
         });
         applyDia_layout.addView(conditionsTv);

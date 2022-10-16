@@ -100,6 +100,14 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp">
 
+                <TextView
+                    android:id="@+id/bodyTv"
+                    android:textSize="18sp"
+                    android:textColor="@color/whitey"
+                    android:layout_gravity="top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
         </LinearLayout>
