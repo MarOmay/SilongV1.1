@@ -7,15 +7,8 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.google.firebase.database.DataSnapshot;
-import com.silong.Object.Admin;
-import com.silong.Object.Pet;
-import com.silong.dev.HorizontalProgressBar;
 import com.silong.dev.UserData;
 
-import java.io.File;
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 

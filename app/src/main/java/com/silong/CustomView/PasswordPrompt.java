@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
+
 import android.text.Html;
-import android.text.InputType;
+
 import android.text.method.PasswordTransformationMethod;
-import android.view.View;
+
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;

@@ -1,6 +1,6 @@
 package com.silong.CustomView;
 
-import android.content.DialogInterface;
+
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -13,10 +13,10 @@ import com.silong.dev.R;
 import com.silong.dev.Timeline;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+
 
 public class AppointmentDatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 

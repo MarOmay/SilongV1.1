@@ -12,11 +12,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.silong.Object.Adoption;
-import com.silong.Object.Pet;
-import com.silong.Object.User;
+
 import com.silong.Operation.ImageProcessor;
-import com.silong.dev.HorizontalProgressBar;
+
 import com.silong.dev.UserData;
 
 import java.io.File;

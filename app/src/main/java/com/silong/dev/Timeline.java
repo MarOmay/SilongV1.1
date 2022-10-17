@@ -38,7 +38,7 @@ import com.silong.Object.Pet;
 import com.silong.Operation.EmailNotif;
 import com.silong.Operation.Utility;
 import com.silong.Task.CancellationCounter;
-import com.silong.Task.SyncAdoptionHistory;
+
 
 import java.io.FileOutputStream;
 import java.util.HashMap;

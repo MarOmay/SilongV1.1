@@ -18,7 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.silong.Operation.Utility;
 import com.silong.Task.PetCounter;
 import com.silong.Task.RecordVerifier;
-import com.silong.Task.SyncAdoptionHistory;
+
 import com.silong.Task.SyncPetRecord;
 
 import java.io.File;

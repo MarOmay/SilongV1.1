@@ -3,7 +3,7 @@ package com.silong.Operation;
 import android.util.Log;
 
 import com.silong.Object.Adoption;
-import com.silong.Object.Pet;
+
 import com.silong.dev.Timeline;
 
 import java.util.Properties;

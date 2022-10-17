@@ -34,7 +34,7 @@ import java.io.BufferedInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.validation.Validator;
+
 
 public class PersonalInformationSettings extends AppCompatActivity {
 

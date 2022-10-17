@@ -9,7 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -25,15 +25,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.silong.CustomView.AccountDeletionDialog;
-import com.silong.CustomView.ConfirmOTP;
+
 import com.silong.CustomView.EmailPrompt;
 import com.silong.CustomView.PasswordPrompt;
 import com.silong.CustomView.RequestDeactivationDialog;
 import com.silong.CustomView.ResetLinkNotice;
-import com.silong.Operation.EmailOTP;
+
 import com.silong.Operation.Utility;
 
-import java.util.Map;
 
 public class AccountSecuritySettings extends AppCompatActivity {
 

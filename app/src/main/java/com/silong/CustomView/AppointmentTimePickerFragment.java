@@ -1,6 +1,6 @@
 package com.silong.CustomView;
 
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;

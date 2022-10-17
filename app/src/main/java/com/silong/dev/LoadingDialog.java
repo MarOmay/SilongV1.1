@@ -3,10 +3,9 @@ package com.silong.dev;
 import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AlertDialog;
 
