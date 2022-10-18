@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+
 import android.widget.SpinnerAdapter;
 
 import androidx.annotation.NonNull;
@@ -15,7 +15,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.silong.dev.R;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
 
 public class BarangaySpinner extends androidx.appcompat.widget.AppCompatSpinner {

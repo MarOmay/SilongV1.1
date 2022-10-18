@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Html;
-import android.view.Gravity;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;

@@ -1,23 +1,22 @@
 package com.silong.Task;
 
 import android.app.Activity;
-import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.silong.CustomView.LoadingDialog;
-import com.silong.Object.Admin;
+
 import com.silong.Object.Pet;
-import com.silong.Operation.Utility;
+
 import com.silong.dev.HorizontalProgressBar;
 import com.silong.dev.UserData;
 

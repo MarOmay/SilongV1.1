@@ -10,16 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.collection.LLRBNode;
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetColor;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Pet;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class SwipeAdapter extends BaseAdapter {
     private Context context;

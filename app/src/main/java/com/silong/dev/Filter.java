@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.switchmaterial.SwitchMaterial;
+
 
 public class Filter extends AppCompatActivity {
 

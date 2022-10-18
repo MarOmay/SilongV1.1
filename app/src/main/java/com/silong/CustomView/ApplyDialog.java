@@ -6,22 +6,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.text.Html;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
 import com.silong.dev.AdoptionAgreement;
-import com.silong.dev.Homepage;
+
 import com.silong.dev.R;
-import com.silong.dev.TermsOfUse;
+
 
 public class ApplyDialog extends MaterialAlertDialogBuilder {
 

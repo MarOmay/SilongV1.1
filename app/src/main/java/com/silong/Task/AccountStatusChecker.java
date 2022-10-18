@@ -3,7 +3,7 @@ package com.silong.Task;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.silong.CustomView.LoadingDialog;
+
 import com.silong.Operation.Utility;
 import com.silong.dev.DeactivatedScreen;
 import com.silong.dev.Homepage;

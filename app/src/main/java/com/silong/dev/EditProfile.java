@@ -18,8 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.silong.CustomView.BarangaySpinner;
 import com.silong.CustomView.RequestDeactivationDialog;
 import com.silong.CustomView.AccountDeletionDialog;
-import com.silong.EnumClass.Gender;
+
 import com.silong.Operation.ImagePicker;
 import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.InputValidator;

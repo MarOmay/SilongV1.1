@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.silong.Operation.ImageProcessor;
 import com.silong.dev.UserData;
 
-import java.util.ArrayList;
+
 
 public class RecordDownloader extends AsyncTask {
 
