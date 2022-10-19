@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +41,8 @@ public class AboutTheOffice extends AppCompatActivity {
     private boolean friday;
     private boolean saturday;
 
+    private TextView scheduleTv, phoneTv, telephoneTv, emailTv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,10 @@ public class AboutTheOffice extends AppCompatActivity {
         getSupportActionBar().hide();
 
         facebookImgview = (ImageView) findViewById(R.id.facebookImgview);
+        scheduleTv = findViewById(R.id.scheduleTv);
+        phoneTv = findViewById(R.id.phoneTv);
+        telephoneTv = findViewById(R.id.telephoneTv);
+        emailTv = findViewById(R.id.emailTv);
 
         //fetch info
         fetchPublicInfo();
@@ -103,6 +110,27 @@ public class AboutTheOffice extends AppCompatActivity {
 
     }
 
+    private void updateUI(){
+        try {
+            String schedule = timeFrom + " - " + timeTo + "\n";
+            schedule += monday ? "Monday\n" : "";
+            schedule += tuesday ? "Tuesday\n" : "";
+            schedule += wednesday ? "Wednesday\n" : "";
+            schedule += thursday ? "Thursday\n" : "";
+            schedule += friday ? "Friday\n" : "";
+            schedule += saturday ? "Saturday" : "";
+
+            scheduleTv.setText(schedule);
+            phoneTv.setText("Phone Number:\n" + phone);
+            telephoneTv.setText("Telephone Number:\n" + telephone);
+            emailTv.setText("Email:\n" + email);
+
+        }
+        catch (Exception e){
+            Utility.log("ATO.uUI: " + e.getMessage());
+        }
+    }
+
     private void fetchPublicInfo(){
         LoadingDialog loadingDialog = new LoadingDialog(AboutTheOffice.this);
         loadingDialog.startLoadingDialog();
@@ -124,11 +152,13 @@ public class AboutTheOffice extends AppCompatActivity {
                         timeTo = snapshot.child("officeSchedule").child("timeTo").getValue().toString();
 
                         monday = (boolean) snapshot.child("officeSchedule").child("monday").getValue();
-                        tuesday = (boolean) snapshot.child("officeSchedule").child("monday").getValue();
+                        tuesday = (boolean) snapshot.child("officeSchedule").child("tuesday").getValue();
                         wednesday = (boolean) snapshot.child("officeSchedule").child("wednesday").getValue();
                         thursday = (boolean) snapshot.child("officeSchedule").child("thursday").getValue();
                         friday = (boolean) snapshot.child("officeSchedule").child("friday").getValue();
                         saturday = (boolean) snapshot.child("officeSchedule").child("saturday").getValue();
+
+                        updateUI();
 
                     }
                     catch (Exception e){

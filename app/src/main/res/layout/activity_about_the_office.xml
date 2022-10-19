@@ -172,6 +172,7 @@
                 android:textColor="@color/pastelGreen"/>
 
             <TextView
+                android:id="@+id/scheduleTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/operatingHrs"
