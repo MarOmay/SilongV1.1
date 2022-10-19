@@ -66,20 +66,6 @@ public class EditProfile extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mDeactivation, new IntentFilter("deactivate-account-now"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mDeletion, new IntentFilter("delete-account-now"));
 
-        /*newBirthdayEt = (EditText) findViewById(R.id.newBirthdayEt);
-        newGenderEt = (EditText) findViewById(R.id.newGenderEt);
-        newContactEt = (EditText) findViewById(R.id.newContactEt);
-        newPictureIv = (ImageView) findViewById(R.id.newPictureIv);
-        newAddressEt = (EditText) findViewById(R.id.newAddressEt);
-        barangaySpinner = (BarangaySpinner) findViewById(R.id.newBarangaySp);
-        saveChangesBtn = (Button) findViewById(R.id.saveChangesBtn);
-
-        newBirthdayEt.setText(UserData.birthday);
-        newGenderEt.setText(UserData.gender == 0 ? "Male" : "Female");
-        newContactEt.setText(UserData.contact);
-        newPictureIv.setImageBitmap(UserData.photo);
-        newAddressEt.setText(UserData.address.getAddressLine());
-        barangaySpinner.setSelection(barangaySpinner.getPositionOf(UserData.address.getBarangay()));*/
     }
 
     public void onPressedPhoto(View view){
