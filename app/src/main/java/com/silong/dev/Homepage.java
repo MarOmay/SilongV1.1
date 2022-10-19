@@ -78,10 +78,9 @@ public class Homepage extends AppCompatActivity {
     DrawerLayout drawerLayout;
 
     TextView headerTitle, editProfileTv;
-    ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn;
+    ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, infoIcon;
     Button applyBtn, aboutOfficeBtn, aboutUsBtn,exitBtn;
     Koloda koloda;
-    ImageView infoIcon;
 
     ImageView avatarImgview;
     TextView usernameTv;
@@ -540,6 +539,12 @@ public class Homepage extends AppCompatActivity {
 
         }
     };
+
+    public void onPressedInfoIcon(View view){
+
+        Intent i = new Intent(Homepage.this, MoreInfo.class);
+        startActivity(i);
+    }
 
     @Override
     public void onBackPressed() {
