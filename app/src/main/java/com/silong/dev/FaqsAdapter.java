@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.silong.Object.Faqs;
+
 import java.util.ArrayList;
 
 public class FaqsAdapter extends RecyclerView.Adapter<FaqsAdapter.MyViewHolder> {
@@ -37,14 +39,14 @@ public class FaqsAdapter extends RecyclerView.Adapter<FaqsAdapter.MyViewHolder> 
         Faqs faqs = faqsArrayList.get(position);
 
         if (Help.KEYWORD.length() == 0 ||
-                faqs.heading.toLowerCase().contains(Help.KEYWORD) ||
-                faqs.body.toLowerCase().contains(Help.KEYWORD)){
+                faqs.getHeading().toLowerCase().contains(Help.KEYWORD) ||
+                faqs.getBody().toLowerCase().contains(Help.KEYWORD) ||
+                faqs.isInTags(Help.KEYWORD)){
 
-            holder.headingTv.setText(faqs.heading);
-            holder.bodyTv.setText(faqs.body);
+            holder.headingTv.setText(faqs.getHeading());
+            holder.bodyTv.setText(faqs.getBody());
 
-            boolean isVisible = faqs.visibility;
-            holder.expandedLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+            holder.expandedLayout.setVisibility(faqs.isVisibility() ? View.VISIBLE : View.GONE);
         }
         else{
             holder.itemView.setVisibility(View.GONE);

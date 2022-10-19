@@ -13,6 +13,8 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.silong.Object.Faqs;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -106,8 +108,9 @@ public class Help extends AppCompatActivity {
 
                     String title = getValue("title", element2);
                     String body = getValue("body", element2);
+                    String tags = getValue("tag", element2);
 
-                    faqsArrayList.add(new Faqs(title, body));
+                    faqsArrayList.add(new Faqs(title, body, tags.split(",")));
 
                 }
             }

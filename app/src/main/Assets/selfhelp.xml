@@ -10,36 +10,42 @@
         5.Valid ID
         6.Leash or Cage (Kulungan o Tali)
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>Are the pets in good health?</title>
         <body>              Yes, the pets that are available for adoption are in good health and have undergone tests by the City Veterinary Office.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>Is there a cost involved?</title>
         <body>              There are no costs involved, but be sure you have the necessary requirements.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>What is the maximum number of pets that can be adopted?</title>
         <body>              For dogs, at most two can be adopted, and any number of cats as long as you have the capacity and financial means to adopt. The owner must be able to provide food and shelter for the adopted pet. They will also be responsible for the healthcare and hospitalization of their pet/s.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>Can I return a pet after adoption?</title>
         <body>              Returning or surrendering a pet is prohibited by law, but if the owner can provide a legally valid reason, please reach out to the City Veterinary Office.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>“I have more questions…”</title>
         <body>               Please send a message to the City Veterinary Office’s Facebook Page, or go to Menu and tap “About the Office” to learn more.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
@@ -50,6 +56,7 @@
             4.Restart your phone
             5.Logout and log back in
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
@@ -61,36 +68,42 @@
 
             If you are logged in and trying to change your password, logout of your account first then follow the instructions above.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>Problem logging in</title>
         <body>              Please refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time. If problem persists, reach out to the City Veterinary Office.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>No photos of pets are shown</title>
         <body>              Tap filter, mark all of the available options. If problem persists, refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>Changing Account Details</title>
         <body>              Go to the Menu, then tap “Edit Profile” to change your photo, address,  and phone number. Birthday, gender and name can’t be changed.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>Silong Feature isn't working</title>
         <body>              Refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
     <article>
         <title>Account Deactivation or Deletion</title>
         <body>              To deactivate your account temporarily or permanently, simply select "Edit Profile", then tap “Deactivate” or “Delete”. Once deactivated you’ll need admin approval to activate the account again. On the other hand, deleting your account is permanent and can’t be undone.
         </body>
+        <tag>prerequisite,bring</tag>
     </article>
 
 </articles>
