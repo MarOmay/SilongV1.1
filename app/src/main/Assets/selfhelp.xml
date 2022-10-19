@@ -17,46 +17,61 @@
         <title>Are the pets in good health?</title>
         <body>              Yes, the pets that are available for adoption are in good health and have undergone tests by the City Veterinary Office.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>healthy,not ill,sick,sakit,malusog</tag>
     </article>
 
     <article>
         <title>Is there a cost involved?</title>
         <body>              There are no costs involved, but be sure you have the necessary requirements.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>money,cash,pay,bayad,pera</tag>
     </article>
 
     <article>
         <title>What is the maximum number of pets that can be adopted?</title>
         <body>              For dogs, at most two can be adopted, and any number of cats as long as you have the capacity and financial means to adopt. The owner must be able to provide food and shelter for the adopted pet. They will also be responsible for the healthcare and hospitalization of their pet/s.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>limit,unlimited,kakayanan</tag>
     </article>
 
     <article>
         <title>Can I return a pet after adoption?</title>
         <body>              Returning or surrendering a pet is prohibited by law, but if the owner can provide a legally valid reason, please reach out to the City Veterinary Office.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>send back,ibalik,sauli</tag>
+    </article>
+
+    <article>
+        <title>How do I find out if my request to adopt a pet has been granted?</title>
+        <body>               Silong will email you to let you know if your adoption request has been approved after it has been submitted.
+        </body>
+        <tag>notice,notify,approve</tag>
+    </article>
+
+    <article>
+        <title>Can I still adopt a pet even though it is outside the authorized neighborhoods or areas?</title>
+        <body>               Users who are not covered or who live outside of the City of San Jose del Monte, Bulacan will not be permitted to adopt by City Veterinary.
+        </body>
+        <tag>not allowed</tag>
     </article>
 
     <article>
         <title>“I have more questions…”</title>
         <body>               Please send a message to the City Veterinary Office’s Facebook Page, or go to Menu and tap “About the Office” to learn more.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>question,concern</tag>
     </article>
 
     <article>
         <title>Basic Troubleshooting Guide</title>
-        <body>        1.Check your internet connection
+        <body>            1.Check your internet connection
             2.Clear App’s data and cache in the phone’s settings
             3.Uninstall the App
             4.Restart your phone
             5.Logout and log back in
+            6.Check your phone's date and time
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>guide,step,process,procedure</tag>
     </article>
 
     <article>
@@ -68,42 +83,84 @@
 
             If you are logged in and trying to change your password, logout of your account first then follow the instructions above.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>forgot</tag>
     </article>
 
     <article>
         <title>Problem logging in</title>
         <body>              Please refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time. If problem persists, reach out to the City Veterinary Office.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>problem logging in</tag>
     </article>
 
     <article>
         <title>No photos of pets are shown</title>
         <body>              Tap filter, mark all of the available options. If problem persists, refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>display,picture</tag>
     </article>
 
     <article>
         <title>Changing Account Details</title>
         <body>              Go to the Menu, then tap “Edit Profile” to change your photo, address,  and phone number. Birthday, gender and name can’t be changed.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>details,information</tag>
     </article>
 
     <article>
         <title>Silong Feature isn't working</title>
         <body>              Refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>malfunction,not working</tag>
     </article>
 
     <article>
         <title>Account Deactivation or Deletion</title>
         <body>              To deactivate your account temporarily or permanently, simply select "Edit Profile", then tap “Deactivate” or “Delete”. Once deactivated you’ll need admin approval to activate the account again. On the other hand, deleting your account is permanent and can’t be undone.
         </body>
-        <tag>prerequisite,bring</tag>
+        <tag>remove,removal,delete</tag>
+    </article>
+
+    <article>
+        <title>No Email Received</title>
+        <body>              For gmail accounts, check in the spam folder; for outlook, search in the junk folder.
+        </body>
+        <tag>gmail,outlook,spam,junk</tag>
+    </article>
+
+    <article>
+        <title>Timeline don't reflect changes immediately</title>
+        <body>              Internet connection greatly impacts real-time update of timeline, if problem persists, refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
+        </body>
+        <tag>delay,effect,realtime</tag>
+    </article>
+
+    <article>
+        <title>Missing Profile Data</title>
+        <body>              Refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
+        </body>
+        <tag>missing,lost</tag>
+    </article>
+
+    <article>
+        <title>Corrupted Pet Picture Displayed on Email</title>
+        <body>              If the pet’s picture does not appear, simply report Silong’s message as “not spam”.
+        </body>
+        <tag>report,error</tag>
+    </article>
+
+    <article>
+        <title>Profile changes do not take effect immediately</title>
+        <body>              Internet connection greatly impacts real-time update of timeline, if problem persists, refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
+        </body>
+        <tag>delay,effect,realtime</tag>
+    </article>
+
+    <article>
+        <title>Missing adoption application</title>
+        <body>              Refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
+        </body>
+        <tag>lost,missing</tag>
     </article>
 
 </articles>
