@@ -74,6 +74,8 @@ public class Help extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 KEYWORD = accountSearchEt.getText().toString();
+                if (KEYWORD.length() > 0)
+                    faqsAdapter.collapseAll();
                 displayContent();
             }
 

@@ -24,6 +24,12 @@ public class FaqsAdapter extends RecyclerView.Adapter<FaqsAdapter.MyViewHolder> 
         this.faqsArrayList = faqsArrayList;
     }
 
+    public void collapseAll(){
+        for (Faqs faq : faqsArrayList){
+            faq.setVisibility(false);
+        }
+    }
+
     @NonNull
     @Override
     public FaqsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
