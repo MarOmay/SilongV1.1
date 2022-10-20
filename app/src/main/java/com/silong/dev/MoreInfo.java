@@ -28,6 +28,7 @@ public class MoreInfo extends AppCompatActivity {
     InfoViewPagerAdapter infoViewPagerAdapter;
 
     private TextView moreType, moreGender, moreAge, moreSize, moreColor, moreRescueDate;
+    private TextView morePetId;
 
     private Pet PET;
 
@@ -45,6 +46,7 @@ public class MoreInfo extends AppCompatActivity {
         moreSize = findViewById(R.id.moreSize);
         moreColor = findViewById(R.id.moreColor);
         moreRescueDate = findViewById(R.id.moreRescueDate);
+        morePetId = findViewById(R.id.morePetId);
 
         loadPetInfo();
 

@@ -3,6 +3,7 @@ package com.silong.CustomView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.text.Html;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -29,6 +30,7 @@ public class TnCDialog extends MaterialAlertDialogBuilder {
         tnc_layout.setVerticalGravity(10);
         TextView tnc_tv = new TextView(context);
         tnc_tv.setText("Terms of Use");
+        tnc_tv.setPaintFlags(tnc_tv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tnc_tv.setTextColor(context.getResources().getColor(R.color.purple_700));
         tnc_tv.setPadding(60,0,0,0);
         tnc_layout.addView(tnc_tv);
