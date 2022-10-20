@@ -233,18 +233,18 @@ public class Homepage extends AppCompatActivity {
             //making a copy of the filtered list as koloda listener reference
             tempPetList = filterList();
 
+            ArrayList<Pet> copyOfTempPetList = (ArrayList<Pet>) tempPetList.clone();
+
             if (tempPetList.size() < 3){
                 for (Pet pet : tempPetList)
-                    tempPetList.add(pet);
+                    copyOfTempPetList.add(pet);
             }
-
-            ArrayList<Pet> copyOfTempPetList = (ArrayList<Pet>) tempPetList.clone();
 
             SwipeAdapter adapter = new SwipeAdapter(this, copyOfTempPetList);
             koloda.setAdapter(adapter);
         }
         catch (Exception e){
-            Log.d("Homepage-lK", e.getMessage() != null ? e.getMessage() : "Error");
+            Utility.log("Homepage.lK: " + e.getMessage());
         }
     }
 
@@ -271,10 +271,7 @@ public class Homepage extends AppCompatActivity {
                 continue;
             
             filteredList.add(pet);
-            Log.d("DEBUGGER>>>", "Added");
         }
-
-        Log.d("DEBUGGER>>>", "Size: " + filteredList.size());
 
         return filteredList;
     }
@@ -285,7 +282,7 @@ public class Homepage extends AppCompatActivity {
             CURRENT_PET = tempPetList.get(0);
         }
         catch (Exception e){
-            Log.d("DEBUGGER>>>", e.getMessage());
+            Utility.log("Homepage.sKL: " + e.getMessage());
         }
 
 
@@ -307,7 +304,6 @@ public class Homepage extends AppCompatActivity {
                 i++;
                 while (i >= tempPetList.size())
                     i -= tempPetList.size();
-                Log.d("DEBUGGER>>>", "value of i: " + i);
                 SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
                 //swipeAdapter.insert(UserData.pets.get(i+1));
                 swipeAdapter.insert(tempPetList.get(i));
@@ -327,7 +323,6 @@ public class Homepage extends AppCompatActivity {
                 i++;
                 while (i >= tempPetList.size())
                     i -= tempPetList.size();
-                Log.d("DEBUGGER>>>", "value of i: " + i);
                 SwipeAdapter swipeAdapter = (SwipeAdapter) koloda.getAdapter();
                 swipeAdapter.insert(tempPetList.get(i));
 
@@ -404,9 +399,6 @@ public class Homepage extends AppCompatActivity {
 
                             UserData.deleteAdoptionByID(Homepage.this, CURRENT_PET.getPetID());
 
-                            Log.d("DEBUGGER>>>", "P: " + CURRENT_PET.getPetID());
-                            Log.d("DEBUGGER>>>", "C: " + CURRENT_PET.getColor());
-
                             FileOutputStream fileOuputStream = openFileOutput("adoption-" + Utility.dateToday(), Context.MODE_PRIVATE);
                             try (FileOutputStream fileOutputStream = openFileOutput( "adoption-" + Utility.dateToday(), Context.MODE_APPEND)) {
                                 String data = "status:0;\npetID:" + CURRENT_PET.getPetID() + ";";
@@ -421,7 +413,6 @@ public class Homepage extends AppCompatActivity {
 
                                 new ImageProcessor().saveToLocal(getApplicationContext(), CURRENT_PET.getPhoto(), "adoptionpic-" + CURRENT_PET.getPetID());
 
-                                Log.d("DEBUGGER>>>", "to file: " + data);
                                 UserData.populateAdoptions(Homepage.this);
 
                                 //launch timeline
@@ -430,13 +421,13 @@ public class Homepage extends AppCompatActivity {
                                 Homepage.this.finish();
                             }
                             catch (Exception e){
-                                Log.d("Homepage-mBA", e.getMessage());
+                                Utility.log("Homepage.gT.oC: " + e.getMessage());
                                 Toast.makeText(getApplicationContext(), "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
                             }
 
                         }
                         catch (Exception e){
-                            Log.d("Homepage-mBA", "Invalid trigger");
+                            Utility.log("Homepage.gT: " + e.getMessage());
                         }
 
 
@@ -501,7 +492,7 @@ public class Homepage extends AppCompatActivity {
                             }
                         }
                         catch (Exception e){
-                            Log.d("DEBUGGER>>>", "mBeginApplication - " + e.getMessage());
+                            Utility.log("Homepage.mBA: " + e.getMessage());
                         }
 
                     }
