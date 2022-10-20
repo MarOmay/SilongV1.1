@@ -2,6 +2,7 @@ package com.silong.dev;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,6 +26,7 @@ import java.io.File;
 
 public class HorizontalProgressBar extends AppCompatActivity {
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private LinearProgressIndicator linearProgressIndicator;
     private TextView horizontalProgressTv;
 
@@ -41,8 +43,11 @@ public class HorizontalProgressBar extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mOnFailure, new IntentFilter("RV-timed-out"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mOnCount, new IntentFilter("PC-count-complete"));
 
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         linearProgressIndicator = findViewById(R.id.progressBar);
         horizontalProgressTv = (TextView) findViewById(R.id.horizontalProgressTv);
+
+        swipeRefreshLayout.setOnRefreshListener(refreshListener);
 
         //check internet connection
         if (!Utility.internetConnection(HorizontalProgressBar.this)){
@@ -106,6 +111,18 @@ public class HorizontalProgressBar extends AppCompatActivity {
             catch (Exception e){
                 Log.d("HPB", e.getMessage());
             }
+        }
+    };
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+
+            Intent intent = new Intent(HorizontalProgressBar.this, HorizontalProgressBar.class);
+            startActivity(intent);
+            swipeRefreshLayout.setRefreshing(false);
+            finish();
+
         }
     };
 
