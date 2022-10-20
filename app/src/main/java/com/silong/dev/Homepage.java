@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -77,6 +78,7 @@ public class Homepage extends AppCompatActivity {
     private DatabaseReference mReference;
 
     DrawerLayout drawerLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     TextView headerTitle, editProfileTv;
     ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, infoIcon;
@@ -122,6 +124,7 @@ public class Homepage extends AppCompatActivity {
 
         //Initialize layout views
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         View view = findViewById(R.id.headerLayout);
         headerTitle = (TextView) findViewById(R.id.headerTitle);
         filterImgview = (ImageView) findViewById(R.id.filterImgview);
@@ -169,6 +172,8 @@ public class Homepage extends AppCompatActivity {
         checkAccountStatus();
         loadKoloda();
         setKolodaListener();
+
+        swipeRefreshLayout.setOnRefreshListener(refreshListener);
 
     }
 
@@ -543,6 +548,18 @@ public class Homepage extends AppCompatActivity {
 
                 }
             });
+
+        }
+    };
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+
+            Intent intent = new Intent(Homepage.this, HorizontalProgressBar.class);
+            startActivity(intent);
+            swipeRefreshLayout.setRefreshing(false);
+            finish();
 
         }
     };

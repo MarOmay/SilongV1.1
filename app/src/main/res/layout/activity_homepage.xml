@@ -8,110 +8,115 @@
     android:id="@+id/drawerLayout"
     tools:context=".Homepage">
 
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="4">
-
-        <include
-            android:id="@+id/headerView"
-            layout="@layout/activity_header"
-            android:layout_weight="1"
-            tools:ignore="IncludeLayoutParam" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.85"
             android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/no_results"
-            android:backgroundTint="@color/gray">
+            android:weightSum="4">
 
-            <com.yalantis.library.Koloda
-                android:id="@+id/koloda"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:koloda_card_layout="@layout/item_koloda" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3.15"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingHorizontal="15dp">
+            <include
+                android:id="@+id/headerView"
+                layout="@layout/activity_header"
+                android:layout_weight="1"
+                tools:ignore="IncludeLayoutParam" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.9"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:layout_weight="0.85"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/no_results"
+                android:backgroundTint="@color/gray">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom">
-
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/paw"
-                        app:tint="@color/black" />
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/cat_paw"
-                        app:tint="@color/black" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:text="Apply for the pet on screen."
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                <com.yalantis.library.Koloda
+                    android:id="@+id/koloda"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:koloda_card_layout="@layout/item_koloda" />
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/applyBtn"
-                android:onClick="onPressedApply"
-                style="@style/pinkButton_style"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Apply" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3.15"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/paw"
+                            app:tint="@color/black" />
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/cat_paw"
+                            app:tint="@color/black" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:text="Apply for the pet on screen."
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/applyBtn"
+                    android:onClick="onPressedApply"
+                    style="@style/pinkButton_style"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Apply" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="end">
-
-        <LinearLayout
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_gravity="end">
 
-            <include
-                layout="@layout/nav_drawer_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <include
+                    layout="@layout/nav_drawer_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-    </com.google.android.material.navigation.NavigationView>
+            </LinearLayout>
 
+        </com.google.android.material.navigation.NavigationView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
