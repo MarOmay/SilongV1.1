@@ -421,24 +421,28 @@ public class Timeline extends AppCompatActivity {
             return;
         }
 
-        mReference = mDatabase.getReference().child("adoptionRequest").child(UserData.userID).child("status");
+        mReference = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null){
 
-                    int status = Integer.valueOf(snapshot.getValue().toString());
-                    updateLocalStatus(status);
+                    int status = Integer.valueOf(snapshot.child("status").getValue().toString());
+                    String date = snapshot.child("appointmentDate").getValue().toString();
+                    String time = snapshot.child("appointmentTime").getValue().toString();
+                    updateLocalStatus(status, date, time);
                     updateRemoteStatus(status);
 
                     Log.d("DEBUGGER>>>", "Status: " + status);
+
+                    String dateTime = date + " " + time;
 
                     if (status == DECLINED){
                         Log.d("DEBUGGER>>>", "Exiting timeline");
                         exitTimeline();
                         return;
                     }
-                    else if (ADOPTION.getStatus() != status){
+                    else if (ADOPTION.getStatus() != status || !dateTime.equals(ADOPTION.getAppointmentDate())){
                         //restartTimeline();
                         mReference = null;
                         refreshTimeline();
@@ -470,6 +474,20 @@ public class Timeline extends AppCompatActivity {
         Intent intent = new Intent(Timeline.this, HorizontalProgressBar.class);
         startActivity(intent);
         finish();
+    }
+
+    private void updateLocalStatus(int status, String date, String time){
+        //update adoption- file
+        try (FileOutputStream fileOutputStream = Timeline.this.openFileOutput( "adoption-" + ADOPTION.getDateRequested(), Context.MODE_APPEND)) {
+            String data = "status:" + status + ";\n";
+            data += "appointmentDate:" + date + " " + time.replace(":","*") + ";\n";
+            fileOutputStream.write(data.getBytes());
+            fileOutputStream.flush();
+        }
+        catch (Exception e){
+            Log.d("DEBUGGER>>>", e.getMessage());
+            Toast.makeText(getApplicationContext(), "Can't update adoption-.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateLocalStatus(int status){
