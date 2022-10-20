@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.AppointmentDatePickerFragment;
 import com.silong.CustomView.CustomStepView;
 import com.silong.CustomView.ExitDialog;
+import com.silong.CustomView.HomepageExitDialog;
 import com.silong.EnumClass.PetStatus;
 import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
@@ -582,10 +583,13 @@ public class Timeline extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (timelineDrawer.isDrawerOpen(GravityCompat.END)){
+            timelineDrawer.closeDrawer(GravityCompat.END);
+        }
+        else {
+            HomepageExitDialog homepageExitDialog = new HomepageExitDialog(Timeline.this);
+            homepageExitDialog.show();
+        }
     }
 
     @Override
