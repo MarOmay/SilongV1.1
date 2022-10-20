@@ -428,21 +428,37 @@ public class Timeline extends AppCompatActivity {
                 if (snapshot.getValue() != null){
 
                     int status = Integer.valueOf(snapshot.child("status").getValue().toString());
-                    String date = snapshot.child("appointmentDate").getValue().toString();
-                    String time = snapshot.child("appointmentTime").getValue().toString();
-                    updateLocalStatus(status, date, time);
+
+
+                    try {
+                        String date = snapshot.child("appointmentDate").getValue().toString();
+                        String time = snapshot.child("appointmentTime").getValue().toString();
+                        updateLocalStatus(status, date, time);
+
+                        String dateTime = date + " " + time;
+                        if (!dateTime.equals(ADOPTION.getAppointmentDate())){
+                            //restartTimeline();
+                            mReference = null;
+                            refreshTimeline();
+                        }
+                    }
+                    catch (Exception e){
+                        updateLocalStatus(status);
+                        Utility.log("Timeline.wRS.oDC: " + e.getMessage());
+                    }
+
                     updateRemoteStatus(status);
 
                     Log.d("DEBUGGER>>>", "Status: " + status);
 
-                    String dateTime = date + " " + time;
+
 
                     if (status == DECLINED){
                         Log.d("DEBUGGER>>>", "Exiting timeline");
                         exitTimeline();
                         return;
                     }
-                    else if (ADOPTION.getStatus() != status || !dateTime.equals(ADOPTION.getAppointmentDate())){
+                    else if (ADOPTION.getStatus() != status ){
                         //restartTimeline();
                         mReference = null;
                         refreshTimeline();

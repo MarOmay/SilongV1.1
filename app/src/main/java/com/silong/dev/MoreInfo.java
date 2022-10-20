@@ -3,12 +3,22 @@ package com.silong.dev;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.silong.EnumClass.Gender;
+import com.silong.EnumClass.PetAge;
+import com.silong.EnumClass.PetColor;
+import com.silong.EnumClass.PetSize;
+import com.silong.EnumClass.PetType;
+import com.silong.Object.Pet;
+import com.silong.Operation.ImageProcessor;
+import com.silong.Operation.Utility;
 
 public class MoreInfo extends AppCompatActivity {
 
@@ -18,6 +28,10 @@ public class MoreInfo extends AppCompatActivity {
     TextView[] dots;
     InfoViewPagerAdapter infoViewPagerAdapter;
 
+    private TextView moreType, moreGender, moreAge, moreSize, moreColor, moreRescueDate;
+
+    private Pet PET;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +40,83 @@ public class MoreInfo extends AppCompatActivity {
 
         moreInfoVp = findViewById(R.id.moreInfoVp);
         moreInfoIndicator = findViewById(R.id.moreInfoIndicator);
+        moreType = findViewById(R.id.moreType);
+        moreGender = findViewById(R.id.moreGender);
+        moreAge = findViewById(R.id.moreAge);
+        moreSize = findViewById(R.id.moreSize);
+        moreColor = findViewById(R.id.moreColor);
+        moreRescueDate = findViewById(R.id.moreRescueDate);
 
         infoViewPagerAdapter = new InfoViewPagerAdapter(MoreInfo.this);
         moreInfoVp.setAdapter(infoViewPagerAdapter);
         setUpIndicator(0);
         moreInfoVp.addOnPageChangeListener(viewListener);
 
+        loadPetInfo();
+
+    }
+
+    private void loadPetInfo(){
+        try {
+            String petID = getIntent().getSerializableExtra("petID").toString();
+            PET = UserData.getPet(petID);
+
+            //translate gender and type
+            String gender = "";
+            switch (PET.getGender()){
+                case Gender.MALE: gender = "Male"; break;
+                case Gender.FEMALE: gender = "Female"; break;
+            }
+
+            String type = "";
+            switch (PET.getType()){
+                case PetType.DOG: type = "Dog"; break;
+                case PetType.CAT: type = "Cat"; break;
+            }
+
+            //translate age
+            String age = "";
+            switch (PET.getAge()){
+                case PetAge.PUPPY: age = (PET.getType() == PetType.DOG ? "Puppy" : "Kitten"); break;
+                case PetAge.YOUNG: age = "Young"; break;
+                case PetAge.OLD: age = "Old"; break;
+            }
+
+            //translate color
+            String color = "";
+            for (char c : PET.getColor().toCharArray()){
+                switch (Integer.parseInt(c+"")){
+                    case PetColor.BLACK: color += "Black "; break;
+                    case PetColor.BROWN: color += "Brown "; break;
+                    case PetColor.CREAM: color += "Cream "; break;
+                    case PetColor.WHITE: color += "White "; break;
+                    case PetColor.ORANGE: color += "Orange "; break;
+                    case PetColor.GRAY: color += "Gray "; break;
+                }
+            }
+            color.trim();
+            color.replace(" ", " / ");
+
+            //translate size
+            String size = "";
+            switch (PET.getSize()){
+                case PetSize.SMALL: size = "Small"; break;
+                case PetSize.MEDIUM: size = "Medium"; break;
+                case PetSize.LARGE: size = "Large"; break;
+            }
+
+            //update ui
+            moreType.setText(type);
+            moreGender.setText(gender);
+            moreAge.setText(age);
+            moreSize.setText(size);
+            moreColor.setText(color);
+            moreRescueDate.setText("Data not available");
+
+        }
+        catch (Exception e){
+            Utility.log("MoreInfo.lPI: " + e.getMessage());
+        }
     }
 
     public void setUpIndicator(int position) {
@@ -51,7 +136,9 @@ public class MoreInfo extends AppCompatActivity {
 
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
 
         @Override
         public void onPageSelected(int position) { setUpIndicator(position); }

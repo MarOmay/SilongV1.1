@@ -45,6 +45,7 @@ import com.yalantis.library.KolodaListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -228,6 +229,21 @@ public class Homepage extends AppCompatActivity {
         accountStatusChecker.execute();
     }
 
+    public void onPressedInfoIcon(View view){
+        gotoMoreInfo();
+    }
+
+    private void gotoMoreInfo(){
+        if (CURRENT_PET.getPetID() == null){
+            Toast.makeText(this, "Can't open information page", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent i = new Intent(Homepage.this, MoreInfo.class);
+        i.putExtra("petID", CURRENT_PET.getPetID());
+        startActivity(i);
+    }
+
     private void loadKoloda(){
         try {
             //making a copy of the filtered list as koloda listener reference
@@ -346,7 +362,7 @@ public class Homepage extends AppCompatActivity {
 
             @Override
             public void onCardSingleTap(int i) {
-
+                gotoMoreInfo();
             }
 
             @Override
@@ -530,12 +546,6 @@ public class Homepage extends AppCompatActivity {
 
         }
     };
-
-    public void onPressedInfoIcon(View view){
-
-        Intent i = new Intent(Homepage.this, MoreInfo.class);
-        startActivity(i);
-    }
 
     @Override
     public void onBackPressed() {

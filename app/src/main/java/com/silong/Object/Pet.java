@@ -2,7 +2,9 @@ package com.silong.Object;
 
 import android.graphics.Bitmap;
 
-public class Pet {
+import java.io.Serializable;
+
+public class Pet implements Serializable {
 
     private String petID;
     private int status;
