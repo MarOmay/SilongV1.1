@@ -1,6 +1,8 @@
 package com.silong.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetColor;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Pet;
+import com.silong.Operation.Utility;
+import com.silong.dev.Homepage;
+import com.silong.dev.HorizontalProgressBar;
 import com.silong.dev.R;
 import com.silong.dev.UserData;
 
@@ -22,10 +28,15 @@ import java.util.ArrayList;
 
 
 public class SwipeAdapter extends BaseAdapter {
+
+    private Activity activity;
     private Context context;
     private ArrayList<Pet> pets;
 
-    public SwipeAdapter(Context context, ArrayList<Pet> pets) {
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    public SwipeAdapter(Activity activity, ArrayList<Pet> pets) {
+        this.activity = activity;
         this.context = context;
         this.pets = pets;
 
@@ -52,6 +63,9 @@ public class SwipeAdapter extends BaseAdapter {
         if (convertView == null){
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_koloda, parent, false);
         }
+
+        swipeRefreshLayout = convertView.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(refreshListener);
 
         try{
             ImageView imageSwipe = convertView.findViewById(R.id.imageSwipe);
@@ -116,4 +130,19 @@ public class SwipeAdapter extends BaseAdapter {
     public ArrayList<Pet> getList(){
         return pets;
     }
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+
+            Utility.log("SwipeAdapter: triggered");
+
+            Intent intent = new Intent(activity, HorizontalProgressBar.class);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+            swipeRefreshLayout.setRefreshing(false);
+            activity.finish();
+
+        }
+    };
 }

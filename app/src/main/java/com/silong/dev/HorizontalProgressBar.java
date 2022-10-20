@@ -65,6 +65,7 @@ public class HorizontalProgressBar extends AppCompatActivity {
             //return to splash
             Intent intent = new Intent(HorizontalProgressBar.this, Splash.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
             finish();
         }
 
@@ -85,6 +86,7 @@ public class HorizontalProgressBar extends AppCompatActivity {
             //goto Homepage
             Intent i = new Intent(HorizontalProgressBar.this, Homepage.class);
             startActivity(i);
+            overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
             finish();
         }
     };
@@ -120,6 +122,7 @@ public class HorizontalProgressBar extends AppCompatActivity {
 
             Intent intent = new Intent(HorizontalProgressBar.this, HorizontalProgressBar.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
             swipeRefreshLayout.setRefreshing(false);
             finish();
 

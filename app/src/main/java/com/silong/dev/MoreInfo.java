@@ -27,8 +27,7 @@ public class MoreInfo extends AppCompatActivity {
     TextView[] dots;
     InfoViewPagerAdapter infoViewPagerAdapter;
 
-    private TextView moreType, moreGender, moreAge, moreSize, moreColor, moreRescueDate;
-    private TextView morePetId;
+    private TextView moreType, moreGender, moreAge, moreSize, moreColor, moreRescueDate, morePetId, moreMarks;
 
     private Pet PET;
 
@@ -47,6 +46,7 @@ public class MoreInfo extends AppCompatActivity {
         moreColor = findViewById(R.id.moreColor);
         moreRescueDate = findViewById(R.id.moreRescueDate);
         morePetId = findViewById(R.id.morePetId);
+        moreMarks = findViewById(R.id.moreMarks);
 
         loadPetInfo();
 
@@ -102,12 +102,14 @@ public class MoreInfo extends AppCompatActivity {
             }
 
             //update ui
+            morePetId.setText(PET.getPetID());
             moreType.setText(type);
             moreGender.setText(gender);
             moreAge.setText(age);
             moreSize.setText(size);
             moreColor.setText(color);
             moreRescueDate.setText("Data not available");
+            moreMarks.setText("Data not available");
 
             Bitmap[] images = new Bitmap[]{PET.getPhoto()};
 

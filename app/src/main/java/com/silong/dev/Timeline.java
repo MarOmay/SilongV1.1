@@ -575,6 +575,7 @@ public class Timeline extends AppCompatActivity {
 
             Intent intent = new Intent(Timeline.this, Timeline.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
             timelineRefreshLayout.setRefreshing(false);
             finish();
 
