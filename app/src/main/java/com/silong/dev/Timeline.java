@@ -6,6 +6,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -58,6 +59,7 @@ public class Timeline extends AppCompatActivity {
     public static final int DECLINED = 7;
 
     DrawerLayout timelineDrawer;
+    SwipeRefreshLayout timelineRefreshLayout;
     ImageView filterImgview, menuImgview, closeDrawerBtn, avatarImgview;
     TextView headerTitle, timelineHeader, timelineBody;
     VerticalStepView timelineStepView;
@@ -89,6 +91,7 @@ public class Timeline extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
         timelineDrawer = (DrawerLayout) findViewById(R.id.timelineDrawer);
+        timelineRefreshLayout = findViewById(R.id.timelineRefreshLayout);
         View view = findViewById(R.id.headerLayout);
         filterImgview = (ImageView) findViewById(R.id.filterImgview);
         headerTitle = (TextView) findViewById(R.id.headerTitle);
@@ -124,6 +127,8 @@ public class Timeline extends AppCompatActivity {
         populateMenu();
 
         refreshTimeline();
+
+        timelineRefreshLayout.setOnRefreshListener(refreshListener);
 
         //if petStatus != active, goto Homepage
         //inform users
@@ -560,6 +565,18 @@ public class Timeline extends AppCompatActivity {
             Intent i = new Intent(Timeline.this, Splash.class);
             startActivity(i);
             finish();
+        }
+    };
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+
+            Intent intent = new Intent(Timeline.this, Timeline.class);
+            startActivity(intent);
+            timelineRefreshLayout.setRefreshing(false);
+            finish();
+
         }
     };
 
