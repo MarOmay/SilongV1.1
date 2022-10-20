@@ -3,21 +3,20 @@ package com.silong.dev;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.silong.Adapter.InfoViewPagerAdapter;
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetAge;
 import com.silong.EnumClass.PetColor;
 import com.silong.EnumClass.PetSize;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Pet;
-import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.Utility;
 
 public class MoreInfo extends AppCompatActivity {
@@ -46,11 +45,6 @@ public class MoreInfo extends AppCompatActivity {
         moreSize = findViewById(R.id.moreSize);
         moreColor = findViewById(R.id.moreColor);
         moreRescueDate = findViewById(R.id.moreRescueDate);
-
-        infoViewPagerAdapter = new InfoViewPagerAdapter(MoreInfo.this);
-        moreInfoVp.setAdapter(infoViewPagerAdapter);
-        setUpIndicator(0);
-        moreInfoVp.addOnPageChangeListener(viewListener);
 
         loadPetInfo();
 
@@ -113,6 +107,12 @@ public class MoreInfo extends AppCompatActivity {
             moreColor.setText(color);
             moreRescueDate.setText("Data not available");
 
+            Bitmap[] images = new Bitmap[]{PET.getPhoto()};
+
+            infoViewPagerAdapter = new InfoViewPagerAdapter(MoreInfo.this, images);
+            moreInfoVp.setAdapter(infoViewPagerAdapter);
+            setUpIndicator(images.length);
+            moreInfoVp.addOnPageChangeListener(viewListener);
         }
         catch (Exception e){
             Utility.log("MoreInfo.lPI: " + e.getMessage());

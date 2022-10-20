@@ -1,6 +1,7 @@
-package com.silong.dev;
+package com.silong.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.silong.dev.R;
+
 public class InfoViewPagerAdapter extends PagerAdapter {
 
-    Context context;
-    int images[] = { R.drawable.onboarding_1, R.drawable.onboarding_2_2, R.drawable.onboarding_3 };
+    private Context context;
+    private Bitmap[] images;
 
-    public InfoViewPagerAdapter (Context context){
+    public InfoViewPagerAdapter (Context context, Bitmap[] images){
         this.context = context;
+        this.images = images;
     }
 
     @Override
@@ -39,7 +43,8 @@ public class InfoViewPagerAdapter extends PagerAdapter {
 
         ImageView sliderImage = (ImageView) view.findViewById(R.id.infoSliderImage);
 
-        sliderImage.setImageResource(images[position]);
+        sliderImage.setImageBitmap(images[position]);
+        sliderImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         container.addView(view);
 
@@ -50,4 +55,5 @@ public class InfoViewPagerAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((LinearLayout)object);
     }
+
 }

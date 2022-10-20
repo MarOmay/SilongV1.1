@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.silong.Adapter.ViewPagerAdapter;
+
 public class OnBoarding extends AppCompatActivity {
 
     ViewPager xslideViewPager;

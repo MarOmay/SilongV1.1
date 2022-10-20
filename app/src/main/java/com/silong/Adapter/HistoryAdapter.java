@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,6 +12,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.silong.dev.AdoptionHistory;
+import com.silong.dev.HistoryData;
+import com.silong.dev.R;
+import com.silong.dev.Timeline;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 

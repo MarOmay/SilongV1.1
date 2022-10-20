@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.Adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,6 +15,8 @@ import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetColor;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Pet;
+import com.silong.dev.R;
+import com.silong.dev.UserData;
 
 import java.util.ArrayList;
 

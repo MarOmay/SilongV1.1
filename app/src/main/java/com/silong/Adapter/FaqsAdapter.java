@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.silong.Object.Faqs;
+import com.silong.dev.Help;
+import com.silong.dev.R;
 
 import java.util.ArrayList;
 

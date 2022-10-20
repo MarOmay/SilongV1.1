@@ -1,4 +1,4 @@
-package com.silong.dev;
+package com.silong.Adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.silong.dev.R;
 
 public class ViewPagerAdapter extends PagerAdapter {
 

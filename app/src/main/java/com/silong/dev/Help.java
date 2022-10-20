@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.silong.Adapter.FaqsAdapter;
 import com.silong.Object.Faqs;
 
 import org.w3c.dom.Document;
