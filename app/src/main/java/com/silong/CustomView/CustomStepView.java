@@ -27,7 +27,7 @@ public class CustomStepView extends VerticalStepView {
                 //uncompleted
                 .setStepViewUnComplectedTextColor(ContextCompat.getColor(context, R.color.gray))
                 .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(context,R.color.gray))
-                .setStepsViewIndicatorAttentionIcon(context.getDrawable(R.drawable.task_ongoing))
+                .setStepsViewIndicatorAttentionIcon(context.getDrawable(R.drawable.task_ongoing_1))
                 //default
                 .setStepsViewIndicatorDefaultIcon(context.getDrawable(R.drawable.task_icon))
                 .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(context, R.color.gray))
