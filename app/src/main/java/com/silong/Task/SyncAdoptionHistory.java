@@ -87,6 +87,12 @@ public class SyncAdoptionHistory extends AsyncTask {
                                 fetchAdoptionFromCloud(key, dateReq, status);
                                 Homepage.RESTART_REQUIRED = true;
                             }
+
+                        }
+
+                        int statusInt = Integer.parseInt(status);
+                        if (statusInt >= 1 && statusInt <= 5){
+                            fetchAdoptionRequest();
                         }
 
                     }
@@ -163,6 +169,34 @@ public class SyncAdoptionHistory extends AsyncTask {
                     Log.d("SAH-fAFC", e.getMessage());
                 }
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void fetchAdoptionRequest(){
+
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        DatabaseReference tempRef = mDatabase.getReference("adoptionRequest").child(userID);
+        tempRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    String petID = snapshot.child("petID").getValue().toString();
+                    String appointmentDate = snapshot.child("appointmentDate").getValue().toString();
+                    String appointmentTime = snapshot.child("appointmentTime").getValue().toString();
+
+                    UserData.writeAdoptionToLocal(activity, petID, "appointmentDate", appointmentDate);
+                    UserData.writeAdoptionToLocal(activity, petID, "appointmentTime", appointmentTime);
+                }
+                catch (Exception e){
+                    Utility.log("SAH: " + e.getMessage());
+                }
             }
 
             @Override

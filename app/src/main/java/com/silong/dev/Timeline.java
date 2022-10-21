@@ -42,6 +42,7 @@ import com.silong.Operation.Utility;
 import com.silong.Task.CancellationCounter;
 
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -376,6 +377,27 @@ public class Timeline extends AppCompatActivity {
                 break;
 
             case SET_APPOINTMENT:
+
+                try {
+                    ADOPTION.getAppointmentDate().replace("*",":");
+                }
+                catch (Exception e){
+                    Utility.log("Timeline: " + e.getMessage());
+
+                    //delete surplus data
+                    for (File file : getFilesDir().listFiles()){
+                        if (file.getAbsolutePath().contains("adoption-")){
+                            file.delete();
+                        }
+                    }
+
+                    Intent intent = new Intent(Timeline.this, HorizontalProgressBar.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+                    timelineRefreshLayout.setRefreshing(false);
+                    finish();
+                }
+
                 timelineCancelLayout.setVisibility(View.GONE);
                 timelineSetAppLayout.setVisibility(View.GONE);
                 timelineHomeLayout.setVisibility(View.GONE);
@@ -611,7 +633,7 @@ public class Timeline extends AppCompatActivity {
         @Override
         public void onRefresh() {
 
-            Intent intent = new Intent(Timeline.this, Timeline.class);
+            Intent intent = new Intent(Timeline.this, HorizontalProgressBar.class);
             startActivity(intent);
             overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
             timelineRefreshLayout.setRefreshing(false);
