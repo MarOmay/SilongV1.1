@@ -29,21 +29,21 @@ public class SyncAdoptionHistory extends AsyncTask {
 
     private Activity activity;
     private boolean routeOnFinish;
+    private String userID;
     private ArrayList<String> keys = new ArrayList<>();
 
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
     private DataSnapshot snapshotF;
 
-    public  SyncAdoptionHistory(Activity activity, boolean routeOnFinish){
+    public  SyncAdoptionHistory(Activity activity, String userID, boolean routeOnFinish){
         this.activity = activity;
         this.routeOnFinish = routeOnFinish;
+        this.userID = userID;
     }
 
     @Override
     protected Object doInBackground(Object[] objects) {
-
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
         mReference = mDatabase.getReference().child("Users").child(userID).child("adoptionHistory");
@@ -61,8 +61,6 @@ public class SyncAdoptionHistory extends AsyncTask {
                             continue;
 
                         keys.add(snap.getKey());
-
-                        int tempStatus = Integer.parseInt(snap.child("status").getValue().toString());
                         /*
                         //skip if status is pending
 
@@ -72,27 +70,34 @@ public class SyncAdoptionHistory extends AsyncTask {
                         //key is petID
                         Log.d("DEBUGGER>>>", "SAH: key-" + snap.getKey());
 
-                        String key = snap.getKey();
-                        String dateReq = snap.child("dateRequested").getValue().toString();
-                        String status =  snap.child("status").getValue().toString();
+                        try{
+                            int tempStatus = Integer.parseInt(snap.child("status").getValue().toString());
 
-                        File file = new File(activity.getFilesDir(), "adoption-" + snap.getKey());
-                        if (!file.exists()){
-                            fetchAdoptionFromCloud(key, dateReq, status);
-                            Homepage.RESTART_REQUIRED = true;
-                        }
-                        else {
-                            Adoption adoption = UserData.fetchAdoptionFromLocal(activity, snap.getKey());
-                            if (adoption.getStatus() != tempStatus){
+                            String key = snap.getKey();
+                            String dateReq = snap.child("dateRequested").getValue().toString();
+                            String status =  snap.child("status").getValue().toString();
+
+                            File file = new File(activity.getFilesDir(), "adoption-" + snap.getKey());
+                            if (!file.exists()){
                                 fetchAdoptionFromCloud(key, dateReq, status);
                                 Homepage.RESTART_REQUIRED = true;
                             }
+                            else {
+                                Adoption adoption = UserData.fetchAdoptionFromLocal(activity, snap.getKey());
+                                if (adoption.getStatus() != tempStatus){
+                                    fetchAdoptionFromCloud(key, dateReq, status);
+                                    Homepage.RESTART_REQUIRED = true;
+                                }
 
+                            }
+
+                            int statusInt = Integer.parseInt(status);
+                            if (statusInt >= 1 && statusInt <= 5){
+                                fetchAdoptionRequest();
+                            }
                         }
-
-                        int statusInt = Integer.parseInt(status);
-                        if (statusInt >= 1 && statusInt <= 5){
-                            fetchAdoptionRequest();
+                        catch (Exception e){
+                            Utility.log("SAH.dIB: " + e.getMessage());
                         }
 
                     }
@@ -122,7 +127,7 @@ public class SyncAdoptionHistory extends AsyncTask {
 
                 }
                 catch (Exception e){
-                    Log.d("SAH-dIB", e.getMessage());
+                    Utility.log("SAH.dIB: " + e.getMessage());;
                 }
             }
 
@@ -179,8 +184,6 @@ public class SyncAdoptionHistory extends AsyncTask {
     }
 
     private void fetchAdoptionRequest(){
-
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         DatabaseReference tempRef = mDatabase.getReference("adoptionRequest").child(userID);
         tempRef.addListenerForSingleValueEvent(new ValueEventListener() {

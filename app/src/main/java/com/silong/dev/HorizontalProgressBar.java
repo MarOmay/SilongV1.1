@@ -64,7 +64,7 @@ public class HorizontalProgressBar extends AppCompatActivity {
 
         try {
             //check if user is logged in
-            Utility.log("HPB: UID - " + FirebaseAuth.getInstance().getCurrentUser().getUid());
+            String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             UserData.populate(HorizontalProgressBar.this);
 
@@ -73,7 +73,7 @@ public class HorizontalProgressBar extends AppCompatActivity {
             petCounter.execute();
 
             //sync adoption record
-            SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this, true);
+            SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this, userID,true);
             syncAdoptionHistory.execute();
         }
         catch (Exception e){

@@ -197,7 +197,7 @@ public class Homepage extends AppCompatActivity {
         drawerLayout.openDrawer(GravityCompat.END);
 
         //sync adoption record
-        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this, false);
+        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this, UserData.userID, false);
         syncAdoptionHistory.execute();
     }
 
