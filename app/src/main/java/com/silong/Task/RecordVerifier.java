@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.silong.dev.HorizontalProgressBar;
 import com.silong.dev.UserData;
 
 import java.util.Timer;
@@ -37,26 +38,25 @@ public class RecordVerifier extends AsyncTask {
             @Override
             public void run() {
                 Log.d("DEBUGGER>>>", "Entered loop: " + System.currentTimeMillis() + " - cur: " + UserData.pets.size());
+                /*
                 //check if processing time is more than 30secs
                 if (System.currentTimeMillis()-startTime > 5000){
                     Log.d("DEBUGGER>>>", "timed out");
-                    sendBroadcast("RV-download-complete");
+                    HorizontalProgressBar.petCounterDone = true;
+                    HorizontalProgressBar.checkCompletion(activity);
                     //end task
                     return;
-                }
+                }*/
 
-                if (UserData.pets.size() == total)
-                    sendBroadcast("RV-download-complete");
+                if (UserData.pets.size() == total){
+                    HorizontalProgressBar.petCounterDone = true;
+                    HorizontalProgressBar.checkCompletion(activity);
+                }
                 else
                     loop();
 
             }
         }, 1000);
-    }
-
-    private void sendBroadcast(String code){
-        Intent intent = new Intent(code);
-        LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
     }
 
 }

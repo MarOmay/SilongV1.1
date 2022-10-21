@@ -12,7 +12,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.silong.Adapter.ViewPagerAdapter;
+
+import java.io.File;
 
 public class OnBoarding extends AppCompatActivity {
 
@@ -113,6 +116,13 @@ public class OnBoarding extends AppCompatActivity {
             Intent intent = new Intent(OnBoarding.this, LogIn.class);
             startActivity(intent);
             finish();
+        }
+        else {
+            Homepage.USERDATA = new File(getFilesDir(),"user.dat");
+            Homepage.AVATARDATA = new File(getFilesDir(),"avatar.dat");
+            UserData.logout(OnBoarding.this);
+            FirebaseAuth.getInstance().signOut();
+            setNotFirstRun();
         }
 
     }

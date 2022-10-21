@@ -17,7 +17,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.silong.Object.Adoption;
 import com.silong.Operation.ImageProcessor;
 
+import com.silong.Operation.Utility;
 import com.silong.dev.Homepage;
+import com.silong.dev.HorizontalProgressBar;
 import com.silong.dev.UserData;
 
 import java.io.File;
@@ -26,14 +28,16 @@ import java.util.ArrayList;
 public class SyncAdoptionHistory extends AsyncTask {
 
     private Activity activity;
+    private boolean routeOnFinish;
     private ArrayList<String> keys = new ArrayList<>();
 
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
     private DataSnapshot snapshotF;
 
-    public  SyncAdoptionHistory(Activity activity){
+    public  SyncAdoptionHistory(Activity activity, boolean routeOnFinish){
         this.activity = activity;
+        this.routeOnFinish = routeOnFinish;
     }
 
     @Override
@@ -49,11 +53,14 @@ public class SyncAdoptionHistory extends AsyncTask {
                 snapshotF = snapshot;
 
                 try {
+                    ArrayList<String> keys = new ArrayList<>();
                     for (DataSnapshot snap : snapshotF.getChildren()){
 
                         //skip if key is null
                         if (snap == null || snap.getKey().equals("null") || snap.getKey() == null)
                             continue;
+
+                        keys.add(snap.getKey());
 
                         int tempStatus = Integer.parseInt(snap.child("status").getValue().toString());
                         /*
@@ -83,7 +90,30 @@ public class SyncAdoptionHistory extends AsyncTask {
                         }
 
                     }
+
+                    //delete surplus data
+                    for (File file : activity.getFilesDir().listFiles()){
+                        if (file.getAbsolutePath().contains("adoption-") && !file.getAbsolutePath().contains("null")){
+                            boolean found = false;
+                            for (String key : keys){
+                                String[] path = file.getAbsolutePath().split("-");
+                                if (path[path.length-1].equals(key)){
+                                    found = true;
+                                }
+                            }
+                            if (!found){
+                                file.delete();
+                            }
+                        }
+                    }
+
                     UserData.populateAdoptions(activity);
+
+                    if (routeOnFinish){
+                        HorizontalProgressBar.syncAdoptionDone = true;
+                        HorizontalProgressBar.checkCompletion(activity);
+                    }
+
                 }
                 catch (Exception e){
                     Log.d("SAH-dIB", e.getMessage());

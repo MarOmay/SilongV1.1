@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,14 +34,18 @@ public class HorizontalProgressBar extends AppCompatActivity {
 
     public static DataSnapshot snapshot = null;
 
+    public static boolean syncAdoptionDone = false, petCounterDone = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horizontal_progress_bar);
         getSupportActionBar().hide();
 
+        syncAdoptionDone = false;
+        petCounterDone = false;
+
         //register receivers
-        LocalBroadcastManager.getInstance(this).registerReceiver(mOnComplete, new IntentFilter("RV-download-complete"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mOnFailure, new IntentFilter("RV-timed-out"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mOnCount, new IntentFilter("PC-count-complete"));
 
@@ -77,7 +82,7 @@ public class HorizontalProgressBar extends AppCompatActivity {
         petCounter.execute();
 
         //sync adoption record
-        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this);
+        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this, true);
         syncAdoptionHistory.execute();
 
     }
@@ -87,16 +92,15 @@ public class HorizontalProgressBar extends AppCompatActivity {
         recordVerifier.execute();
     }
 
-    private BroadcastReceiver mOnComplete = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
+    public static void checkCompletion(Activity activity){
+        if (syncAdoptionDone && petCounterDone){
             //goto Homepage
-            Intent i = new Intent(HorizontalProgressBar.this, Homepage.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
-            finish();
+            Intent i = new Intent(activity, Homepage.class);
+            activity.startActivity(i);
+            activity.overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+            activity.finish();
         }
-    };
+    }
 
     private BroadcastReceiver mOnFailure = new BroadcastReceiver() {
         @Override
@@ -138,7 +142,6 @@ public class HorizontalProgressBar extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mOnComplete);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mOnFailure);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mOnCount);
         super.onDestroy();
