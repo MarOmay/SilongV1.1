@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silong.Operation.ImageProcessor;
+import com.silong.Operation.Utility;
 import com.silong.dev.UserData;
 
 
@@ -48,6 +49,33 @@ public class RecordDownloader extends AsyncTask {
                     String lastModified = snapshot.child("lastModified").getValue().toString();
                     String photo = snapshot.child("photo").getValue().toString();
 
+                    //get optional data
+                    String distMark = null, rescueDate = null, extrapic1 = null, extrapic2 = null;
+                    try {
+                        distMark = snapshot.child("distMark").getValue().toString();
+                    }
+                    catch (Exception e){
+                        Utility.log("RecordDownloader: Check if exist distMark - " + e.getMessage());
+                    }
+                    try {
+                        rescueDate = snapshot.child("rescueDate").getValue().toString();
+                    }
+                    catch (Exception e){
+                        Utility.log("RecordDownloader: Check if exist rescueDate - " + e.getMessage());
+                    }
+                    try {
+                        extrapic1 = snapshot.child("extraPhoto").child("photo1").getValue().toString();
+                    }
+                    catch (Exception e){
+                        Utility.log("RecordDownloader: Check if exist extrapic1 - " + e.getMessage());
+                    }
+                    try {
+                        extrapic2 = snapshot.child("extraPhoto").child("photo2").getValue().toString();
+                    }
+                    catch (Exception e){
+                        Utility.log("RecordDownloader: Check if exist extrapic2 - " + e.getMessage());
+                    }
+
                     //create local copy
                     UserData.writePetToLocal(activity, id, "petID", id);
                     UserData.writePetToLocal(activity, id, "status", String.valueOf(status));
@@ -60,6 +88,23 @@ public class RecordDownloader extends AsyncTask {
 
                     Bitmap bitmap = new ImageProcessor().toBitmap(photo);
                     new ImageProcessor().saveToLocal(activity, bitmap, "petpic-" + id);
+
+                    //write extra to local
+                    if (distMark != null){
+                        UserData.writePetToLocal(activity, id, "distMark", String.valueOf(distMark));
+                    }
+                    if (rescueDate != null){
+                        UserData.writePetToLocal(activity, id, "rescueDate", String.valueOf(rescueDate));
+                    }
+                    if (extrapic1 != null){
+                        Bitmap bmp = new ImageProcessor().toBitmap(extrapic1);
+                        new ImageProcessor().saveToLocal(activity, bmp, "extrapic-" + id + "-1");
+                    }
+                    if (extrapic2 != null){
+                        Bitmap bmp = new ImageProcessor().toBitmap(extrapic2);
+                        new ImageProcessor().saveToLocal(activity, bmp, "extrapic-" + id + "-2");
+                    }
+
                     UserData.populateRecords(activity);
                 }
                 catch (Exception e){

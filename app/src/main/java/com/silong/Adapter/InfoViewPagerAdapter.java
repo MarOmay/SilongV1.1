@@ -15,18 +15,20 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.silong.dev.R;
 
+import java.util.ArrayList;
+
 public class InfoViewPagerAdapter extends PagerAdapter {
 
     private Context context;
-    private Bitmap[] images;
+    private ArrayList<Bitmap> photos;
 
-    public InfoViewPagerAdapter (Context context, Bitmap[] images){
+    public InfoViewPagerAdapter (Context context, ArrayList<Bitmap> photos){
         this.context = context;
-        this.images = images;
+        this.photos = photos;
     }
 
     @Override
-    public int getCount() { return images.length;
+    public int getCount() { return photos.size();
     }
 
     @Override
@@ -43,7 +45,7 @@ public class InfoViewPagerAdapter extends PagerAdapter {
 
         ImageView sliderImage = (ImageView) view.findViewById(R.id.infoSliderImage);
 
-        sliderImage.setImageBitmap(images[position]);
+        sliderImage.setImageBitmap(photos.get(position));
         sliderImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         container.addView(view);

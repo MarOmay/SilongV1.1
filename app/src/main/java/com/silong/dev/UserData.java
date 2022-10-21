@@ -162,6 +162,8 @@ public class UserData { //removed: extends User
                         case "color" : pet.setColor(temp[1]); break;
                         case "liked" : pet.setLiked(temp[1].equals("true") ? true : false); break;
                         case "lastModified" : pet.setLastModified(temp[1]); break;
+                        case "distMark": pet.setDistMark(temp[1]); break;
+                        case "rescueDate": pet.setRescueDate(temp[1]); break;
                     }
 
                 }
@@ -370,6 +372,8 @@ public class UserData { //removed: extends User
                     case "age": pet.setAge(Integer.parseInt(temp[1])); break;
                     case "color" : pet.setColor(temp[1]); break;
                     case "lastModified" : pet.setLastModified(temp[1]); break;
+                    case "distMark": pet.setDistMark(temp[1]); break;
+                    case "rescueDate": pet.setRescueDate(temp[1]); break;
                 }
 
             }

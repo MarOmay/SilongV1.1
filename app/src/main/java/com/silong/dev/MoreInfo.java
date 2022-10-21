@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -19,6 +20,9 @@ import com.silong.EnumClass.PetType;
 import com.silong.Object.Pet;
 import com.silong.Operation.Utility;
 
+import java.io.File;
+import java.util.ArrayList;
+
 public class MoreInfo extends AppCompatActivity {
 
     ViewPager moreInfoVp;
@@ -30,6 +34,8 @@ public class MoreInfo extends AppCompatActivity {
     private TextView moreType, moreGender, moreAge, moreSize, moreColor, moreRescueDate, morePetId, moreMarks;
 
     private Pet PET;
+
+    private int numOfDots = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,14 +114,29 @@ public class MoreInfo extends AppCompatActivity {
             moreAge.setText(age);
             moreSize.setText(size);
             moreColor.setText(color);
-            moreRescueDate.setText("Data not available");
-            moreMarks.setText("Data not available");
+            if (PET.getDistMark() != null)
+                moreMarks.setText(PET.getDistMark());
+            if (PET.getRescueDate() != null)
+                moreRescueDate.setText(PET.getRescueDate());
 
-            Bitmap[] images = new Bitmap[]{PET.getPhoto()};
+            ArrayList<Bitmap> photos = new ArrayList<>();
+            photos.add(PET.getPhoto());
 
-            infoViewPagerAdapter = new InfoViewPagerAdapter(MoreInfo.this, images);
+            //load optional data
+            File extrapic1 = new File(getFilesDir(), "extrapic-" + PET.getPetID() + "-1");
+            if (extrapic1.exists()){
+                Bitmap bmp = BitmapFactory.decodeFile(extrapic1.getAbsolutePath());
+                photos.add(bmp);
+            }
+            File extrapic2 = new File(getFilesDir(), "extrapic-" + PET.getPetID() + "-2");
+            if (extrapic2.exists()){
+                Bitmap bmp = BitmapFactory.decodeFile(extrapic2.getAbsolutePath());
+                photos.add(bmp);
+            }
+
+            infoViewPagerAdapter = new InfoViewPagerAdapter(MoreInfo.this, photos);
             moreInfoVp.setAdapter(infoViewPagerAdapter);
-            setUpIndicator(images.length);
+            setUpIndicator(photos.size(), 0);
             moreInfoVp.addOnPageChangeListener(viewListener);
         }
         catch (Exception e){
@@ -123,8 +144,9 @@ public class MoreInfo extends AppCompatActivity {
         }
     }
 
-    public void setUpIndicator(int position) {
-        dots = new TextView[3];
+    public void setUpIndicator(int numOfDots, int position) {
+        this.numOfDots = numOfDots;
+        dots = new TextView[numOfDots];
         moreInfoIndicator.removeAllViews();
 
         for (int i = 0; i < dots.length; i++) {
@@ -145,7 +167,7 @@ public class MoreInfo extends AppCompatActivity {
         }
 
         @Override
-        public void onPageSelected(int position) { setUpIndicator(position); }
+        public void onPageSelected(int position) { setUpIndicator(numOfDots, position); }
 
         @Override
         public void onPageScrollStateChanged(int state) { }

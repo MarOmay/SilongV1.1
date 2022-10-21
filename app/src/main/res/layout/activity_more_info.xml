@@ -241,7 +241,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="7dp"
-                            android:text="Rescue Date"
                             android:textColor="@color/black"
                             android:textSize="17sp" />
 
@@ -250,7 +249,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="7dp"
-                            android:text="Distinguishing Marks"
                             android:textColor="@color/black"
                             android:textSize="17sp" />
 
