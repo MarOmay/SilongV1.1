@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.silong.Operation.Utility;
 import com.silong.dev.HorizontalProgressBar;
 import com.silong.dev.UserData;
 
@@ -48,6 +49,9 @@ public class RecordVerifier extends AsyncTask {
                     return;
                 }*/
 
+                UserData.populateRecords(activity);
+                Utility.log("RV: UserData.pets.size - " + UserData.pets.size());
+                Utility.log("RV: total - " + total);
                 if (UserData.pets.size() == total){
                     HorizontalProgressBar.petCounterDone = true;
                     HorizontalProgressBar.checkCompletion(activity);

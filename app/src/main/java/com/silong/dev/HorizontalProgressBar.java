@@ -62,7 +62,23 @@ public class HorizontalProgressBar extends AppCompatActivity {
             return;
         }
 
-        if (FirebaseAuth.getInstance().getCurrentUser() == null){
+        try {
+            //check if user is logged in
+            Utility.log("HPB: UID - " + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            UserData.populate(HorizontalProgressBar.this);
+
+            //get total record count from RTDB
+            PetCounter petCounter = new PetCounter(this);
+            petCounter.execute();
+
+            //sync adoption record
+            SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this, true);
+            syncAdoptionHistory.execute();
+        }
+        catch (Exception e){
+            Utility.log("HPB: " + e.getMessage());
+
             //remove user data
             Homepage.USERDATA = new File(getFilesDir(),"user.dat");
             Homepage.AVATARDATA = new File(getFilesDir(),"avatar.dat");
@@ -75,15 +91,6 @@ public class HorizontalProgressBar extends AppCompatActivity {
             finish();
         }
 
-        UserData.populate(HorizontalProgressBar.this);
-
-        //get total record count from RTDB
-        PetCounter petCounter = new PetCounter(this);
-        petCounter.execute();
-
-        //sync adoption record
-        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this, true);
-        syncAdoptionHistory.execute();
 
     }
 
@@ -100,6 +107,19 @@ public class HorizontalProgressBar extends AppCompatActivity {
             activity.overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
             activity.finish();
         }
+    }
+
+    public static void logout(Activity activity){
+        //remove user data
+        Homepage.USERDATA = new File(activity.getFilesDir(),"user.dat");
+        Homepage.AVATARDATA = new File(activity.getFilesDir(),"avatar.dat");
+        UserData.logout(activity);
+
+        //return to splash
+        Intent intent = new Intent(activity, Splash.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+        activity.finish();
     }
 
     private BroadcastReceiver mOnFailure = new BroadcastReceiver() {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -48,7 +49,10 @@ public class PetCounter extends AsyncTask {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    if (error.getCode() == DatabaseError.PERMISSION_DENIED ){
+                        Toast.makeText(activity, "Session expired", Toast.LENGTH_SHORT).show();
+                        HorizontalProgressBar.logout(activity);
+                    }
                 }
             });
         }
