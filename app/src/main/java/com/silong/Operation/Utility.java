@@ -13,8 +13,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 
@@ -98,6 +100,10 @@ public class Utility {
 
         }
 
+    }
+
+    public static void animateOnClick(Context context, View view){
+        view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.custom_on_click));
     }
 
     public void showNotification(Context context, String title, String message) {

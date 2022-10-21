@@ -179,16 +179,19 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void onPressedFilter(View view){
+        Utility.animateOnClick(Homepage.this, view);
         Intent i = new Intent(Homepage.this, Filter.class);
         startActivity(i);
         finish();
     }
 
     public void onPressedMessage(View view){
+        Utility.animateOnClick(Homepage.this, view);
         Utility.gotoMessenger(Homepage.this);
     }
 
     public void onPressedMenu(View view){
+        Utility.animateOnClick(Homepage.this, view);
         avatarImgview.setImageBitmap(UserData.photo);
         usernameTv.setText(UserData.firstName + " " + UserData.lastName);
         drawerLayout.openDrawer(GravityCompat.END);
@@ -199,35 +202,42 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void onPressedAdoptionHistory(View view){
+        Utility.animateOnClick(Homepage.this, view);
         Intent i = new Intent(Homepage.this, AdoptionHistory.class);
         startActivity(i);
     }
 
     public void onPressedHelp(View view){
+        Utility.animateOnClick(Homepage.this, view);
         Intent i = new Intent(Homepage.this, Help.class);
         startActivity(i);
     }
 
     public void onPressedAboutOffice(View view){
+        Utility.animateOnClick(Homepage.this, view);
         Intent i = new Intent(Homepage.this, AboutTheOffice.class);
         startActivity(i);
     }
 
     public void onPressedAboutUs(View view){
+        Utility.animateOnClick(Homepage.this, view);
         Intent z = new Intent(Homepage.this, AboutUs.class);
         startActivity(z);
     }
 
     public void onPressedCloseDrawer(View view){
+        Utility.animateOnClick(Homepage.this, view);
         drawerLayout.closeDrawer(GravityCompat.END);
     }
 
     public void onPressedLogout(View view){
+        Utility.animateOnClick(Homepage.this, view);
         ExitDialog exitDialog = new ExitDialog(Homepage.this);
         exitDialog.show();
     }
 
     public void onEditProfilePressed(View view){
+        Utility.animateOnClick(Homepage.this, view);
         Intent i = new Intent(Homepage.this, EditProfile.class);
         startActivity(i);
         EditProfile.FORBID_DEACTIVATION = false;
@@ -240,6 +250,7 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void onPressedInfoIcon(View view){
+        Utility.animateOnClick(Homepage.this, view);
         gotoMoreInfo();
     }
 
@@ -393,6 +404,8 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void onPressedApply(View view){
+
+        Utility.animateOnClick(Homepage.this, view);
 
         if (koloda.getAdapter() == null){
             Toast.makeText(this, "No pet selected.", Toast.LENGTH_SHORT).show();

@@ -140,39 +140,47 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void onPressedMessage(View view){
+        Utility.animateOnClick(Timeline.this, view);
         Utility.gotoMessenger(Timeline.this);
     }
 
     public void onPressedMenu(View view){
+        Utility.animateOnClick(Timeline.this, view);
         avatarImgview.setImageBitmap(UserData.photo);
         timelineDrawer.openDrawer(GravityCompat.END);
     }
 
     public void onPressedCloseDrawer(View view){
+        Utility.animateOnClick(Timeline.this, view);
         timelineDrawer.closeDrawer(GravityCompat.END);
     }
 
     public void onPressedAdoptionHistory(View view){
+        Utility.animateOnClick(Timeline.this, view);
         Intent i = new Intent(Timeline.this, AdoptionHistory.class);
         startActivity(i);
     }
 
     public void onPressedHelp(View view){
+        Utility.animateOnClick(Timeline.this, view);
         Intent i = new Intent(Timeline.this, Help.class);
         startActivity(i);
     }
 
     public void onPressedAboutOffice(View view){
+        Utility.animateOnClick(Timeline.this, view);
         Intent i = new Intent(Timeline.this, AboutTheOffice.class);
         startActivity(i);
     }
 
     public void onPressedAboutUs(View view){
+        Utility.animateOnClick(Timeline.this, view);
         Intent z = new Intent(Timeline.this, AboutUs.class);
         startActivity(z);
     }
 
     public void onEditProfilePressed(View view){
+        Utility.animateOnClick(Timeline.this, view);
         Intent i = new Intent(Timeline.this, EditProfile.class);
         startActivity(i);
         EditProfile.FORBID_DEACTIVATION = true;
@@ -180,11 +188,13 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void onPressedLogout(View view){
+        Utility.animateOnClick(Timeline.this, view);
         ExitDialog exitDialog = new ExitDialog(Timeline.this);
         exitDialog.show();
     }
 
     public void onPressedSetAppointment(View view){
+        Utility.animateOnClick(Timeline.this, view);
         //check internet connection
         if (!Utility.internetConnection(Timeline.this)){
             Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
@@ -196,6 +206,7 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void onPressedHome(View view){
+        Utility.animateOnClick(Timeline.this, view);
         //check internet connection
         if (!Utility.internetConnection(Timeline.this)){
             Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
@@ -218,6 +229,7 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void onPressedCancel(View view){
+        Utility.animateOnClick(Timeline.this, view);
         Log.d("DEBUGGER>>>", "Cancellation triggered oPC");
 
         //check internet connection
