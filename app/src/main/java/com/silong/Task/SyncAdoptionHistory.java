@@ -7,14 +7,17 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.silong.Object.Adoption;
 import com.silong.Operation.ImageProcessor;
 
+import com.silong.dev.Homepage;
 import com.silong.dev.UserData;
 
 import java.io.File;
@@ -36,8 +39,10 @@ public class SyncAdoptionHistory extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
 
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        mReference = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory");
+        mReference = mDatabase.getReference().child("Users").child(userID).child("adoptionHistory");
         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -50,20 +55,31 @@ public class SyncAdoptionHistory extends AsyncTask {
                         if (snap == null || snap.getKey().equals("null") || snap.getKey() == null)
                             continue;
 
-                        //skip if status is pending
                         int tempStatus = Integer.parseInt(snap.child("status").getValue().toString());
+                        /*
+                        //skip if status is pending
+
                         if (tempStatus > 0 && tempStatus < 6)
-                            return;
+                            return;*/
 
                         //key is petID
                         Log.d("DEBUGGER>>>", "SAH: key-" + snap.getKey());
 
+                        String key = snap.getKey();
+                        String dateReq = snap.child("dateRequested").getValue().toString();
+                        String status =  snap.child("status").getValue().toString();
+
                         File file = new File(activity.getFilesDir(), "adoption-" + snap.getKey());
                         if (!file.exists()){
-                            String key = snap.getKey();
-                            String dateReq = snap.child("dateRequested").getValue().toString();
-                            String status =  snap.child("status").getValue().toString();
                             fetchAdoptionFromCloud(key, dateReq, status);
+                            Homepage.RESTART_REQUIRED = true;
+                        }
+                        else {
+                            Adoption adoption = UserData.fetchAdoptionFromLocal(activity, snap.getKey());
+                            if (adoption.getStatus() != tempStatus){
+                                fetchAdoptionFromCloud(key, dateReq, status);
+                                Homepage.RESTART_REQUIRED = true;
+                            }
                         }
 
                     }

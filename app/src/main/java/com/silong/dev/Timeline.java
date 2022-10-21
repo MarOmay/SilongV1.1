@@ -228,22 +228,31 @@ public class Timeline extends AppCompatActivity {
 
         LoadingDialog loadingDialog = new LoadingDialog(Timeline.this);
         loadingDialog.startLoadingDialog();
+        
+        Map<String, Object> multiNodeMap = new HashMap<>();
+        multiNodeMap.put("Pets/"+ADOPTION.getPetID()+"/status", PetStatus.ACTIVE);
+        multiNodeMap.put("recordSummary/"+ADOPTION.getPetID(), PetStatus.ACTIVE);
+        multiNodeMap.put("adoptionRequest/"+UserData.userID, null);
+        multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+ADOPTION.getPetID()+"/dateRequested", ADOPTION.getDateRequested());
+        multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+ADOPTION.getPetID()+"/status", Timeline.CANCELLED);
 
+        /*
         //set pet status to active
         DatabaseReference tempRefStatus = mDatabase.getReference().child("Pets").child(ADOPTION.getPetID()).child("status");
         tempRefStatus.setValue(PetStatus.ACTIVE);
 
         DatabaseReference tempReference = mDatabase.getReference().child("recordSummary").child(ADOPTION.getPetID());
-        tempReference.setValue(PetStatus.ACTIVE);
+        tempReference.setValue(PetStatus.ACTIVE);*/
 
         //set request to null in RTDB
-        DatabaseReference tempRef = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
-        tempRef.setValue(null)
+        DatabaseReference tempRef = mDatabase.getReference();//.child("adoptionRequest").child(UserData.userID);
+        tempRef.updateChildren(multiNodeMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         updateLocalStatus(CANCELLED);
 
+                        /*
                         Log.d("DEBUGGER>>>", "Cancellation ADOPTION.getPetID(): " + ADOPTION.getPetID());
 
                         //archive to user's RTDB
@@ -273,7 +282,24 @@ public class Timeline extends AppCompatActivity {
                                 Timeline.this.finish();
 
                             }
-                        });
+                        });*/
+
+                        //increment rtdb cancellation value
+                        CancellationCounter cc = new CancellationCounter(UserData.userID);
+                        cc.execute();
+
+                        //notify user
+                        EmailNotif emailNotif = new EmailNotif(UserData.email, Timeline.CANCELLED, ADOPTION);
+                        emailNotif.sendNotif();
+
+                        //delete local copy of current adoption
+                        UserData.deleteAdoptionByID(Timeline.this, ADOPTION.getPetID());
+
+                        //return to Splash
+                        loadingDialog.dismissLoadingDialog();
+                        Intent intent = new Intent(Timeline.this, Splash.class);
+                        startActivity(intent);
+                        Timeline.this.finish();
 
                     }
                 });

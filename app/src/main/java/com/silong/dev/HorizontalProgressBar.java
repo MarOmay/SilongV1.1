@@ -20,6 +20,7 @@ import com.silong.Operation.Utility;
 import com.silong.Task.PetCounter;
 import com.silong.Task.RecordVerifier;
 
+import com.silong.Task.SyncAdoptionHistory;
 import com.silong.Task.SyncPetRecord;
 
 import java.io.File;
@@ -69,9 +70,15 @@ public class HorizontalProgressBar extends AppCompatActivity {
             finish();
         }
 
+        UserData.populate(HorizontalProgressBar.this);
+
         //get total record count from RTDB
         PetCounter petCounter = new PetCounter(this);
         petCounter.execute();
+
+        //sync adoption record
+        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this);
+        syncAdoptionHistory.execute();
 
     }
 

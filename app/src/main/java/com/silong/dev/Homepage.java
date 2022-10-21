@@ -33,6 +33,7 @@ import com.silong.Adapter.SwipeAdapter;
 import com.silong.CustomView.ApplyDialog;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.HomepageExitDialog;
+import com.silong.CustomView.PendingApplicationNotice;
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetAge;
 import com.silong.EnumClass.PetType;
@@ -92,6 +93,8 @@ public class Homepage extends AppCompatActivity {
     private Pet CURRENT_PET = new Pet();
 
     public static boolean BEGIN_APPLY = false;
+
+    public static boolean RESTART_REQUIRED = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,9 +167,10 @@ public class Homepage extends AppCompatActivity {
             }
         }
 
+        /*
         //sync adoption record
         SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this);
-        syncAdoptionHistory.execute();
+        syncAdoptionHistory.execute();*/
 
         checkAccountStatus();
         loadKoloda();
@@ -188,6 +192,10 @@ public class Homepage extends AppCompatActivity {
         avatarImgview.setImageBitmap(UserData.photo);
         usernameTv.setText(UserData.firstName + " " + UserData.lastName);
         drawerLayout.openDrawer(GravityCompat.END);
+
+        //sync adoption record
+        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this);
+        syncAdoptionHistory.execute();
     }
 
     public void onPressedAdoptionHistory(View view){
@@ -415,6 +423,8 @@ public class Homepage extends AppCompatActivity {
 
                         try {
 
+                            Utility.log("Homepage.gTT: PetID: " + CURRENT_PET.getPetID());
+
                             UserData.deleteAdoptionByID(Homepage.this, CURRENT_PET.getPetID());
 
                             FileOutputStream fileOuputStream = openFileOutput("adoption-" + Utility.dateToday(), Context.MODE_PRIVATE);
@@ -499,6 +509,13 @@ public class Homepage extends AppCompatActivity {
                     boolean processing = false;
                     for (DataSnapshot snap : snapshot.getChildren()){
                         try{
+
+                            if (snap.getKey().equals(UserData.userID)){
+                                PendingApplicationNotice pan = new PendingApplicationNotice(Homepage.this);
+                                pan.show();
+                                return;
+                            }
+
                             if (snap.child("petID").getValue().toString().equals(CURRENT_PET.getPetID())){
                                 if (snap.child("status").getValue().toString().equals("7"))
                                     processing = false;
