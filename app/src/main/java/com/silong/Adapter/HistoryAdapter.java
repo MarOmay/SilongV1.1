@@ -1,5 +1,6 @@
 package com.silong.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.silong.CustomView.ImageDialog;
 import com.silong.dev.AdoptionHistory;
 import com.silong.dev.HistoryData;
 import com.silong.dev.R;
@@ -20,12 +22,14 @@ import com.silong.dev.Timeline;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
+    private Activity activity;
     HistoryData historyData[];
     Context context;
 
-    public HistoryAdapter(HistoryData[] historyData, AdoptionHistory activity){
+    public HistoryAdapter(HistoryData[] historyData, Activity activity){
         this.historyData = historyData;
         this.context = activity;
+        this.activity = activity;
     }
 
     @NonNull
@@ -76,6 +80,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             }
 
             holder.adoptStat.setText(status);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ImageDialog imageDialog = new ImageDialog(activity, holder.petPic.getDrawable());
+                    imageDialog.show();
+                }
+            });
         }
         catch (Exception e){
             holder.itemView.setVisibility(View.GONE);
