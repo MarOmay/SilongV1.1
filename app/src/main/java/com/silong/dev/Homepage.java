@@ -524,9 +524,12 @@ public class Homepage extends AppCompatActivity {
                         try{
 
                             if (snap.getKey().equals(UserData.userID)){
-                                PendingApplicationNotice pan = new PendingApplicationNotice(Homepage.this);
-                                pan.show();
-                                return;
+                                int status = Integer.parseInt(snap.child("status").getValue().toString());
+                                if (status >= 1 && status <= 5){
+                                    PendingApplicationNotice pan = new PendingApplicationNotice(Homepage.this);
+                                    pan.show();
+                                    return;
+                                }
                             }
 
                             if (snap.child("petID").getValue().toString().equals(CURRENT_PET.getPetID())){
