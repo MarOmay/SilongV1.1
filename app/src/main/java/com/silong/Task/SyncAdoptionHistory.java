@@ -1,11 +1,13 @@
 package com.silong.Task;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -53,6 +55,8 @@ public class SyncAdoptionHistory extends AsyncTask {
                 snapshotF = snapshot;
 
                 try {
+
+
                     ArrayList<String> keys = new ArrayList<>();
                     for (DataSnapshot snap : snapshotF.getChildren()){
 
@@ -84,7 +88,7 @@ public class SyncAdoptionHistory extends AsyncTask {
                             }
                             else {
                                 Adoption adoption = UserData.fetchAdoptionFromLocal(activity, snap.getKey());
-                                if (adoption.getStatus() != tempStatus){
+                                if (adoption.getStatus() != tempStatus || adoption.getPetID() == null){
                                     fetchAdoptionFromCloud(key, dateReq, status);
                                     Homepage.RESTART_REQUIRED = true;
                                 }
@@ -124,16 +128,19 @@ public class SyncAdoptionHistory extends AsyncTask {
                         HorizontalProgressBar.syncAdoptionDone = true;
                         HorizontalProgressBar.checkCompletion(activity);
                     }
+                    else {
+                        LocalBroadcastManager.getInstance(activity).sendBroadcast(new Intent("SAH-done"));
+                    }
 
                 }
                 catch (Exception e){
-                    Utility.log("SAH.dIB: " + e.getMessage());;
+                    Utility.log("SAH.dIB: " + e.getMessage());
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Utility.log("SAH.dIB.OC: " + error.getMessage());
             }
         });
 
@@ -153,7 +160,7 @@ public class SyncAdoptionHistory extends AsyncTask {
                     String age = snapshot.child("age").getValue().toString();
                     String color = snapshot.child("color").getValue().toString();
                     String size = snapshot.child("size").getValue().toString();
-                    String photo = snapshot.child("photo").getValue().toString();
+
 
                     UserData.writeAdoptionToLocal(activity, id, "petID", id);
                     UserData.writeAdoptionToLocal(activity, id, "gender", gender);
@@ -164,21 +171,25 @@ public class SyncAdoptionHistory extends AsyncTask {
                     UserData.writeAdoptionToLocal(activity, id, "dateRequested", dateRequested);
                     UserData.writeAdoptionToLocal(activity, id, "status", status);
 
-                    Bitmap bitmap = new ImageProcessor().toBitmap(photo);
-                    new ImageProcessor().saveToLocal(activity, bitmap, "adoptionpic-" + id);
+                    File file = new File(activity.getFilesDir(), "adoptionpic-" + id);
+                    if (!file.exists()){
+                        String photo = snapshot.child("photo").getValue().toString();
+                        Bitmap bitmap = new ImageProcessor().toBitmap(photo);
+                        new ImageProcessor().saveToLocal(activity, bitmap, "adoptionpic-" + id);
+                    }
 
                     UserData.populateAdoptions(activity);
 
                 }
                 catch (Exception e){
-                    Log.d("SAH-fAFC", e.getMessage());
+                    Utility.log("SAH.fAFC: " + e.getMessage());
                 }
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Utility.log("SAH.fAFC.oC: " + error.getMessage());
             }
         });
     }
@@ -189,22 +200,28 @@ public class SyncAdoptionHistory extends AsyncTask {
         tempRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean falseAlarm = true;
+
                 try {
                     String petID = snapshot.child("petID").getValue().toString();
+                    int pid = Integer.parseInt(petID);
+                    if (pid >= 3 && pid <= 5){
+                        falseAlarm = false;
+                    }
                     String appointmentDate = snapshot.child("appointmentDate").getValue().toString();
                     String appointmentTime = snapshot.child("appointmentTime").getValue().toString();
 
-                    UserData.writeAdoptionToLocal(activity, petID, "appointmentDate", appointmentDate);
-                    UserData.writeAdoptionToLocal(activity, petID, "appointmentTime", appointmentTime);
+                    UserData.writeAdoptionToLocal(activity, petID, "appointmentDate", appointmentDate + " " + appointmentTime);
+                    //UserData.writeAdoptionToLocal(activity, petID, "appointmentTime", appointmentTime);
                 }
                 catch (Exception e){
-                    Utility.log("SAH: " + e.getMessage());
+                    Utility.log("SAH.fAR: (" + (falseAlarm ? "falseAlarm" : "not falseAlarm") + ") : " + e.getMessage());
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Utility.log("SAH.fAR.oC: " + error.getMessage());
             }
         });
     }

@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.baoyachi.stepview.VerticalStepView;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +42,7 @@ import com.silong.Object.Pet;
 import com.silong.Operation.EmailNotif;
 import com.silong.Operation.Utility;
 import com.silong.Task.CancellationCounter;
+import com.silong.Task.SyncAdoptionHistory;
 
 
 import java.io.File;
@@ -72,7 +75,7 @@ public class Timeline extends AppCompatActivity {
     private DatabaseReference mReference;
 
     private Pet PET;
-    private Adoption ADOPTION = new Adoption();
+    private Adoption ADOPTION = null;
 
     private int CURRENT_STAGE = 0;
     public static String CHOSEN_DATE, CHOSEN_TIME;
@@ -83,11 +86,12 @@ public class Timeline extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
         getSupportActionBar().hide();
 
-        Log.d("DEBUGGER>>>", "Timeline launched");
+        Utility.log("Timeline: Launched");
 
         //Receive logout trigger
         LocalBroadcastManager.getInstance(this).registerReceiver(mLogoutReceiver, new IntentFilter("logout-user"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mScheduleSelected, new IntentFilter("schedule-chosen"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mSAHReceiver, new IntentFilter("SAH-done"));
 
         //initialize Firebase objects
         mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -216,9 +220,23 @@ public class Timeline extends AppCompatActivity {
 
         mReference = null;
         mReference = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
-        mReference.setValue(null);
-        updateLocalStatus(FINISHED);
-        exitTimeline();
+        mReference.setValue(null)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        resyncAdoptionHistory();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Timeline.this, "Something went wrong. please try again.", Toast.LENGTH_SHORT).show();
+                        Utility.log("Timeline.oPH: " + e.getMessage());
+                    }
+                });
+
+        //updateLocalStatus(FINISHED);
+        //exitTimeline();
     }
 
     private void populateMenu(){
@@ -231,7 +249,7 @@ public class Timeline extends AppCompatActivity {
 
     public void onPressedCancel(View view){
         Utility.animateOnClick(Timeline.this, view);
-        Log.d("DEBUGGER>>>", "Cancellation triggered oPC");
+        Utility.log("Timeline.oPC: onPressedCancel triggered");
 
         //check internet connection
         if (!Utility.internetConnection(Timeline.this)){
@@ -264,6 +282,8 @@ public class Timeline extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         updateLocalStatus(CANCELLED);
+                        Utility.log("Timeline.oPC: oPC multiNodeMap uploaded");
+                        //resyncAdoptionHistory();
 
                         /*
                         Log.d("DEBUGGER>>>", "Cancellation ADOPTION.getPetID(): " + ADOPTION.getPetID());
@@ -322,7 +342,7 @@ public class Timeline extends AppCompatActivity {
     private void refreshTimeline(){
         UserData.populateAdoptions(Timeline.this);
         for (Adoption adoption : UserData.adoptionHistory){
-            Log.d("DEBUGGER>>>", "Adoption on device: " + adoption.getDateRequested() + " petID: " + adoption.getPetID() + " status: " + adoption.getStatus());
+            Utility.log("Timeline.rT: Adoption on device: " + adoption.getDateRequested() + " petID: " + adoption.getPetID() + " status: " + adoption.getStatus());
             switch (adoption.getStatus()){
                 case SEND_REQUEST:
                 case AWAITING_APPROVAL:
@@ -334,11 +354,12 @@ public class Timeline extends AppCompatActivity {
         }
 
         if (ADOPTION == null){
-            exitTimeline();
+            //exitTimeline();
+            resyncAdoptionHistory();
             return;
         }
 
-        Log.d("DEBUGGER>>>", "Final Adoption on device: " + ADOPTION.getDateRequested() + " petID: " + ADOPTION.getPetID());
+        Utility.log("Timeline.rT: Final Adoption on device: " + ADOPTION.getDateRequested() + " petID: " + ADOPTION.getPetID());
 
         PET = UserData.getPet(ADOPTION.getPetID());
 
@@ -347,12 +368,10 @@ public class Timeline extends AppCompatActivity {
         timelineStepView.setVisibility(View.INVISIBLE);
         timelineStepView.setStepsViewIndicatorComplectingPosition(CURRENT_STAGE +1);
         timelineStepView.setVisibility(View.VISIBLE);
-        Log.d("DEBUGGER>>>", "Setting timeline to " + CURRENT_STAGE);
+        Utility.log("Timeline.rT: Setting timeline to " + CURRENT_STAGE);
 
         switch (CURRENT_STAGE){
             case SEND_REQUEST:
-                Log.d("DEBUGGER>>>", "Updating status of " + ADOPTION.getPetID());
-                updatePetStatus(ADOPTION.getPetID());
                 timelineCancelLayout.setVisibility(View.VISIBLE);
                 timelineSetAppLayout.setVisibility(View.GONE);
                 timelineHomeLayout.setVisibility(View.GONE);
@@ -432,7 +451,8 @@ public class Timeline extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 //go back to HorizontalProgressBar
-                                exitTimeline();
+                                //exitTimeline();
+                                resyncAdoptionHistory();
                             }
                         });
                 break;
@@ -457,8 +477,35 @@ public class Timeline extends AppCompatActivity {
             return;
         }
 
-        Log.d("DEBUGGER>>>", "TRACK petID: (uPS) " + petID);
-        Log.d("DEBUGGER>>>", "TRACK getPetID: (uPS) " + ADOPTION.getPetID());
+        Utility.log("Timeline.uPS: TRACK petID: (uPS) " + petID);
+        Utility.log("Timeline.uPS: TRACK getPetID: (uPS) " + ADOPTION.getPetID());
+
+        String date = Utility.dateToday();
+
+        Map<String, Object> multiNodeMap = new HashMap<>();
+        multiNodeMap.put("adoptionRequest/"+UserData.userID+"/status", "1");
+        multiNodeMap.put("adoptionRequest/"+UserData.userID+"/dateRequested", date);
+        multiNodeMap.put("adoptionRequest/"+UserData.userID+"/petID", ADOPTION.getPetID());
+        multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+ADOPTION.getPetID()+"/status", AWAITING_APPROVAL);
+        multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+ADOPTION.getPetID()+"/dateRequested", date);
+
+        DatabaseReference tempRef = mDatabase.getReference();
+        tempRef.updateChildren(multiNodeMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        resyncAdoptionHistory();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Timeline.this, "Operation failed", Toast.LENGTH_SHORT).show();
+                        Utility.log("Timeline.uPS: " + e.getMessage());
+                    }
+                });
+
+        /*
         //write to RTDB
         DatabaseReference tempRef = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
         Map<String, Object> map = new HashMap<>();
@@ -476,26 +523,37 @@ public class Timeline extends AppCompatActivity {
                         refreshTimeline();
                     }
                 });
+        */
 
     }
 
     private void watchRTDBStatus(){
-        Log.d("DEBUGGER>>>", "watchRTDBStatus: started");
-        Log.d("DEBUGGER>>>", "id : " + UserData.userID);
+
+        Utility.log("Timeline.wRS: watchRTDBStatus: started");
+        Utility.log("Timeline.wRS: id : " + UserData.userID);
 
         if (UserData.userID == null){
             return;
         }
 
-        mReference = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
-        mReference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference mref = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
+        mref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() != null){
+                if (snapshot.child("status").getValue() != null){
+
+                    if (snapshot.child("status").getValue().toString().equals(String.valueOf(ADOPTION.getStatus()))){
+
+                        return;
+                    }
 
                     int status = Integer.valueOf(snapshot.child("status").getValue().toString());
 
+                    Utility.log("Timeline.wRS: statusFromCLoud: " + status + "  curStatus: " + ADOPTION.getStatus());
 
+                    updateLocalStatus(status);
+
+                    /*
                     try {
                         String date = snapshot.child("appointmentDate").getValue().toString();
                         String time = snapshot.child("appointmentTime").getValue().toString();
@@ -503,39 +561,45 @@ public class Timeline extends AppCompatActivity {
 
                         String dateTime = date + " " + time;
                         if (!dateTime.equals(ADOPTION.getAppointmentDate())){
-                            //restartTimeline();
-                            mReference = null;
-                            refreshTimeline();
+                            restartTimeline();
+                            //refreshTimeline();
                         }
                     }
                     catch (Exception e){
                         updateLocalStatus(status);
                         Utility.log("Timeline.wRS.oDC: " + e.getMessage());
+                    }*/
+
+                    //updateRemoteStatus(status);
+
+                    Utility.log("Timeline.wRS: Status - " + status);
+
+                    if (status == REQUEST_APPROVED){
+                        timelineSetAppCancelBtn.setEnabled(true);
+                        timelineSetAppCancelBtn.setClickable(true);
+                        timelineSetAppBtn.setEnabled(true);
+                        timelineSetAppBtn.setClickable(true);
                     }
 
-                    updateRemoteStatus(status);
-
-                    Log.d("DEBUGGER>>>", "Status: " + status);
-
-
-
                     if (status == DECLINED){
-                        Log.d("DEBUGGER>>>", "Exiting timeline");
-                        exitTimeline();
+                        resyncAdoptionHistory();
                         return;
                     }
                     else if (ADOPTION.getStatus() != status ){
                         //restartTimeline();
-                        mReference = null;
-                        refreshTimeline();
+                        //mReference = null;
+                        //refreshTimeline();
+                        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Timeline.this, UserData.userID, false);
+                        syncAdoptionHistory.execute();
                     }
+
 
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Utility.log("Timeline.wRS.Oc: " + error.getMessage());
             }
         });
     }
@@ -549,38 +613,40 @@ public class Timeline extends AppCompatActivity {
 
         tempRef.updateChildren(map);
 
+        Utility.log("Timeline.aA: aA map uploaded");
+
     }
 
-    private void exitTimeline(){
-        //return to HorizontalProgressBar
+    private void resyncAdoptionHistory(){
         Intent intent = new Intent(Timeline.this, HorizontalProgressBar.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
         finish();
     }
 
     private void updateLocalStatus(int status, String date, String time){
         //update adoption- file
-        try (FileOutputStream fileOutputStream = Timeline.this.openFileOutput( "adoption-" + ADOPTION.getDateRequested(), Context.MODE_APPEND)) {
+        try (FileOutputStream fileOutputStream = Timeline.this.openFileOutput( "adoption-" + ADOPTION.getPetID(), Context.MODE_APPEND)) {
             String data = "status:" + status + ";\n";
             data += "appointmentDate:" + date + " " + time.replace(":","*") + ";\n";
             fileOutputStream.write(data.getBytes());
             fileOutputStream.flush();
         }
         catch (Exception e){
-            Log.d("DEBUGGER>>>", e.getMessage());
+            Utility.log("Timeline.uLS: " + e.getMessage());
             Toast.makeText(getApplicationContext(), "Can't update adoption-.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void updateLocalStatus(int status){
         //update adoption- file
-        try (FileOutputStream fileOutputStream = Timeline.this.openFileOutput( "adoption-" + ADOPTION.getDateRequested(), Context.MODE_APPEND)) {
+        try (FileOutputStream fileOutputStream = Timeline.this.openFileOutput( "adoption-" + ADOPTION.getPetID(), Context.MODE_APPEND)) {
             String data = "status:" + status + ";\n";
             fileOutputStream.write(data.getBytes());
             fileOutputStream.flush();
         }
         catch (Exception e){
-            Log.d("DEBUGGER>>>", e.getMessage());
+            Utility.log("Timeline.uLS: " + e.getMessage());
             Toast.makeText(getApplicationContext(), "Can't update adoption-.", Toast.LENGTH_SHORT).show();
         }
     }
@@ -595,6 +661,51 @@ public class Timeline extends AppCompatActivity {
     private BroadcastReceiver mScheduleSelected = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
+            timelineSetAppCancelBtn.setEnabled(false);
+            timelineSetAppCancelBtn.setClickable(false);
+            timelineSetAppBtn.setEnabled(false);
+            timelineSetAppBtn.setClickable(false);
+
+            Map<String, Object> multiNodeMap = new HashMap<>();
+            multiNodeMap.put("adoptionRequest/"+UserData.userID+"/status", String.valueOf(Timeline.SET_APPOINTMENT));
+            multiNodeMap.put("adoptionRequest/"+UserData.userID+"/dateRequested", ADOPTION.getDateRequested());
+            multiNodeMap.put("adoptionRequest/"+UserData.userID+"/appointmentDate", CHOSEN_DATE);
+            multiNodeMap.put("adoptionRequest/"+UserData.userID+"/appointmentTime", CHOSEN_TIME.replace(":","*"));
+            multiNodeMap.put("adoptionRequest/"+UserData.userID+"/petID", ADOPTION.getPetID());
+            multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+ADOPTION.getPetID()+"/status", Timeline.SET_APPOINTMENT);
+            multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+ADOPTION.getPetID()+"/dateRequested", ADOPTION.getDateRequested());
+
+            /*
+            Map<String, Object> map = new HashMap<>();
+            map.put("appointmentDate", CHOSEN_DATE);
+            map.put("appointmentTime", CHOSEN_TIME.replace(":","*"));
+            map.put("status", "3");
+            map.put("petID", String.valueOf(ADOPTION.getPetID()));
+            */
+
+            DatabaseReference tempRefDate = mDatabase.getReference();
+            tempRefDate.updateChildren(multiNodeMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Utility.log("Timeline.mSS: mSS map uploaded");
+                            updateLocalStatus(Integer.parseInt(ADOPTION.getPetID()), CHOSEN_DATE, CHOSEN_TIME.replace(":","*"));
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Timeline.this, "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                            Utility.log("Timeline.mSS: " + e.getMessage());
+                            timelineSetAppCancelBtn.setEnabled(true);
+                            timelineSetAppCancelBtn.setClickable(true);
+                            timelineSetAppBtn.setEnabled(true);
+                            timelineSetAppBtn.setClickable(true);
+                        }
+                    });
+
+            /*
             DatabaseReference tempRefDate = mDatabase.getReference().child("adoptionRequest").child(UserData.userID).child("appointmentDate");
             tempRefDate.setValue(CHOSEN_DATE);
             DatabaseReference tempRefTime = mDatabase.getReference().child("adoptionRequest").child(UserData.userID).child("appointmentTime");
@@ -613,6 +724,7 @@ public class Timeline extends AppCompatActivity {
 
             DatabaseReference tempRef = mDatabase.getReference().child("adoptionRequest").child(UserData.userID).child("status");
             tempRef.setValue("3");
+            */
         }
     };
 
@@ -626,6 +738,13 @@ public class Timeline extends AppCompatActivity {
             Intent i = new Intent(Timeline.this, Splash.class);
             startActivity(i);
             finish();
+        }
+    };
+
+    private BroadcastReceiver mSAHReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refreshTimeline();
         }
     };
 
@@ -658,6 +777,7 @@ public class Timeline extends AppCompatActivity {
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLogoutReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mScheduleSelected);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mSAHReceiver);
         super.onDestroy();
     }
 

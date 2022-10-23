@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -153,7 +155,7 @@ public class Homepage extends AppCompatActivity {
         UserData.populateAdoptions(Homepage.this);
         if (UserData.adoptionHistory.size() > 0){
             for (Adoption adoption : UserData.adoptionHistory){
-                Log.d("DEBUGGER>>>", "A-status " + adoption.getStatus());
+                Utility.log("Homepage: Adoption on Device - PetDI:" + adoption.getPetID() + " Status: " + adoption.getStatus());
                 if (adoption.getStatus() == Timeline.DECLINED ||
                         adoption.getStatus() == Timeline.CANCELLED ||
                         adoption.getStatus() == Timeline.FINISHED)
@@ -197,8 +199,8 @@ public class Homepage extends AppCompatActivity {
         drawerLayout.openDrawer(GravityCompat.END);
 
         //sync adoption record
-        SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this, UserData.userID, false);
-        syncAdoptionHistory.execute();
+        //SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(Homepage.this, UserData.userID, false);
+        //syncAdoptionHistory.execute();
     }
 
     public void onPressedAdoptionHistory(View view){
@@ -424,16 +426,20 @@ public class Homepage extends AppCompatActivity {
 
     private void gotoTimeline(){
 
-        Map<String, Object> newHist = new HashMap<>();
-        newHist.put("dateRequested", Utility.dateToday());
-        newHist.put("status", 0);
+        String date = Utility.dateToday();
 
-        DatabaseReference histRef = mDatabase.getReference().child("Users").child(UserData.userID).child("adoptionHistory").child(String.valueOf(CURRENT_PET.getPetID()));
-        histRef.updateChildren(newHist)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+        Map<String, Object> multiNodeMap = new HashMap<>();
+        multiNodeMap.put("adoptionRequest/"+UserData.userID+"/status", String.valueOf(Timeline.AWAITING_APPROVAL));
+        multiNodeMap.put("adoptionRequest/"+UserData.userID+"/dateRequested", date);
+        multiNodeMap.put("adoptionRequest/"+UserData.userID+"/petID", CURRENT_PET.getPetID());
+        multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+CURRENT_PET.getPetID()+"/status", Timeline.AWAITING_APPROVAL);
+        multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+CURRENT_PET.getPetID()+"/dateRequested", date);
+
+        DatabaseReference histRef = mDatabase.getReference();
+        histRef.updateChildren(multiNodeMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
+                    public void onSuccess(Void unused) {
                         try {
 
                             Utility.log("Homepage.gTT: PetID: " + CURRENT_PET.getPetID());
@@ -442,7 +448,7 @@ public class Homepage extends AppCompatActivity {
 
                             FileOutputStream fileOuputStream = openFileOutput("adoption-" + Utility.dateToday(), Context.MODE_PRIVATE);
                             try (FileOutputStream fileOutputStream = openFileOutput( "adoption-" + Utility.dateToday(), Context.MODE_APPEND)) {
-                                String data = "status:0;\npetID:" + CURRENT_PET.getPetID() + ";";
+                                String data = "status:1;\npetID:" + CURRENT_PET.getPetID() + ";";
                                 data += "\ndateRequested:" + Utility.dateToday() + ";\n";
                                 data += "gender:" + CURRENT_PET.getGender() + "\n";
                                 data += "type:" + CURRENT_PET.getType() + "\n";
@@ -470,8 +476,13 @@ public class Homepage extends AppCompatActivity {
                         catch (Exception e){
                             Utility.log("Homepage.gT: " + e.getMessage());
                         }
-
-
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Homepage.this, "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                        Utility.log("Homepage.gT: " + e.getMessage());
                     }
                 });
 
