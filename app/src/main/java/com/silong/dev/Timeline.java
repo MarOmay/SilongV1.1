@@ -218,9 +218,15 @@ public class Timeline extends AppCompatActivity {
             return;
         }
 
+        //prepare data
+        Map<String, Object> multiNodeMap = new HashMap<>();
+        multiNodeMap.put("adoptionRequest/"+UserData.userID, null);
+        multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+ADOPTION.getPetID()+"/dateRequested", ADOPTION.getDateRequested());
+        multiNodeMap.put("Users/"+UserData.userID+"/adoptionHistory/"+ADOPTION.getPetID()+"/status", 6);
+
         mReference = null;
-        mReference = mDatabase.getReference().child("adoptionRequest").child(UserData.userID);
-        mReference.setValue(null)
+        mReference = mDatabase.getReference();
+        mReference.updateChildren(multiNodeMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -440,7 +446,6 @@ public class Timeline extends AppCompatActivity {
                 timelineHomeLayout.setVisibility(View.VISIBLE);
                 timelineHeader.setText(R.string.congrats);
                 timelineBody.setText(R.string.successBody);
-                archiveAdoption();
                 break;
 
             case FINISHED:
