@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/historyDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="10/02/2022"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/historyPetId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:paddingStart="5dp"
+            android:text="Pet ID: ##"
+            android:textAlignment="textStart"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/historyStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:paddingStart="5dp"
+            android:scrollHorizontally="true"
+            android:text="Approved an adoption request."
+            android:textAlignment="textStart"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="350dp"
+        android:layout_height="1dp"
+        android:alpha="0.2"
+        android:background="@color/gray" />
+
+</LinearLayout>
