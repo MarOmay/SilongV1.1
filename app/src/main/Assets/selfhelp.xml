@@ -65,11 +65,12 @@
     <article>
         <title>Basic Troubleshooting Guide</title>
         <body>            1.Check your internet connection
-            2.Clear App’s data and cache in the phone’s settings
-            3.Uninstall the App
-            4.Restart your phone
-            5.Logout and log back in
-            6.Check your phone's date and time
+            2.Swipe down to refresh
+            3.Check your phone's date and time
+            4.Clear App’s data and cache in the phone’s settings
+            5.Uninstall the App
+            6.Restart your phone
+            7.Logout and log back in
         </body>
         <tag>guide,step,process,procedure</tag>
     </article>
@@ -132,7 +133,7 @@
         <title>Timeline don't reflect changes immediately</title>
         <body>              Internet connection greatly impacts real-time update of timeline, if problem persists, refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
         </body>
-        <tag>delay,effect,realtime</tag>
+        <tag>delay,effect,realtime,no result</tag>
     </article>
 
     <article>
@@ -161,6 +162,13 @@
         <body>              Refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
         </body>
         <tag>lost,missing</tag>
+    </article>
+
+    <article>
+        <title>"You have cancelled too many requests"</title>
+        <body>              Please send a message to the City Veterinary Office’s Facebook Page, or go to Menu and tap “About the Office” for assistance.
+        </body>
+        <tag>cancel,many</tag>
     </article>
 
 </articles>
