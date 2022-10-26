@@ -83,7 +83,7 @@ public class Homepage extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
 
-    TextView headerTitle, editProfileTv;
+    TextView headerTitle, editProfileTv, indexTrackerTv;
     ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, infoIcon;
     Button applyBtn, aboutOfficeBtn, aboutUsBtn,exitBtn;
     Koloda koloda;
@@ -135,6 +135,7 @@ public class Homepage extends AppCompatActivity {
         messageImgview = (ImageView) findViewById(R.id.messageImgview);
         menuImgview = (ImageView) findViewById(R.id.menuImgview);
         koloda = findViewById(R.id.koloda);
+        indexTrackerTv = findViewById(R.id.indexTrackerTv);
         applyBtn = (Button) findViewById(R.id.applyBtn);
         closeDrawerBtn = (ImageView) findViewById(R.id.closeDrawerBtn);
         aboutOfficeBtn = (Button) findViewById(R.id.aboutOfficeBtn);
@@ -281,6 +282,8 @@ public class Homepage extends AppCompatActivity {
 
             SwipeAdapter adapter = new SwipeAdapter(this, copyOfTempPetList);
             koloda.setAdapter(adapter);
+
+            indexTrackerTv.setText("1 / " + tempPetList.size());
         }
         catch (Exception e){
             Utility.log("Homepage.lK: " + e.getMessage());
@@ -353,6 +356,8 @@ public class Homepage extends AppCompatActivity {
                 else {
                     CURRENT_PET = tempPetList.get(i+1);
                 }
+
+                updateIndexUI(CURRENT_PET.getPetID());
             }
 
             @Override
@@ -371,6 +376,8 @@ public class Homepage extends AppCompatActivity {
                 else {
                     CURRENT_PET = tempPetList.get(i+1);
                 }
+
+                updateIndexUI(CURRENT_PET.getPetID());
             }
 
             @Override
@@ -403,6 +410,10 @@ public class Homepage extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void updateIndexUI(String petID){
+        indexTrackerTv.setText(((SwipeAdapter) koloda.getAdapter()).getPetIndex(petID) + " / " + tempPetList.size());
     }
 
     public void onPressedApply(View view){

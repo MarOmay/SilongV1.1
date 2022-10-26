@@ -25,6 +25,8 @@ import com.silong.dev.R;
 import com.silong.dev.UserData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SwipeAdapter extends BaseAdapter {
@@ -32,6 +34,8 @@ public class SwipeAdapter extends BaseAdapter {
     private Activity activity;
     private Context context;
     private ArrayList<Pet> pets;
+    private Map<String, Integer> petIndexer = new HashMap<>();
+    private int indexer = 1;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -39,7 +43,6 @@ public class SwipeAdapter extends BaseAdapter {
         this.activity = activity;
         this.context = context;
         this.pets = pets;
-
     }
 
     @Override
@@ -74,6 +77,9 @@ public class SwipeAdapter extends BaseAdapter {
             TextView petColor = convertView.findViewById(R.id.petColor);
 
             Pet p = pets.get(index);
+
+            if (!petIndexer.containsKey(p.getPetID()))
+                petIndexer.put(p.getPetID(), indexer++);
 
             imageSwipe.setImageBitmap(p.getPhoto());
             genderSign.setImageResource(p.getGender() == Gender.MALE ? R.drawable.gendermale : R.drawable.genderfemale);
@@ -129,6 +135,10 @@ public class SwipeAdapter extends BaseAdapter {
 
     public ArrayList<Pet> getList(){
         return pets;
+    }
+
+    public int getPetIndex(String petID){
+        return petIndexer.get(petID);
     }
 
     private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {

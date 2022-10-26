@@ -31,13 +31,22 @@
                 android:background="@drawable/no_results"
                 android:backgroundTint="@color/gray"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:weightSum="2">
 
                 <com.yalantis.library.Koloda
                     android:id="@+id/koloda"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1.8"
                     app:koloda_card_layout="@layout/item_koloda" />
+
+                <TextView
+                    android:id="@+id/indexTrackerTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:padding="0dp"/>
 
             </LinearLayout>
 
