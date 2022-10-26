@@ -283,7 +283,13 @@ public class Homepage extends AppCompatActivity {
             SwipeAdapter adapter = new SwipeAdapter(this, copyOfTempPetList);
             koloda.setAdapter(adapter);
 
-            indexTrackerTv.setText("1 / " + tempPetList.size());
+            if (tempPetList.size() > 0){
+                indexTrackerTv.setText("1 / " + tempPetList.size());
+            }
+            else {
+                indexTrackerTv.setText("");
+            }
+
         }
         catch (Exception e){
             Utility.log("Homepage.lK: " + e.getMessage());
