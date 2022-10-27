@@ -81,6 +81,8 @@ public class Homepage extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
 
+    public static String FB_ID = null;
+
     DrawerLayout drawerLayout;
 
     TextView headerTitle, editProfileTv, indexTrackerTv;

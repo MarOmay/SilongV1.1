@@ -20,9 +20,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.silong.dev.Homepage;
+import com.silong.dev.LoadingDialog;
 import com.silong.dev.R;
+import com.silong.dev.Timeline;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -75,14 +84,18 @@ public class Utility {
             Log.d("DEBUGGER>>>", message);
     }
 
-    public static void gotoMessenger(Activity activity){
+    private static void launchMessenger(Activity activity, String fbID){
+
+        if (fbID == null){
+            fbID = "CityVetOfficeCSJDM";
+        }
 
         try{
             //open FB messenger
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
             intent.setPackage("com.facebook.orca");
-            intent.setData(Uri.parse("https://m.me/"+"CityVetOfficeCSJDM"));
+            intent.setData(Uri.parse("https://m.me/"+fbID));
             activity.startActivity(intent);
         }
         catch (Exception e){
@@ -100,6 +113,39 @@ public class Utility {
 
         }
 
+    }
+
+    public static void gotoMessenger(Activity activity){
+        LoadingDialog loadingDialog = new LoadingDialog(activity);
+        loadingDialog.startLoadingDialog();
+
+        try {
+            FirebaseDatabase mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
+            DatabaseReference mRef = mDatabase.getReference("publicInformation").child("contactInformation").child("facebookPage");
+            mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    loadingDialog.dismissLoadingDialog();
+                    if (snapshot.getValue() != null){
+                        String fbid = snapshot.getValue().toString();
+                        launchMessenger(activity, fbid);
+                    }
+                    else {
+                        launchMessenger(activity, null);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    loadingDialog.dismissLoadingDialog();
+                    Utility.log("Utility.fF: " + error.getMessage());
+                }
+            });
+        }
+        catch (Exception e){
+            loadingDialog.dismissLoadingDialog();
+            Utility.log("Utility.fF: " + e.getMessage());
+        }
     }
 
     public static void animateOnClick(Context context, View view){

@@ -78,7 +78,7 @@ public class Timeline extends AppCompatActivity {
     private Adoption ADOPTION = null;
 
     private int CURRENT_STAGE = 0;
-    public static String CHOSEN_DATE, CHOSEN_TIME;
+    public static String CHOSEN_DATE, CHOSEN_TIME, FB_ID = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
