@@ -98,7 +98,7 @@
         <title>No photos of pets are shown</title>
         <body>              Tap filter, mark all of the available options. If problem persists, refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
         </body>
-        <tag>display,picture</tag>
+        <tag>display,picture,no result</tag>
     </article>
 
     <article>
@@ -133,7 +133,7 @@
         <title>Timeline don't reflect changes immediately</title>
         <body>              Internet connection greatly impacts real-time update of timeline, if problem persists, refer to the Basic Troubleshooting Guide and, preferably, perform the steps one at a time.
         </body>
-        <tag>delay,effect,realtime,no result</tag>
+        <tag>delay,effect,realtime</tag>
     </article>
 
     <article>
