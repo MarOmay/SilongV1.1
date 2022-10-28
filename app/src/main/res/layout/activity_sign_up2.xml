@@ -84,7 +84,7 @@
             android:foreground="@drawable/ic_round_camera_alt_24"
             android:foregroundGravity="center"
             android:foregroundTint="@color/textgray"
-            app:cardCornerRadius="100dp"
+            app:cardCornerRadius="50dp"
             tools:ignore="SpeakableTextPresentCheck,DuplicateClickableBoundsCheck">
 
             <ImageView

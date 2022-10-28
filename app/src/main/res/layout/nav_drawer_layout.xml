@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="-80dp"
         android:backgroundTint="@color/whitey"
-        app:cardCornerRadius="100dp"
+        app:cardCornerRadius="55dp"
         app:cardElevation="10dp"
         app:strokeColor="@color/whitey"
         app:strokeWidth="5dp">
