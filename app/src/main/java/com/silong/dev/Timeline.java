@@ -663,9 +663,32 @@ public class Timeline extends AppCompatActivity {
         remoteRef.setValue(status);
     }
 
+    private void resyncSystem(){
+        Intent intent = new Intent(Timeline.this, HorizontalProgressBar.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+        timelineRefreshLayout.setRefreshing(false);
+        finish();
+    }
+
     private BroadcastReceiver mScheduleSelected = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
+            //check if crucial info are not missing
+            if (UserData.userID == null){
+                Toast.makeText(Timeline.this, "Some information needs to be updated.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Timeline.this, "Refreshing system...", Toast.LENGTH_SHORT).show();
+                resyncSystem();
+                return;
+            }
+
+            if (UserData.userID.equals("null")){
+                Toast.makeText(Timeline.this, "Some information needs to be updated.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Timeline.this, "Refreshing system...", Toast.LENGTH_SHORT).show();
+                resyncSystem();
+                return;
+            }
 
             timelineSetAppCancelBtn.setEnabled(false);
             timelineSetAppCancelBtn.setClickable(false);
@@ -757,11 +780,7 @@ public class Timeline extends AppCompatActivity {
         @Override
         public void onRefresh() {
 
-            Intent intent = new Intent(Timeline.this, HorizontalProgressBar.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
-            timelineRefreshLayout.setRefreshing(false);
-            finish();
+            resyncSystem();
 
         }
     };
