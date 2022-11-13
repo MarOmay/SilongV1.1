@@ -151,6 +151,13 @@ public class Timeline extends AppCompatActivity {
 
     public void onPressedMenu(View view){
         Utility.animateOnClick(Timeline.this, view);
+        if (UserData.firstName == null || UserData.lastName == null){
+            UserData.populate(Timeline.this);
+        }
+        else if (UserData.firstName.equals("null") || UserData.lastName.equals("null")){
+            UserData.populate(Timeline.this);
+        }
+        populateMenu();
         avatarImgview.setImageBitmap(UserData.photo);
         timelineDrawer.openDrawer(GravityCompat.END);
     }

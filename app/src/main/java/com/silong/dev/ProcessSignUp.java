@@ -135,19 +135,19 @@ public class ProcessSignUp extends AppCompatActivity {
         mReference = mDatabase.getReference("Users/" + USER.getUserID());
 
         Map<String, Object> map = new HashMap<>();
-        map.put("firstName",USER.getFirstName());
-        map.put("lastName",USER.getLastName());
-        map.put("email", USER.getEmail());
-        map.put("birthday", USER.getBirthday());
+        map.put("firstName",USER.getFirstName().trim());
+        map.put("lastName",USER.getLastName().trim());
+        map.put("email", USER.getEmail().trim());
+        map.put("birthday", USER.getBirthday().trim());
         map.put("gender", USER.getGender());
-        map.put("contact", USER.contact);
+        map.put("contact", USER.contact.trim());
         map.put("photo", USER.getPhotoAsString());
         map.put("accountStatus", true);
         Address address = USER.getAddress();
-        map.put("address/addressLine", address.getAddressLine());
-        map.put("address/barangay", address.getBarangay());
-        map.put("address/municipality", address.getMunicipality());
-        map.put("address/province", address.getProvince());
+        map.put("address/addressLine", address.getAddressLine().trim());
+        map.put("address/barangay", address.getBarangay().trim());
+        map.put("address/municipality", address.getMunicipality().trim());
+        map.put("address/province", address.getProvince().trim());
         map.put("address/zipcode", address.getZipcode());
         map.put("lastModified", Utility.dateToday() + " " + Utility.timeNow());
         map.put("created", Utility.dateToday());
