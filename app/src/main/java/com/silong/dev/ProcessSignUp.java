@@ -144,7 +144,7 @@ public class ProcessSignUp extends AppCompatActivity {
         map.put("photo", USER.getPhotoAsString());
         map.put("accountStatus", true);
         Address address = USER.getAddress();
-        map.put("address/addressLine", address.getAddressLine().trim());
+        map.put("address/addressLine", address.getAddressLine().trim().replace("\n", " "));
         map.put("address/barangay", address.getBarangay().trim());
         map.put("address/municipality", address.getMunicipality().trim());
         map.put("address/province", address.getProvince().trim());

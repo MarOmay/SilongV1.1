@@ -69,7 +69,7 @@ public class AddressSettings extends AppCompatActivity {
             loadingDialog.startLoadingDialog();
 
             //extract input
-            String addressLine = newAddressEt.getText().toString();
+            String addressLine = newAddressEt.getText().toString().trim().replace("\n", " ");
             String barangay = newBarangaySp.getSelectedItem().toString();
             int zipcode = Integer.parseInt(newBarangaySp.getZip());
 
