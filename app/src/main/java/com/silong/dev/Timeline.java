@@ -36,6 +36,7 @@ import com.silong.CustomView.AppointmentDatePickerFragment;
 import com.silong.CustomView.CustomStepView;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.HomepageExitDialog;
+import com.silong.CustomView.RelaunchNotifier;
 import com.silong.EnumClass.PetStatus;
 import com.silong.Object.Adoption;
 import com.silong.Object.Pet;
@@ -151,12 +152,18 @@ public class Timeline extends AppCompatActivity {
 
     public void onPressedMenu(View view){
         Utility.animateOnClick(Timeline.this, view);
-        if (UserData.firstName == null || UserData.lastName == null){
-            UserData.populate(Timeline.this);
+
+        if (UserData.userID == null){
+            RelaunchNotifier relaunchNotifier = new RelaunchNotifier(Timeline.this);
+            relaunchNotifier.show();
+            return;
         }
-        else if (UserData.firstName.equals("null") || UserData.lastName.equals("null")){
-            UserData.populate(Timeline.this);
+        if (UserData.userID.equals("null")){
+            RelaunchNotifier relaunchNotifier = new RelaunchNotifier(Timeline.this);
+            relaunchNotifier.show();
+            return;
         }
+
         populateMenu();
         avatarImgview.setImageBitmap(UserData.photo);
         timelineDrawer.openDrawer(GravityCompat.END);
@@ -684,16 +691,13 @@ public class Timeline extends AppCompatActivity {
 
             //check if crucial info are not missing
             if (UserData.userID == null){
-                Toast.makeText(Timeline.this, "Some information needs to be updated.", Toast.LENGTH_SHORT).show();
-                Toast.makeText(Timeline.this, "Refreshing system...", Toast.LENGTH_SHORT).show();
-                resyncSystem();
+                RelaunchNotifier relaunchNotifier = new RelaunchNotifier(Timeline.this);
+                relaunchNotifier.show();
                 return;
             }
-
             if (UserData.userID.equals("null")){
-                Toast.makeText(Timeline.this, "Some information needs to be updated.", Toast.LENGTH_SHORT).show();
-                Toast.makeText(Timeline.this, "Refreshing system...", Toast.LENGTH_SHORT).show();
-                resyncSystem();
+                RelaunchNotifier relaunchNotifier = new RelaunchNotifier(Timeline.this);
+                relaunchNotifier.show();
                 return;
             }
 

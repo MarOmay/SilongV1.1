@@ -36,6 +36,7 @@ import com.silong.CustomView.ApplyDialog;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.HomepageExitDialog;
 import com.silong.CustomView.PendingApplicationNotice;
+import com.silong.CustomView.RelaunchNotifier;
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetAge;
 import com.silong.EnumClass.PetType;
@@ -197,6 +198,18 @@ public class Homepage extends AppCompatActivity {
 
     public void onPressedMenu(View view){
         Utility.animateOnClick(Homepage.this, view);
+
+        if (UserData.userID == null){
+            RelaunchNotifier relaunchNotifier = new RelaunchNotifier(Homepage.this);
+            relaunchNotifier.show();
+            return;
+        }
+        if (UserData.userID.equals("null")){
+            RelaunchNotifier relaunchNotifier = new RelaunchNotifier(Homepage.this);
+            relaunchNotifier.show();
+            return;
+        }
+
         avatarImgview.setImageBitmap(UserData.photo);
         usernameTv.setText(UserData.firstName + " " + UserData.lastName);
         drawerLayout.openDrawer(GravityCompat.END);
