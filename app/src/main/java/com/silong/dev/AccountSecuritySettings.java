@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -169,8 +170,14 @@ public class AccountSecuritySettings extends AppCompatActivity {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getApplicationContext(), "Unable to complete request.", Toast.LENGTH_SHORT).show();
+                                            if (e instanceof FirebaseAuthInvalidUserException){
+                                                if (((FirebaseAuthInvalidUserException) e).getErrorCode().equals("ERROR_USER_NOT_FOUND")){
+                                                    Utility.log("ASS.delA: " + e.getMessage());
+                                                    return;
+                                                }
+                                            }
                                             Utility.log("ASS.delA: " + e.getMessage());
+                                            Toast.makeText(getApplicationContext(), "Unable to complete request.", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                         }
