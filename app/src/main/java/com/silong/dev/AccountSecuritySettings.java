@@ -33,6 +33,9 @@ import com.silong.CustomView.ResetLinkNotice;
 
 import com.silong.Operation.Utility;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class AccountSecuritySettings extends AppCompatActivity {
 
@@ -138,46 +141,49 @@ public class AccountSecuritySettings extends AppCompatActivity {
     }
 
     private void deactivateAccount(boolean restart){
-        //Check internet connection
-        if (Utility.internetConnection(getApplicationContext())){
-            //disable account specific status
-            mReference = mDatabase.getReference("Users/" + UserData.userID).child("accountStatus");
-            mReference.setValue(false)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            //disable in summary
-                            mReference = mDatabase.getReference("accountSummary").child(UserData.userID);
-                            mReference.setValue(restart ? false : "deleted")
+
+        //disable account
+        Map<String, Object> multiNodeMap = new HashMap<>();
+        multiNodeMap.put("Users/" + UserData.userID + "/accountStatus", false);
+        multiNodeMap.put("accountSummary/" + UserData.userID, restart ? false : "deleted");
+
+        mReference = mDatabase.getReference();
+        mReference.updateChildren(multiNodeMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (restart){
+                            Toast.makeText(AccountSecuritySettings.this, "Deactivating your account.", Toast.LENGTH_SHORT).show();
+                            restartApp();
+                        }
+                        else if (!restart){
+                            //delete from Auth
+                            mAuth.getCurrentUser().delete()
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            if (restart){
-                                                Toast.makeText(AccountSecuritySettings.this, "Deactivating your account.", Toast.LENGTH_SHORT).show();
-                                                restartApp();
-                                            }
+                                            Toast.makeText(getApplicationContext(), "Account deleted successfully!", Toast.LENGTH_SHORT).show();
+                                            restartApp();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(AccountSecuritySettings.this, "Unable to complete request.", Toast.LENGTH_SHORT).show();
-                                            Utility.log("ASS.dA: " + e.getMessage());
+                                            Toast.makeText(getApplicationContext(), "Unable to complete request.", Toast.LENGTH_SHORT).show();
+                                            Utility.log("ASS.delA: " + e.getMessage());
                                         }
                                     });
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AccountSecuritySettings.this, "Unable to complete request.", Toast.LENGTH_SHORT).show();
-                            Utility.log("ASS.dA: " + e.getMessage());
-                        }
-                    });
-        }
-        else {
-            Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
-        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AccountSecuritySettings.this, "Unable to complete request.", Toast.LENGTH_SHORT).show();
+                        Utility.log("ASS.dA: " + e.getMessage());
+                    }
+                });
+
     }
 
     private void restartApp(){
@@ -194,21 +200,6 @@ public class AccountSecuritySettings extends AppCompatActivity {
         if (Utility.internetConnection(getApplicationContext())){
             try {
                 deactivateAccount(false);
-                mAuth.getCurrentUser().delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(getApplicationContext(), "Account deleted successfully!", Toast.LENGTH_SHORT).show();
-                                restartApp();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Unable to complete request.", Toast.LENGTH_SHORT).show();
-                                Utility.log("ASS.delA: " + e.getMessage());
-                            }
-                        });
             }
             catch (Exception e){
                 Toast.makeText(this, "Unable to complete request.", Toast.LENGTH_SHORT).show();
