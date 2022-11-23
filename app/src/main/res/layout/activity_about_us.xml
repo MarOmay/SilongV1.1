@@ -195,7 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="January 20XX"
+                android:text="November 2022"
                 android:textAlignment="center"
                 android:textColor="@color/whitey"
                 android:textSize="15sp" />
