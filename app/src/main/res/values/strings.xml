@@ -18,6 +18,10 @@
         <item>Kaypian</item>
         <item>Maharlika</item>
         <item>Muzon</item>
+        <item>Muzon Proper</item>
+        <item>Muzon East</item>
+        <item>Muzon West</item>
+        <item>Muzon South</item>
         <item>Paradise III</item>
         <item>Poblacion</item>
         <item>Poblacion I</item>
@@ -25,6 +29,7 @@
         <item>San Manuel</item>
         <item>San Roque</item>
         <item>Santo Cristo</item>
+        <item>Tungkong Mangga</item>
         <item>Tungkong Mangga</item>
     </string-array>
     <string-array name="barangay_3024">
@@ -64,7 +69,6 @@
         <item>St. Martin de Porres</item>
         <item>Sapang Palay Proper</item>
         <item>Minuyan Proper</item>
-        <item>Barangay</item>
     </string-array>
     <string-array name="zipcode">
         <item>3023</item>
