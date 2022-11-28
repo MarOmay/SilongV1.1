@@ -144,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Gender"
+                    android:text="Sex"
                     android:textColor="@color/textgray"
                     android:textSize="13sp"
                     android:paddingStart="10dp"/>
