@@ -35,34 +35,46 @@ public class Filter extends AppCompatActivity {
         maleChip = findViewById(R.id.maleChip);
         femaleChip = findViewById(R.id.femaleChip);
 
-        if (Homepage.DOG) typeToggle.check(R.id.dogChip);
         if (Homepage.CAT) typeToggle.check(R.id.catChip);
+        if (Homepage.DOG) typeToggle.check(R.id.dogChip);
         if (Homepage.PUPPY) ageToggle.check(R.id.puppyChip);
         if (Homepage.YOUNG) ageToggle.check(R.id.youngChip);
         if (Homepage.OLD) ageToggle.check(R.id.oldChip);
         if (Homepage.MALE) genderToggle.check(R.id.maleChip);
         if (Homepage.FEMALE) genderToggle.check(R.id.femaleChip);
 
+        if (Homepage.CAT && Homepage.DOG){
+            Homepage.CAT = false;
+        }
+
+    }
+
+    public void onPressedResetFilter(View view){
+        Homepage.DOG = true;
+        Homepage.CAT = true;
+        Homepage.PUPPY = true;
+        Homepage.YOUNG = true;
+        Homepage.OLD = true;
+        Homepage.MALE = true;
+        Homepage.FEMALE = true;
+
+        onBackPressed();
     }
 
     public void onPressedDog(View view){
         Homepage.DOG = dogChip.isChecked();
-        if (!dogChip.isChecked()){
-            puppyChip.setText("KITTEN");
-        }
-        else {
-            puppyChip.setText("PUPPY");
-        }
+        Homepage.CAT = false;
+
+        puppyChip.setText("PUPPY");
+        catChip.setSelected(false);
     }
 
     public void onPressedCat(View view){
         Homepage.CAT = catChip.isChecked();
-        if (dogChip.isChecked()){
-            puppyChip.setText("PUPPY");
-        }
-        else {
-            puppyChip.setText("KITTEN");
-        }
+        Homepage.DOG = false;
+
+        puppyChip.setText("KITTEN");
+        dogChip.setSelected(false);
     }
 
     public void onPressedPuppy(View view){
