@@ -219,7 +219,7 @@
                             android:layout_height="match_parent"
                             android:clickable="true"
                             android:onClick="onPressedOld"
-                            android:text="OLD"
+                            android:text="ADULT"
                             android:textAlignment="center"
                             android:textSize="14sp"
                             android:textStyle="bold" />

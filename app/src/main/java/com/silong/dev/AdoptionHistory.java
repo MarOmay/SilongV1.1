@@ -91,7 +91,7 @@ public class AdoptionHistory extends AppCompatActivity {
                 switch (adoption.getAge()){
                     case PetAge.PUPPY: age = (adoption.getType() == PetType.DOG ? "Puppy" : "Kitten"); break;
                     case PetAge.YOUNG: age = "Young"; break;
-                    case PetAge.OLD: age = "Old"; break;
+                    case PetAge.OLD: age = "Adult"; break;
                 }
 
                 //translate color

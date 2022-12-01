@@ -81,7 +81,7 @@ public class MoreInfo extends AppCompatActivity {
             switch (PET.getAge()){
                 case PetAge.PUPPY: age = (PET.getType() == PetType.DOG ? "Puppy" : "Kitten"); break;
                 case PetAge.YOUNG: age = "Young"; break;
-                case PetAge.OLD: age = "Old"; break;
+                case PetAge.OLD: age = "Adult"; break;
             }
 
             //translate color
