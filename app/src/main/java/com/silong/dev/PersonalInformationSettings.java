@@ -119,8 +119,16 @@ public class PersonalInformationSettings extends AppCompatActivity {
                 map.put("gender", gender);
             if (!UserData.birthday.equals(birthday))
                 map.put("birthday", birthday);
-            if (!bitmap.sameAs(UserData.photo))
-                map.put("photo", new ImageProcessor().toUTF8(bitmap, true));
+
+            if (bitmap != null){
+                if (UserData.photo != null){
+                    if (!bitmap.sameAs(UserData.photo))
+                        map.put("photo", new ImageProcessor().toUTF8(bitmap, true));
+                }
+                else {
+                    map.put("photo", new ImageProcessor().toUTF8(bitmap, true));
+                }
+            }
 
             //check if there is something to save
             if (map.isEmpty()){
@@ -156,9 +164,18 @@ public class PersonalInformationSettings extends AppCompatActivity {
                                     UserData.birthday = birthday;
                                     new ImageProcessor().saveToLocal(getApplicationContext(), "birthday", birthday);
                                 }
-                                if (!bitmap.sameAs(UserData.photo)){
-                                    UserData.photo = bitmap;
-                                    new ImageProcessor().saveToLocal(getApplicationContext(), bitmap, "avatar.dat");
+
+                                if (bitmap != null){
+                                    if (UserData.photo != null){
+                                        if (!bitmap.sameAs(UserData.photo)){
+                                            UserData.photo = bitmap;
+                                            new ImageProcessor().saveToLocal(getApplicationContext(), bitmap, "avatar.dat");
+                                        }
+                                    }
+                                    else {
+                                        UserData.photo = bitmap;
+                                        new ImageProcessor().saveToLocal(getApplicationContext(), bitmap, "avatar.dat");
+                                    }
                                 }
 
                                 Toast.makeText(PersonalInformationSettings.this, "Changes saved!", Toast.LENGTH_SHORT).show();
@@ -184,6 +201,7 @@ public class PersonalInformationSettings extends AppCompatActivity {
         catch (Exception e){
             Toast.makeText(PersonalInformationSettings.this, "Failed to save changes.", Toast.LENGTH_SHORT).show();
             Utility.log("PIS.oPB: " + e.getMessage());
+            e.printStackTrace();
         }
 
     }

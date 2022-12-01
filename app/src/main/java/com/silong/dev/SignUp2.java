@@ -93,9 +93,13 @@ public class SignUp2 extends AppCompatActivity {
             return;
         }
 
-        if (ivPicture.getDrawable() == null){
+        /*if (ivPicture.getDrawable() == null){
             Toast.makeText(getApplicationContext(), "Please select a 1x1 photo.", Toast.LENGTH_SHORT).show();
             return;
+        }*/
+
+        if (ivPicture.getDrawable() == null){
+            bmp = null;
         }
         else if (new ImageProcessor().checkFileSize(ivPicture.getDrawable(), true) == false){
             Toast.makeText(getApplicationContext(), "Please select a 1x1 picture less than 1MB.", Toast.LENGTH_SHORT).show();
@@ -111,6 +115,7 @@ public class SignUp2 extends AppCompatActivity {
         user.setAddress(address);
         //user.setPhotoAsString(new ImageProcessor().toUTF8(((BitmapDrawable)ivPicture.getDrawable()).getBitmap(), true));
         //user.setPhotoAsString(new ImageProcessor().toUTF8(bmp, true));
+
         UserData.photo = bmp;
 
         //Alert Dialog for Confirmation builder.

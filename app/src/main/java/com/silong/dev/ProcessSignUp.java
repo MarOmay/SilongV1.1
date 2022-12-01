@@ -52,7 +52,12 @@ public class ProcessSignUp extends AppCompatActivity {
         USER = (User) getIntent().getSerializableExtra("DATA");
         PASSWORD = (String) getIntent().getStringExtra("PASSWORD");
 
-        USER.setPhotoAsString(new ImageProcessor().toUTF8(UserData.photo, true));
+        if (UserData.photo == null){
+            USER.setPhotoAsString(null);
+        }
+        else {
+            USER.setPhotoAsString(new ImageProcessor().toUTF8(UserData.photo, true));
+        }
 
         try{
             registerEmail();

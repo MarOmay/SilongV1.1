@@ -13,6 +13,7 @@ import com.silong.Object.Adoption;
 import com.silong.Object.Chat;
 import com.silong.Object.Favorite;
 import com.silong.Object.Pet;
+import com.silong.Operation.Utility;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -112,7 +113,7 @@ public class UserData { //removed: extends User
             bufferedReader.close();
         }
         catch (Exception e){
-            Log.d("UserData", " " + e.getMessage());
+            Utility.log("UserData.populate: " + e.getMessage());
         }
 
         //Populate Bitmap variable
@@ -121,7 +122,8 @@ public class UserData { //removed: extends User
             ImageView iv = activity.findViewById(R.id.avatarImgview);
             iv.setImageBitmap(UserData.photo);
         }catch (Exception e){
-            Log.d("UserData", e.getMessage());
+            photo = null;
+            Utility.log("UserData.populate: " + e.getMessage());
         }
 
     }

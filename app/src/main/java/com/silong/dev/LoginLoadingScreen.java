@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.silong.Object.Address;
 
 import com.silong.Operation.ImageProcessor;
-
+import com.silong.Operation.Utility;
 
 
 public class LoginLoadingScreen extends AppCompatActivity {
@@ -73,7 +73,7 @@ public class LoginLoadingScreen extends AppCompatActivity {
                         UserData.birthday = snapshot.child("birthday").getValue().toString();
                         UserData.gender = Integer.parseInt(snapshot.child("gender").getValue().toString());
                         UserData.contact = snapshot.child("contact").getValue().toString();
-                        String photo = snapshot.child("photo").getValue().toString();
+                        Object photo = snapshot.child("photo").getValue();
                         UserData.address.setAddressLine(snapshot.child("address").child("addressLine").getValue().toString());
                         UserData.address.setBarangay(snapshot.child("address").child("barangay").getValue().toString());
                         UserData.address.setMunicipality(snapshot.child("address").child("municipality").getValue().toString());
@@ -95,15 +95,17 @@ public class LoginLoadingScreen extends AppCompatActivity {
                         new ImageProcessor().saveToLocal(getApplicationContext(), "zipcode", UserData.address.getZipcode()+"");
 
                         //Create avatar
-                        Bitmap bitmap = new ImageProcessor().toBitmap(photo);
-                        UserData.photo = bitmap;
-                        new ImageProcessor().saveToLocal(getApplicationContext(), bitmap, "avatar.dat");
+                        if (photo != null){
+                            Bitmap bitmap = new ImageProcessor().toBitmap(photo.toString());
+                            UserData.photo = bitmap;
+                            new ImageProcessor().saveToLocal(getApplicationContext(), bitmap, "avatar.dat");
+
+                            //Send broadcast
+                            Intent updateA = new Intent("update-avatar");
+                            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(updateA);
+                        }
 
                         downloadAdoption(uid);
-
-                        //Send broadcast
-                        Intent updateA = new Intent("update-avatar");
-                        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(updateA);
 
                         //Send broadcast
                         Intent updateN = new Intent("update-name");
@@ -130,7 +132,7 @@ public class LoginLoadingScreen extends AppCompatActivity {
 
                     }
                     catch (Exception e){
-                        Log.d("DEBUGGER>>>", e.getMessage());
+                        Utility.log("LLS: oDC - " + e.getMessage());
                         Intent i = new Intent(LoginLoadingScreen.this, Splash.class);
                         startActivity(i);
                         finish();
@@ -139,7 +141,7 @@ public class LoginLoadingScreen extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    Utility.log("LLS.oC: - " + error.getMessage());
                 }
             });
 
@@ -156,7 +158,7 @@ public class LoginLoadingScreen extends AppCompatActivity {
         adoptionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("DEBUGGER>>>","downloading adoption...");
+                Utility.log("LLS.dA: Downloading adoption history...");
                 try {
                     String dateRquested = snapshot.child("dateRequested").getValue().toString();
                     String petID = snapshot.child("petID").getValue().toString();
@@ -170,24 +172,24 @@ public class LoginLoadingScreen extends AppCompatActivity {
                         String appointmentDate = snapshot.child("appointmentDate").getValue().toString();
                         UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "appointmentDate", appointmentDate);
                     }catch (Exception e){
-                        Log.d("DEBUGGER>>>", "No appointment yet.");
+                        Utility.log("LLS.dA: No appointment detected");
                     }
 
                     try {
                         String dateReleased = snapshot.child("dateReleased").getValue().toString();
                         UserData.writeAdoptionToLocal(LoginLoadingScreen.this, dateRquested, "dateReleased", dateReleased);
                     }catch (Exception e){
-                        Log.d("DEBUGGER>>>", "No dateReleased yet.");
+                        Utility.log("LLS.dA: No appointment detected");
                     }
                 }
                 catch (Exception e){
-                    Log.d("DEBUGGER>>>", e.getMessage());
+                    Utility.log("LLS.dA: " + e.getMessage());
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Utility.log("LLS.dA: " + error.getMessage());
             }
         });
     }
