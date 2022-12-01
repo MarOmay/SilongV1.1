@@ -441,6 +441,11 @@ public class Homepage extends AppCompatActivity {
 
         Utility.animateOnClick(Homepage.this, view);
 
+        if (!AVATARDATA.exists()){
+            Toast.makeText(this, "Please upload a profile photo first.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (koloda.getAdapter() == null){
             Toast.makeText(this, "No pet selected.", Toast.LENGTH_SHORT).show();
             return;
