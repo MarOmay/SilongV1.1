@@ -87,17 +87,8 @@ public class LandingPage extends AppCompatActivity {
         landingPetGalleryBtn = (Button) findViewById(R.id.landingPetGalleryBtn);
         headerPic = (ImageView) findViewById(R.id.headerPic);
 
-        //header customizations
-        filterImgview.setVisibility(View.INVISIBLE);
-        headerTitle.setTextSize(23);
-        headerTitle.setGravity(Gravity.CENTER_VERTICAL);
-        headerTitle.setText("Charl Nikki");
-        headerPic.setImageResource(R.drawable.circlelogo_gradient);
-
         //hide timeline button
         landingTimelineBtn.setVisibility(View.INVISIBLE);
-
-
 
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
@@ -106,6 +97,13 @@ public class LandingPage extends AppCompatActivity {
 
         avatarImgview.setImageBitmap(UserData.photo);
         usernameTv.setText(UserData.firstName + " " + UserData.lastName);
+
+        //header customizations
+        filterImgview.setVisibility(View.INVISIBLE);
+        headerTitle.setTextSize(23);
+        headerTitle.setGravity(Gravity.CENTER_VERTICAL);
+        headerTitle.setText(UserData.firstName + " " + UserData.lastName);
+        headerPic.setImageBitmap(UserData.photo);
 
         //check pending adoption request
         UserData.populateAdoptions(LandingPage.this);
@@ -132,12 +130,14 @@ public class LandingPage extends AppCompatActivity {
     }
 
     public void onPressedTimeline(View view){
+        Utility.animateOnClick(LandingPage.this, view);
         Intent intent = new Intent(LandingPage.this, Timeline.class);
         startActivity(intent);
     }
 
     public void onPressedGallery(View view){
         //goto Homepage
+        Utility.animateOnClick(LandingPage.this, view);
         Intent i = new Intent(LandingPage.this, Homepage.class);
         startActivity(i);
         overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
