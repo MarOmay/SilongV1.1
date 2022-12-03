@@ -1,5 +1,6 @@
 package com.silong.dev;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -10,7 +11,13 @@ import android.text.Html;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silong.Adapter.InfoViewPagerAdapter;
 import com.silong.EnumClass.Gender;
 import com.silong.EnumClass.PetAge;
@@ -18,6 +25,8 @@ import com.silong.EnumClass.PetColor;
 import com.silong.EnumClass.PetSize;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Pet;
+import com.silong.Operation.EmailNotif;
+import com.silong.Operation.InputValidator;
 import com.silong.Operation.Utility;
 
 import java.io.File;
@@ -158,6 +167,56 @@ public class MoreInfo extends AppCompatActivity {
         }
 
         dots[position].setTextColor(getResources().getColor(R.color.pink));
+    }
+
+    public void requestMorePhoto(View view){
+
+        if (!Utility.internetConnection(MoreInfo.this)){
+            Toast.makeText(this, "No internet connection.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        LoadingDialog loadingDialog = new LoadingDialog(MoreInfo.this);
+        loadingDialog.startLoadingDialog();
+
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance("https://silongdb-1-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        DatabaseReference mReference = mDatabase.getReference("publicInformation/contactInformation/email");
+
+        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                try {
+                    String email = snapshot.getValue().toString();
+
+                    email = email.split("/")[0].trim();
+
+                    //validate email
+                    if (InputValidator.checkEmail(email)){
+                        EmailNotif emailNotif = new EmailNotif(email, UserData.email, UserData.firstName, PET.getPetID());
+                        emailNotif.sendNotif();
+
+                        Toast.makeText(MoreInfo.this, "Once available, the Office may respond via email.", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(MoreInfo.this, "Request failed. Please contact City Veterinary Office directly.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Exception e){
+                    Utility.log("MoreInfo.rMP: " + e.getMessage());
+                    Toast.makeText(MoreInfo.this, "Request failed. Please contact City Veterinary Office directly.", Toast.LENGTH_SHORT).show();
+                }
+
+                loadingDialog.dismissLoadingDialog();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                loadingDialog.dismissLoadingDialog();
+                Utility.log("MoreInfo.rMP: " + error.getMessage());
+            }
+        });
+
     }
 
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {

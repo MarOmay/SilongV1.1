@@ -24,6 +24,8 @@ public class EmailNotif {
     private String HOST = "smtp.gmail.com";
     private String PORT = "465";
 
+    public static final int REQUEST_MORE_PHOTO = 11;
+
     private int STATUS;
     private Adoption ADOPTION;
 
@@ -56,10 +58,16 @@ public class EmailNotif {
         }
     }
 
+    //for request more photo use only
+    public EmailNotif (String officeEmail, String userEmail, String userFirstName, String petID){
+        SUBJECT = "Silong | Request More Photo";
+        BODY = "Hi, I am curious to know if I may request more photos of the pet in the Silong App PetID#"+petID+"."+
+                "\nMy email is " + userEmail + ". \n\nThank you! \n\n"+userFirstName+", Silong User";
+        RECEIVER = officeEmail;
+    }
+
     boolean sent = false;
     public boolean sendNotif(){
-
-        Log.d("DEBUGGER>>>", "Sending email");
 
         //try sending the email
         try{
@@ -98,7 +106,7 @@ public class EmailNotif {
                     }
                     catch (Exception ex){
                         sent = false;
-                        Log.d("DEBUGGER>>>", "EmailNotif - thread: " + ex.getMessage());
+                        Utility.log("EmailNotif.sendNotif: " + ex.getMessage());
                     }
                 }
             });
@@ -108,6 +116,7 @@ public class EmailNotif {
 
         }
         catch (Exception e){
+            Utility.log("EmailNotif.sendNotif: " + e.getMessage());
             return false;
         }
     }
