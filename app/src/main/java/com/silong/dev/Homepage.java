@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +91,7 @@ public class Homepage extends AppCompatActivity {
     ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, infoIcon;
     Button applyBtn, aboutOfficeBtn, aboutUsBtn,exitBtn, moreInfoBtn;
     Koloda koloda;
+    LinearLayout headerPicLayout;
 
     ImageView avatarImgview;
     TextView usernameTv;
@@ -149,9 +151,12 @@ public class Homepage extends AppCompatActivity {
         editProfileTv = (TextView) findViewById(R.id.editProfileTv);
         infoIcon = (ImageView) findViewById(R.id.infoIcon);
         //moreInfoBtn = (Button) findViewById(R.id.moreInfoBtn);
+        headerPicLayout = (LinearLayout) findViewById(R.id.headerPicLayout);
+        headerPicLayout.setVisibility(View.GONE);
 
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
+
 
         UserData.populate(this);
 

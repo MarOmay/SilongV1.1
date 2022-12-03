@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,7 +39,7 @@ public class LandingPage extends AppCompatActivity {
 
     private DrawerLayout landingDrawer;
     private TextView headerTitle, usernameTv;
-    private ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, avatarImgview;
+    private ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, avatarImgview, headerPic;
     private Button landingTimelineBtn, landingPetGalleryBtn;
     private TextView petsAvailableCount, petsProcessCount, livesSavedCount;
 
@@ -84,12 +85,19 @@ public class LandingPage extends AppCompatActivity {
 
         landingTimelineBtn = (Button) findViewById(R.id.landingTimelineBtn);
         landingPetGalleryBtn = (Button) findViewById(R.id.landingPetGalleryBtn);
+        headerPic = (ImageView) findViewById(R.id.headerPic);
+
+        //header customizations
+        filterImgview.setVisibility(View.INVISIBLE);
+        headerTitle.setTextSize(23);
+        headerTitle.setGravity(Gravity.CENTER_VERTICAL);
+        headerTitle.setText("Charl Nikki");
+        headerPic.setImageResource(R.drawable.circlelogo_gradient);
 
         //hide timeline button
         landingTimelineBtn.setVisibility(View.INVISIBLE);
 
-        filterImgview.setVisibility(View.INVISIBLE);
-        headerTitle.setVisibility(View.INVISIBLE);
+
 
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);

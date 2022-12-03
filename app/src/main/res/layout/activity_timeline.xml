@@ -87,38 +87,6 @@
                             android:textSize="14sp" />
                     </ScrollView>
 
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:weightSum="2"
-                    android:paddingHorizontal="10dp"
-                    android:layout_marginBottom="30dp">
-
-                    <Button
-                        android:id="@+id/homepageBtn"
-                        android:onClick="onPressedHomepage"
-                        android:layout_marginEnd="5dp"
-                        android:layout_weight="1"
-                        style="@style/grayButton_style"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Homepage"/>
-
-                    <Button
-                        android:id="@+id/adoptHistoryBtn"
-                        android:onClick="onPressedAdoptionHistory"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        style="@style/grayButton_style"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Adoption history"/>
-
                 </LinearLayout>
 
             </LinearLayout>

@@ -69,7 +69,7 @@ public class Timeline extends AppCompatActivity {
     ImageView filterImgview, menuImgview, closeDrawerBtn, avatarImgview;
     TextView headerTitle, timelineHeader, timelineBody;
     VerticalStepView timelineStepView;
-    LinearLayout timelineCancelLayout, timelineSetAppLayout, timelineHomeLayout;
+    LinearLayout timelineCancelLayout, timelineSetAppLayout, timelineHomeLayout, headerPicLayout;
     Button timelineCancelBtn, timelineSetAppBtn, timelineSetAppCancelBtn, timelineHomeBtn;
 
     //new added buttons//
@@ -118,6 +118,9 @@ public class Timeline extends AppCompatActivity {
         timelineSetAppBtn = (Button) findViewById(R.id.timelineSetAppBtn);
         timelineSetAppCancelBtn = (Button) findViewById(R.id.timelineSetAppCancelBtn);
         timelineHomeBtn = (Button) findViewById(R.id.timelineHomeBtn);
+
+        headerPicLayout = (LinearLayout) findViewById(R.id.headerPicLayout);
+        headerPicLayout.setVisibility(View.GONE);
 
         //hides filter button and change header to PROGRESS
         filterImgview.setVisibility(View.INVISIBLE);
