@@ -101,6 +101,8 @@ public class Homepage extends AppCompatActivity {
 
     public static boolean RESTART_REQUIRED = false;
 
+    public static boolean FORBID_APPLICATION = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,10 +176,8 @@ public class Homepage extends AppCompatActivity {
                         adoption.getStatus() == Timeline.FINISHED)
                     continue;
                 else {
-                    Log.d("DEBUGGER>>>", "Goto Timeline" + adoption.getStatus());
-                    Intent intent = new Intent(Homepage.this, Timeline.class);
-                    startActivity(intent);
-                    finish();
+                    //forbid application
+                    applyBtn.setVisibility(View.INVISIBLE);
                 }
             }
         }
@@ -645,8 +645,7 @@ public class Homepage extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.END);
         }
         else {
-            HomepageExitDialog homepageExitDialog = new HomepageExitDialog(Homepage.this);
-            homepageExitDialog.show();
+            super.onBackPressed();
         }
     }
 

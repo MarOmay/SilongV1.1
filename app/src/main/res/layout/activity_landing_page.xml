@@ -100,7 +100,7 @@
                                             android:id="@+id/petsAvailableCount"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text=""
+                                            android:text="0"
                                             android:textAlignment="center"
                                             android:textColor="@color/black"
                                             android:textSize="30sp"
@@ -137,7 +137,7 @@
                                             android:id="@+id/petsProcessCount"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text=""
+                                            android:text="0"
                                             android:textAlignment="center"
                                             android:textColor="@color/black"
                                             android:textSize="30sp"
@@ -174,7 +174,7 @@
                                             android:id="@+id/livesSavedCount"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text=""
+                                            android:text="0"
                                             android:textAlignment="center"
                                             android:textColor="@color/black"
                                             android:textSize="30sp"
@@ -224,6 +224,7 @@
 
                 <Button
                     android:id="@+id/landingTimelineBtn"
+                    android:onClick="onPressedTimeline"
                     style="@style/pinkButton_style"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
@@ -233,6 +234,7 @@
 
                 <Button
                     android:id="@+id/landingPetGalleryBtn"
+                    android:onClick="onPressedGallery"
                     style="@style/pinkButton_style"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"

@@ -215,6 +215,12 @@ public class Timeline extends AppCompatActivity {
         exitDialog.show();
     }
 
+    public void onPressedHomepage(View view){
+        Utility.animateOnClick(Timeline.this, view);
+        Intent i = new Intent(Timeline.this, LandingPage.class);
+        startActivity(i);
+    }
+
     public void onPressedSetAppointment(View view){
         Utility.animateOnClick(Timeline.this, view);
         //check internet connection
@@ -805,8 +811,7 @@ public class Timeline extends AppCompatActivity {
             timelineDrawer.closeDrawer(GravityCompat.END);
         }
         else {
-            HomepageExitDialog homepageExitDialog = new HomepageExitDialog(Timeline.this);
-            homepageExitDialog.show();
+            super.onBackPressed();
         }
     }
 

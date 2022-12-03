@@ -107,7 +107,7 @@ public class HorizontalProgressBar extends AppCompatActivity {
     public static void checkCompletion(Activity activity){
         if (syncAdoptionDone && petCounterDone){
             //goto Homepage
-            Intent i = new Intent(activity, Homepage.class);
+            Intent i = new Intent(activity, LandingPage.class);
             activity.startActivity(i);
             activity.overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
             activity.finish();
