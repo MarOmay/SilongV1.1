@@ -85,7 +85,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Date of Adoption"
+                android:text="Date of Request"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/textgray"/>

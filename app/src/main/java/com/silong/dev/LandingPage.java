@@ -80,6 +80,7 @@ public class LandingPage extends AppCompatActivity {
 
         petsAvailableCount = (TextView) findViewById(R.id.petsAvailableCount);
         petsProcessCount = (TextView) findViewById(R.id.petsProcessCount);
+        livesSavedCount = (TextView) findViewById(R.id.livesSavedCount);
 
         landingTimelineBtn = (Button) findViewById(R.id.landingTimelineBtn);
         landingPetGalleryBtn = (Button) findViewById(R.id.landingPetGalleryBtn);
@@ -115,9 +116,10 @@ public class LandingPage extends AppCompatActivity {
 
         //update numbers
         petsAvailableCount.setText(String.valueOf(UserData.pets.size()));
+        livesSavedCount.setText(String.valueOf(UserData.adoptionHistory.size()));
+        tallyPets();
 
         checkAccountStatus();
-        tallyPets();
 
     }
 

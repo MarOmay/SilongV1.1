@@ -91,6 +91,7 @@
                                     app:cardCornerRadius="10dp">
 
                                     <LinearLayout
+                                        android:onClick="onPressedGallery"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
@@ -165,6 +166,7 @@
                                     app:cardCornerRadius="10dp">
 
                                     <LinearLayout
+                                        android:onClick="onPressedAdoptionHistory"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
@@ -184,7 +186,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="7dp"
-                                            android:text="Lives\nSaved"
+                                            android:text="In Your\nHistory"
                                             android:textAlignment="center"
                                             android:textColor="@color/black"
                                             android:textSize="15sp" />
