@@ -449,7 +449,7 @@ public class Timeline extends AppCompatActivity {
                     finish();
                 }
 
-                timelineCancelLayout.setVisibility(View.GONE);
+                timelineCancelLayout.setVisibility(View.INVISIBLE);
                 timelineSetAppLayout.setVisibility(View.GONE);
                 timelineHomeLayout.setVisibility(View.GONE);
                 timelineHeader.setText(R.string.setAppointmentHeader);
@@ -457,7 +457,7 @@ public class Timeline extends AppCompatActivity {
                 break;
 
             case APPOINTMENT_CONFIRMED:
-                timelineCancelLayout.setVisibility(View.GONE);
+                timelineCancelLayout.setVisibility(View.INVISIBLE);
                 timelineSetAppLayout.setVisibility(View.GONE);
                 timelineHomeLayout.setVisibility(View.GONE);
                 timelineHeader.setText(R.string.appointmentConfirmedHeader);
