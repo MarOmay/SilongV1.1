@@ -89,41 +89,33 @@
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingHorizontal="20dp">
+        android:paddingHorizontal="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp">
 
             <Button
-                android:onClick="onPressedAdoptionHistory"
                 android:id="@+id/adoptionHistoryBtn"
                 style="@style/orangeButton_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
+                android:onClick="onPressedAdoptionHistory"
                 android:text="ADOPTION HISTORY" />
 
             <Button
-                android:id="@+id/aboutOfficeBtn"
+                android:id="@+id/CertificatesBtn"
                 style="@style/orangeButton_style"
-                android:onClick="onPressedAboutOffice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:text="ABOUT THE OFFICE" />
-
-            <Button
-                android:id="@+id/aboutUsBtn"
-                style="@style/orangeButton_style"
-                android:onClick="onPressedAboutUs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:text="ABOUT THE DEVELOPERS" />
+                android:onClick="onPressedAdoptionHistory"
+                android:text="My Certifications" />
 
         </LinearLayout>
 
@@ -131,39 +123,87 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal"
             android:gravity="bottom"
-            android:paddingBottom="15dp"
+            android:orientation="vertical"
             android:weightSum="2">
 
-            <Button
-                android:onClick="onPressedHelp"
-                android:id="@+id/helpBtn"
-                style="@style/transpaButton_style"
-                android:drawableLeft="@drawable/ic_baseline_help_outline_24"
-                android:drawableTint="@color/black"
-                android:text="SELF HELP"
-                android:textSize="11sp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_marginEnd="3dp"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:stateListAnimator="@null"/>
+                android:gravity="bottom"
+                android:orientation="horizontal">
 
-            <Button
-                android:onClick="onPressedLogout"
-                android:id="@+id/exitBtn"
-                style="@style/pinkButton_style"
-                android:drawableLeft="@drawable/ic_round_exit_to_app_24"
-                android:drawableTint="@color/whitey"
-                android:text="LOGOUT"
-                android:textSize="12sp"
+                <Button
+                    android:id="@+id/aboutOfficeBtn"
+                    style="@style/transpaButton_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_outline_location_city_24"
+                    android:drawableTint="@color/black"
+                    android:onClick="onPressedAboutOffice"
+                    android:stateListAnimator="@null"
+                    android:text="THE OFFICE"
+                    android:textSize="11sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/aboutUsBtn"
+                    style="@style/transpaButton_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_outline_construction_24"
+                    android:drawableTint="@color/black"
+                    android:onClick="onPressedAboutUs"
+                    android:stateListAnimator="@null"
+                    android:text="DEVELOPERS"
+                    android:textSize="11sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_marginStart="3dp"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/helpBtn"
+                    style="@style/transpaButton_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_baseline_help_24"
+                    android:drawableTint="@color/black"
+                    android:onClick="onPressedHelp"
+                    android:stateListAnimator="@null"
+                    android:text="SELF HELP"
+                    android:textSize="11sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/exitBtn"
+                    style="@style/transpaButton_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_round_exit_to_app_24"
+                    android:drawableTint="@color/red"
+                    android:onClick="onPressedLogout"
+                    android:text="LOGOUT"
+                    android:textColor="@color/red"
+                    android:textSize="12sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

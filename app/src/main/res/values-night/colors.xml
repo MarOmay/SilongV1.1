@@ -4,8 +4,9 @@
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#fb528b</color>
     <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="teal_700">#e6080B</color>
     <color name="black">#FFFFFFFF</color>
+    <color name="blacky">#FF000000</color>
     <color name="white">#FF000000</color>
     <color name="whiteLogin">#FFffffff</color>
     <color name="nighty">#121212</color>
@@ -20,7 +21,7 @@
     <color name="lightgray">#252627</color>
     <color name="darkgray">#3d3d39</color>
     <color name="green">#61A86D</color>
-    <color name="red">#AE4142</color>
+    <color name="red">#DC383A</color>
     <color name="pastelGreen">#55ab55</color>
 
     <!-- much more custome colors DO NOT REMOVE OR CHANGE -->
