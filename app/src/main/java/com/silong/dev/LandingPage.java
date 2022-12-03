@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -133,6 +134,7 @@ public class LandingPage extends AppCompatActivity {
         Utility.animateOnClick(LandingPage.this, view);
         Intent intent = new Intent(LandingPage.this, Timeline.class);
         startActivity(intent);
+        finish();
     }
 
     public void onPressedGallery(View view){
@@ -141,6 +143,7 @@ public class LandingPage extends AppCompatActivity {
         Intent i = new Intent(LandingPage.this, Homepage.class);
         startActivity(i);
         overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+        finish();
     }
 
     public void onPressedMessage(View view){

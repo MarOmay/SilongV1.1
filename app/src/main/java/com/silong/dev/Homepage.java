@@ -650,7 +650,10 @@ public class Homepage extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.END);
         }
         else {
-            super.onBackPressed();
+            Intent intent = new Intent(Homepage.this, LandingPage.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            finish();
         }
     }
 

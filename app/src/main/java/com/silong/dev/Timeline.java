@@ -814,7 +814,10 @@ public class Timeline extends AppCompatActivity {
             timelineDrawer.closeDrawer(GravityCompat.END);
         }
         else {
-            super.onBackPressed();
+            Intent intent = new Intent(Timeline.this, LandingPage.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            finish();
         }
     }
 

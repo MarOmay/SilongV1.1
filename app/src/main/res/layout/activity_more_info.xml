@@ -44,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_weight="1"
-                android:onClick="requestMorePhoto"
                 android:text="More Information"
                 android:textColor="@color/gray"
                 android:textSize="28sp"
@@ -271,6 +270,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <Button
+            android:onClick="requestMorePhoto"
             android:layout_marginTop="5dp"
             style="@style/pinkButton_style"
             android:layout_width="match_parent"
