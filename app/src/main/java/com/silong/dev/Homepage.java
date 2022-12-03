@@ -171,6 +171,9 @@ public class Homepage extends AppCompatActivity {
             }
         });*/
 
+        //reset restriction
+        AccountSecuritySettings.FORBID_DEACTIVATION = false;
+
         //check pending adoption request
         UserData.populateAdoptions(Homepage.this);
         if (UserData.adoptionHistory.size() > 0){
@@ -183,6 +186,7 @@ public class Homepage extends AppCompatActivity {
                 else {
                     //forbid application
                     applyBtn.setVisibility(View.INVISIBLE);
+                    AccountSecuritySettings.FORBID_DEACTIVATION = true;
                 }
             }
         }
@@ -272,8 +276,6 @@ public class Homepage extends AppCompatActivity {
         Utility.animateOnClick(Homepage.this, view);
         Intent i = new Intent(Homepage.this, EditProfile.class);
         startActivity(i);
-        EditProfile.FORBID_DEACTIVATION = false;
-        AccountSecuritySettings.FORBID_DEACTIVATION = false;
     }
 
     private void checkAccountStatus(){

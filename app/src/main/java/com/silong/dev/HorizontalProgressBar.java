@@ -1,6 +1,5 @@
 package com.silong.dev;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,16 +17,13 @@ import android.widget.Toast;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.silong.Operation.Utility;
 import com.silong.Task.PetCounter;
 import com.silong.Task.RecordVerifier;
 
 import com.silong.Task.SyncAdoptionHistory;
 import com.silong.Task.SyncPetRecord;
+import com.silong.Task.SyncProofOfAdoption;
 
 import java.io.File;
 
@@ -73,6 +69,8 @@ public class HorizontalProgressBar extends AppCompatActivity {
 
             UserData.populate(HorizontalProgressBar.this);
 
+            UserData.populateAdoptions(HorizontalProgressBar.this);
+
             //get total record count from RTDB
             PetCounter petCounter = new PetCounter(this);
             petCounter.execute();
@@ -80,6 +78,10 @@ public class HorizontalProgressBar extends AppCompatActivity {
             //sync adoption record
             SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this, userID,true);
             syncAdoptionHistory.execute();
+
+            //sync proof of adoption
+            SyncProofOfAdoption syncProofOfAdoption = new SyncProofOfAdoption(HorizontalProgressBar.this, userID);
+            syncProofOfAdoption.execute();
         }
         catch (Exception e){
             Utility.log("HPB: " + e.getMessage());
@@ -106,7 +108,7 @@ public class HorizontalProgressBar extends AppCompatActivity {
 
     public static void checkCompletion(Activity activity){
         if (syncAdoptionDone && petCounterDone){
-            //goto Homepage
+            //goto Landing Page
             Intent i = new Intent(activity, LandingPage.class);
             activity.startActivity(i);
             activity.overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);

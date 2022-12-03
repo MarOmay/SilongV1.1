@@ -106,6 +106,9 @@ public class LandingPage extends AppCompatActivity {
         headerTitle.setText(UserData.firstName + " " + UserData.lastName);
         headerPic.setImageBitmap(UserData.photo);
 
+        //reset restriction
+        AccountSecuritySettings.FORBID_DEACTIVATION = false;
+
         //check pending adoption request
         UserData.populateAdoptions(LandingPage.this);
         if (UserData.adoptionHistory.size() > 0){
@@ -117,6 +120,7 @@ public class LandingPage extends AppCompatActivity {
                     continue;
                 else {
                     landingTimelineBtn.setVisibility(View.VISIBLE);
+                    AccountSecuritySettings.FORBID_DEACTIVATION = true;
                 }
             }
         }
