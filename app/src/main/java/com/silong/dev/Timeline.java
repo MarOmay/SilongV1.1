@@ -72,6 +72,9 @@ public class Timeline extends AppCompatActivity {
     LinearLayout timelineCancelLayout, timelineSetAppLayout, timelineHomeLayout;
     Button timelineCancelBtn, timelineSetAppBtn, timelineSetAppCancelBtn, timelineHomeBtn;
 
+    //new added buttons//
+    Button homepageBtn, adoptHistoryBtn;
+
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
 

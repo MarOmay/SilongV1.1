@@ -35,16 +35,48 @@
                 android:weightSum="2">
 
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.8"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:paddingHorizontal="10dp">
 
+                    <!--stepview-->
                     <com.silong.CustomView.CustomStepView
+                        android:layout_marginBottom="50dp"
                         android:id="@+id/timelineStepview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:weightSum="2"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginBottom="30dp">
+
+                        <Button
+                            android:id="@+id/homepageBtn"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            style="@style/grayButton_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Homepage"/>
+
+                        <Button
+                            android:id="@+id/adoptHistoryBtn"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            style="@style/grayButton_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Adoption history"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

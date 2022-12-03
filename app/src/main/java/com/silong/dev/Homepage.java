@@ -156,6 +156,14 @@ public class Homepage extends AppCompatActivity {
         avatarImgview.setImageBitmap(UserData.photo);
         usernameTv.setText(UserData.firstName + " " + UserData.lastName);
 
+        /*headerTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Homepage.this, LandingPage.class);
+                startActivity(i);
+            }
+        });*/
+
         //check pending adoption request
         UserData.populateAdoptions(Homepage.this);
         if (UserData.adoptionHistory.size() > 0){
