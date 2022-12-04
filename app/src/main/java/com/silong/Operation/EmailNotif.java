@@ -19,7 +19,7 @@ import javax.mail.internet.MimeMessage;
 public class EmailNotif {
 
     private String EMAIL = "silong.sjdm@gmail.com";
-    private String PASSWORD = "lbbpxdnxbsfjnsim";
+    private String PASSWORD = "qsivferctauhhuxu";
     private String SENDER = "Silong Support";
     private String HOST = "smtp.gmail.com";
     private String PORT = "465";
