@@ -129,6 +129,7 @@
                                     app:cardCornerRadius="10dp">
 
                                     <LinearLayout
+                                        android:onClick="onPressedProcess"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"

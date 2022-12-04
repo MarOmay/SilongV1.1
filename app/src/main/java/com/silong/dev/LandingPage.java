@@ -217,6 +217,14 @@ public class LandingPage extends AppCompatActivity {
         exitDialog.show();
     }
 
+    public void onPressedProcess(View view){
+        Utility.animateOnClick(LandingPage.this, view);
+        Intent i = new Intent(LandingPage.this, PetsProcess.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+        finish();
+    }
+
     private void populateMenu(){
         ImageView avatar = findViewById(R.id.avatarImgview);
         TextView name = findViewById(R.id.usernameTv);

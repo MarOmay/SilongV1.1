@@ -453,7 +453,8 @@ public class Timeline extends AppCompatActivity {
                 timelineSetAppLayout.setVisibility(View.GONE);
                 timelineHomeLayout.setVisibility(View.GONE);
                 timelineHeader.setText(R.string.setAppointmentHeader);
-                timelineBody.setText("on " + ADOPTION.getAppointmentDate().replace("*",":") + "\n\nNote:\nThe office reserves the right to reschedule the appointment without prior notice.");
+                timelineBody.setText("on " + ADOPTION.getAppointmentDate().replace("*",":") + "\n\nNote:\n- The office reserves the right to reschedule the appointment without prior notice.\n- The adoption procedure will be canceled automatically in the event that the client does not show up 3 days following the settled day of appointment. ");
+                timelineBody.setTextSize(13);
                 break;
 
             case APPOINTMENT_CONFIRMED:
