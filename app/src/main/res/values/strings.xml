@@ -145,4 +145,10 @@
         \n\nNOTICE:\nPlease be informed that a household can only adopt at most two dogs or any number of cats as long as the pets\' welfare are guaranteed.
         \n\nPAUNAWA: \nAng bawat pamilya ay maaari lamang mag-ampon ng hanggang dalawang aso o higit pang bilang ng pusa hangga\'t masisiguro ang kapakanan ng mga alagang hayop.</string>
 
+    <string name="landingPage">1. Must be a Filipino Citizen;\n2. Must be at least 18 years old and above;\n3. Must be able to provide proper food and shelter for adopted animal;\n4. Preferably resident of the City to facilitate monitoring;
+    \n5. Willing to abide by the Conditions as stipulated in the adoption agreement, to mention:
+    \n\t- the Office may periodically check the condition of the animal while in the care of adopter;
+    \n\t- In case of any sign of illness, adopter must report and submit the animal for proper treatment to the City Veterinary Office;
+    \n\t- Adopter may not sell nor transfer the ownership of animal without permission from the City Veterinary Office.</string>
+
 </resources>

@@ -91,10 +91,10 @@
                                     app:cardCornerRadius="10dp">
 
                                     <LinearLayout
-                                        android:onClick="onPressedGallery"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
+                                        android:onClick="onPressedGallery"
                                         android:orientation="vertical">
 
                                         <TextView
@@ -129,10 +129,10 @@
                                     app:cardCornerRadius="10dp">
 
                                     <LinearLayout
-                                        android:onClick="onPressedProcess"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
+                                        android:onClick="onPressedProcess"
                                         android:orientation="vertical">
 
                                         <TextView
@@ -167,10 +167,10 @@
                                     app:cardCornerRadius="10dp">
 
                                     <LinearLayout
-                                        android:onClick="onPressedAdoptionHistory"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
+                                        android:onClick="onPressedAdoptionHistory"
                                         android:orientation="vertical">
 
                                         <TextView
@@ -205,48 +205,92 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="0.7"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:orientation="vertical"
                     android:weightSum="2">
 
-                    <ScrollView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="0.7">
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="6dp"
+                        android:layout_weight="0.7"
+                        android:backgroundTint="@color/lightgray"
+                        app:cardCornerRadius="10dp">
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="5dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_marginTop="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="DOG ADOPTION PROGRAM"
+                                    android:textAlignment="center"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"/>
+
+                                <TextView
+                                    android:layout_marginTop="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="TERMS AND CONDITIONS:"
+                                    android:textSize="17sp" />
+
+                                <TextView
+                                    android:lineSpacingExtra="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:text="@string/landingPage"/>
+
+                            </LinearLayout>
+
+                        </ScrollView>
 
 
-
-                    </ScrollView>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <LinearLayout
                         android:id="@+id/adoptionPreview"
                         android:onClick="onPressedTimeline"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1.3">
+                        android:layout_weight="1.3"
+                        android:orientation="horizontal">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:layout_margin="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="10dp"
                             android:backgroundTint="@color/lightgray"
                             app:cardCornerRadius="10dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:gravity="center"
                                 android:orientation="horizontal"
-                                android:weightSum="2"
-                                android:gravity="center">
+                                android:weightSum="2">
 
                                 <com.google.android.material.card.MaterialCardView
-                                    android:layout_margin="10dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
                                     android:layout_weight="1.35"
                                     app:cardCornerRadius="10dp">
 
@@ -254,8 +298,8 @@
                                         android:id="@+id/landingProcessPic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/silong_user_app_icon"
-                                        android:scaleType="centerCrop"/>
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/silong_user_app_icon" />
 
                                 </com.google.android.material.card.MaterialCardView>
 
@@ -263,25 +307,25 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="0.65"
-                                    android:orientation="vertical"
-                                    android:gravity="center_vertical">
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="Your Current Request:"
-                                        android:textSize="17sp"
-                                        android:textColor="@color/black"/>
+                                        android:textColor="@color/black"
+                                        android:textSize="17sp" />
 
                                     <TextView
-                                        android:layout_marginTop="10dp"
                                         android:id="@+id/landingProcessStatus"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
                                         android:text="Awaiting Approval"
-                                        android:textStyle="bold"
+                                        android:textColor="#EAEA00"
                                         android:textSize="20sp"
-                                        android:textColor="#EAEA00"/>
+                                        android:textStyle="bold" />
 
                                 </LinearLayout>
 
@@ -306,22 +350,22 @@
 
                 <Button
                     android:id="@+id/landingTimelineBtn"
-                    android:onClick="onPressedTimeline"
                     style="@style/pinkButton_style"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:onClick="onPressedTimeline"
                     android:text="TIMELINE" />
 
                 <Button
                     android:id="@+id/landingPetGalleryBtn"
-                    android:onClick="onPressedGallery"
                     style="@style/pinkButton_style"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
+                    android:onClick="onPressedGallery"
                     android:text="PET GALLERY" />
 
             </LinearLayout>
