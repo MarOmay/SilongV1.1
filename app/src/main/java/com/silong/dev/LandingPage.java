@@ -11,12 +11,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +32,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.HomepageExitDialog;
+import com.silong.CustomView.ImageDialog;
 import com.silong.CustomView.RelaunchNotifier;
 import com.silong.Object.Adoption;
+import com.silong.Object.Pet;
 import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
 
@@ -38,6 +43,7 @@ import java.io.File;
 
 public class LandingPage extends AppCompatActivity {
 
+    private LinearLayout adoptionPreview;
     private DrawerLayout landingDrawer;
     private TextView headerTitle, usernameTv;
     private ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, avatarImgview, headerPic;
@@ -92,8 +98,13 @@ public class LandingPage extends AppCompatActivity {
         landingPetGalleryBtn = (Button) findViewById(R.id.landingPetGalleryBtn);
         headerPic = (ImageView) findViewById(R.id.headerPic);
 
-        //hide timeline button
+        adoptionPreview = (LinearLayout) findViewById(R.id.adoptionPreview);
+        landingProcessPic = (ImageView) findViewById(R.id.landingProcessPic);
+        landingProcessStatus = (TextView) findViewById(R.id.landingProcessStatus);
+
+        //hide timeline related elements
         landingTimelineBtn.setVisibility(View.INVISIBLE);
+        adoptionPreview.setVisibility(View.INVISIBLE);
 
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
@@ -124,6 +135,7 @@ public class LandingPage extends AppCompatActivity {
                     continue;
                 else {
                     landingTimelineBtn.setVisibility(View.VISIBLE);
+                    showAdoptionPreview(adoption);
                     AccountSecuritySettings.FORBID_DEACTIVATION = true;
                 }
             }
@@ -235,6 +247,51 @@ public class LandingPage extends AppCompatActivity {
 
         avatar.setImageBitmap(UserData.photo);
         name.setText(UserData.firstName + " " + UserData.lastName);
+    }
+
+    private void showAdoptionPreview(Adoption adoption){
+        adoptionPreview.setVisibility(View.VISIBLE);
+
+        try {
+            landingProcessPic.setImageBitmap(BitmapFactory.decodeFile(getFilesDir() + "/adoptionpic-" + adoption.getPetID()));
+        }
+        catch (Exception e){
+            Utility.log("LandingPage.sAP: " + e.getMessage());
+            landingProcessPic.setImageDrawable(getResources().getDrawable(R.drawable.dog_cat));
+        }
+
+        switch (adoption.getStatus()){
+            case Timeline.SEND_REQUEST:
+                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setText("REQUEST SENT");
+                break;
+            case Timeline.AWAITING_APPROVAL:
+                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setText("AWAITING APPROVAL");
+                break;
+            case Timeline.REQUEST_APPROVED:
+                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setText("REQUEST APPROVED");
+                break;
+            case Timeline.SET_APPOINTMENT:
+                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setText("SET APPOINTMENT");
+                break;
+            case Timeline.APPOINTMENT_CONFIRMED:
+                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setText("APPOINTMENT CONFIRMED");
+                break;
+
+            case Timeline.ADOPTION_SUCCESSFUL:
+                landingProcessStatus.setTextColor(Color.GREEN);
+                landingProcessStatus.setText("ADOPTION SUCCESSFUL");
+                break;
+            default:
+                landingProcessStatus.setTextColor(Color.GREEN);
+                landingProcessStatus.setText("Fetching information...");
+                break;
+        }
+
     }
 
     private void checkAccountStatus(){

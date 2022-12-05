@@ -28,6 +28,23 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:onClick="onPressedAdoptionHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="See Adoption Info >"
+                    android:textColor="@color/pink"
+                    android:textAlignment="viewEnd"
+                    android:padding="0dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
                 android:gravity="center"
