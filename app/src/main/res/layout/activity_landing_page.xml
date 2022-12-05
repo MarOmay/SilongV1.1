@@ -211,17 +211,18 @@
                     android:layout_height="match_parent"
                     android:weightSum="2">
 
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:layout_weight="0.7">
 
 
 
-                    </LinearLayout>
+                    </ScrollView>
 
                     <LinearLayout
+                        android:id="@+id/landingProcessLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"

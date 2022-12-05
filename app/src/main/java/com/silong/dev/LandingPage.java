@@ -17,6 +17,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class LandingPage extends AppCompatActivity {
     //new elements
     ImageView landingProcessPic;
     TextView landingProcessStatus;
+    LinearLayout landingProcessLayout; //i hide nalang tong layout pag walang current process, tas pag meron tsaka lang lalabas.
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
