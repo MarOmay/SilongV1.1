@@ -131,7 +131,7 @@ public class LandingPage extends AppCompatActivity {
         tallyPets();
 
         checkAccountStatus();
-
+        detectSystemMaintenanceState();
     }
 
     public void onPressedTimeline(View view){
@@ -265,6 +265,31 @@ public class LandingPage extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         Utility.log("LandingPage.tallyPets: " + error.getMessage());
+                    }
+                });
+    }
+
+    private void detectSystemMaintenanceState(){
+        mDatabase.getReference("publicInformation/isSystemMaintenance")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        Object isSystemMaintenance = snapshot.getValue();
+
+                        if (isSystemMaintenance != null){
+                            if ((boolean) isSystemMaintenance){
+                                Intent intent = new Intent(LandingPage.this, UnderMaintenanceScreen.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+                                finish();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Utility.log("LandingPage.dSM.oC: " + error.getMessage());
                     }
                 });
     }

@@ -45,6 +45,7 @@
         <entry key="..\:/Users/Alex/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_personal_information_settings.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/Alex/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_sign_up2.xml" value="0.1109375" />
+        <entry key="..\:/Users/Alex/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_under_maintenance_screen.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/SilongV1.1/app/src/main/res/layout/nav_drawer_layout.xml" value="0.25" />
         <entry key="..\:/Users/Alex/StudioProjects/SilongV1.1/app/src/main/res/layout/process_dialog_layout.xml" value="0.25" />
         <entry key="..\:/Users/Jocelyn/AndroidStudioProjects/Silong/app/src/main/res/layout/activity_adoption_agreement.xml" value="0.1796875" />
@@ -118,7 +119,6 @@
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/drawable-v24/dialog_bg.xml" value="0.1625" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/drawable-v24/dialog_bg_2.xml" value="0.1625" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_adoption_history.xml" value="0.21052631578947367" />
-        <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_deactivated_screen.xml" value="0.2077922077922078" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_filter.xml" value="0.25" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_header.xml" value="0.2077922077922078" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_homepage.xml" value="0.21052631578947367" />
@@ -128,7 +128,6 @@
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_pets_process.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_sign_up2.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_timeline.xml" value="0.2077922077922078" />
-        <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/activity_under_maintenance_screen.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/grid_layout_item_list.xml" value="0.2077922077922078" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/history_list_layout.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/cnbelano/StudioProjects/SilongV1.1/app/src/main/res/layout/history_list_layout_spare.xml" value="0.21052631578947367" />
