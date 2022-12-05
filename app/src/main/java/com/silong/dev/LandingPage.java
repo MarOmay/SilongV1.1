@@ -44,6 +44,10 @@ public class LandingPage extends AppCompatActivity {
     private Button landingTimelineBtn, landingPetGalleryBtn;
     private TextView petsAvailableCount, petsProcessCount, livesSavedCount;
 
+    //new elements
+    ImageView landingProcessPic;
+    TextView landingProcessStatus;
+
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
