@@ -53,6 +53,7 @@ public class LandingPage extends AppCompatActivity {
     //new elements
     ImageView landingProcessPic;
     TextView landingProcessStatus;
+    LinearLayout landingProcessLayout; //i hide nalang tong layout pag walang current process, tas pag meron tsaka lang lalabas.
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
