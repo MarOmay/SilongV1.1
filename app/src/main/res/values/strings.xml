@@ -117,6 +117,8 @@
 
     <string name="deactMessage">It seems like you are trying to access a deactivated account. Activating this account again will require administrator\'s approval.</string>
 
+    <string name="maintenanceMessage">The Silong App is under maintenance for the time being. We expect to be back in a couple of hours. Thanks for your patience!</string>
+
     <string name="requestDeactivationMessage">Deactivating your account means...\n\n-You may no longer view the adoption listing.\n-Your data and account will not be completely deleted from the database.\n
     -You cannot create another account under the same email address.\n-and Activating your account again will require approval from the administrators.\n\nDo you want to continue?\n</string>
 
