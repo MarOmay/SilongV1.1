@@ -47,7 +47,6 @@ public class LandingPage extends AppCompatActivity {
     private DrawerLayout landingDrawer;
     private TextView headerTitle, usernameTv;
     private ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, avatarImgview, headerPic;
-    private Button landingTimelineBtn, landingPetGalleryBtn;
     private TextView petsAvailableCount, petsProcessCount, livesSavedCount;
 
     //new elements
@@ -95,8 +94,6 @@ public class LandingPage extends AppCompatActivity {
         petsProcessCount = (TextView) findViewById(R.id.petsProcessCount);
         livesSavedCount = (TextView) findViewById(R.id.livesSavedCount);
 
-        landingTimelineBtn = (Button) findViewById(R.id.landingTimelineBtn);
-        landingPetGalleryBtn = (Button) findViewById(R.id.landingPetGalleryBtn);
         headerPic = (ImageView) findViewById(R.id.headerPic);
 
         adoptionPreview = (LinearLayout) findViewById(R.id.adoptionPreview);
@@ -104,7 +101,6 @@ public class LandingPage extends AppCompatActivity {
         landingProcessStatus = (TextView) findViewById(R.id.landingProcessStatus);
 
         //hide timeline related elements
-        landingTimelineBtn.setVisibility(View.INVISIBLE);
         adoptionPreview.setVisibility(View.INVISIBLE);
 
         avatarImgview = findViewById(R.id.avatarImgview);
@@ -135,7 +131,6 @@ public class LandingPage extends AppCompatActivity {
                         adoption.getStatus() == Timeline.FINISHED)
                     continue;
                 else {
-                    landingTimelineBtn.setVisibility(View.VISIBLE);
                     showAdoptionPreview(adoption);
                     AccountSecuritySettings.FORBID_DEACTIVATION = true;
                 }
