@@ -22,6 +22,7 @@ import com.silong.Task.PetCounter;
 import com.silong.Task.RecordVerifier;
 
 import com.silong.Task.SyncAdoptionHistory;
+import com.silong.Task.SyncPetInprocess;
 import com.silong.Task.SyncPetRecord;
 import com.silong.Task.SyncProofOfAdoption;
 
@@ -78,6 +79,10 @@ public class HorizontalProgressBar extends AppCompatActivity {
             //sync adoption record
             SyncAdoptionHistory syncAdoptionHistory = new SyncAdoptionHistory(HorizontalProgressBar.this, userID,true);
             syncAdoptionHistory.execute();
+
+            //sync pet in process
+            SyncPetInprocess syncPetInprocess = new SyncPetInprocess(HorizontalProgressBar.this);
+            syncPetInprocess.execute();
 
             //sync proof of adoption
             SyncProofOfAdoption syncProofOfAdoption = new SyncProofOfAdoption(HorizontalProgressBar.this, userID);

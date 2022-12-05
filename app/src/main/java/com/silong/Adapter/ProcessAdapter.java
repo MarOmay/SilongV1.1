@@ -11,20 +11,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.silong.CustomView.ImageDialog;
 import com.silong.CustomView.ProcessDialog;
-import com.silong.dev.HistoryData;
-import com.silong.dev.ProcessData;
+import com.silong.EnumClass.Gender;
+import com.silong.EnumClass.PetAge;
+import com.silong.EnumClass.PetColor;
+import com.silong.EnumClass.PetSize;
+import com.silong.EnumClass.PetType;
+import com.silong.Object.Pet;
 import com.silong.dev.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProcessAdapter extends RecyclerView.Adapter<ProcessAdapter.ViewHolder>{
 
     private Activity activity;
-    ProcessData processData[];
+    private ArrayList<Pet> pets;
     Context context;
 
-    public ProcessAdapter(ProcessData[] processData, Activity activity){
-        this.processData = processData;
+    public ProcessAdapter(ArrayList<Pet> pets, Activity activity){
+        this.pets = pets;
         this.context = activity;
         this.activity = activity;
     }
@@ -40,14 +47,61 @@ public class ProcessAdapter extends RecyclerView.Adapter<ProcessAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProcessAdapter.ViewHolder holder, int position) {
+        final Pet pet = pets.get(position);
 
-        final ProcessData processDataList = processData[position];
-        holder.processImage.setImageResource(processDataList.getProcessImage());
-        holder.processGenderType.setText(processDataList.getProcessGenderType());
+        //translate gender and type
+        String genderType = "";
+        switch (pet.getGender()){
+            case Gender.MALE: genderType = "Male "; break;
+            case Gender.FEMALE: genderType = "Female "; break;
+        }
+        switch (pet.getType()){
+            case PetType.DOG: genderType += "Dog"; break;
+            case PetType.CAT: genderType += "Cat"; break;
+        }
+
+        //translate age
+        String age = "";
+        switch (pet.getAge()){
+            case PetAge.PUPPY: age = (pet.getType() == PetType.DOG ? "Puppy" : "Kitten"); break;
+            case PetAge.YOUNG: age = "Young"; break;
+            case PetAge.OLD: age = "Adult"; break;
+        }
+
+        //translate color
+        String color = "";
+        for (char c : pet.getColor().toCharArray()){
+            switch (Integer.parseInt(c+"")){
+                case PetColor.BLACK: color += "Black "; break;
+                case PetColor.BROWN: color += "Brown "; break;
+                case PetColor.CREAM: color += "Cream "; break;
+                case PetColor.WHITE: color += "White "; break;
+                case PetColor.ORANGE: color += "Orange "; break;
+                case PetColor.GRAY: color += "Gray "; break;
+            }
+        }
+        color.trim();
+        color.replace(" ", " / ");
+
+        holder.processImage.setImageBitmap(pet.getPhoto());
+        holder.processGenderType.setText(genderType);
+
+        final String gType = genderType;
+        final String colors = color;
+        final String pAge = age;
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProcessDialog processDialog = new ProcessDialog(activity, holder.processImage.getDrawable(), processDataList.getProcessGenderType());
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("petID", pet.getPetID());
+                map.put("genderType", gType);
+                map.put("color", colors);
+                map.put("age", pAge);
+                map.put("pic", pet.getPhoto());
+
+                ProcessDialog processDialog = new ProcessDialog(activity, map);
                 processDialog.show();
             }
         });
@@ -55,7 +109,7 @@ public class ProcessAdapter extends RecyclerView.Adapter<ProcessAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return processData.length;
+        return pets.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

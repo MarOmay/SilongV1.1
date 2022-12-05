@@ -74,14 +74,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Date of Request:"
+                    android:text="Estimated Age"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/processDialogDateReq"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Date of Request"
+                    android:text="Estimated Age"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 

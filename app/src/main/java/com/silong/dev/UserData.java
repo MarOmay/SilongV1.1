@@ -447,4 +447,85 @@ public class UserData { //removed: extends User
         }
     }
 
+    public static ArrayList<Pet> getLocalPetsInprocess(Activity activity){
+        ArrayList<Pet> inprocess = new ArrayList<>();
+
+        try{
+            ArrayList<File> petRecords = new ArrayList<File>();
+
+            for (File file : activity.getFilesDir().listFiles()){
+                if (file.getAbsolutePath().contains("inprocess-")){
+                    petRecords.add(file);
+                }
+            }
+
+            //read each account info
+            for (File record : petRecords){
+                Pet pet = new Pet();
+
+                //Read basic info
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(record));
+                String line;
+                while ((line = bufferedReader.readLine()) != null){
+                    line = line.replace(";","");
+
+                    String [] temp = line.split(":");
+                    switch (temp[0]){
+                        case "petID": pet.setPetID(temp[1]); break;
+                        case "status": pet.setStatus(Integer.parseInt(temp[1])); break;
+                        case "type": pet.setType(Integer.parseInt(temp[1])); break;
+                        case "gender": pet.setGender(Integer.parseInt(temp[1])); break;
+                        case "size": pet.setSize(Integer.parseInt(temp[1])); break;
+                        case "age": pet.setAge(Integer.parseInt(temp[1])); break;
+                        case "color" : pet.setColor(temp[1]); break;
+                        case "liked" : pet.setLiked(temp[1].equals("true") ? true : false); break;
+                        case "lastModified" : pet.setLastModified(temp[1]); break;
+                        case "distMark": pet.setDistMark(temp[1]); break;
+                        case "rescueDate": pet.setRescueDate(temp[1]); break;
+                    }
+
+                }
+                bufferedReader.close();
+
+                //Read avatar
+                try{
+                    pet.setPhoto(BitmapFactory.decodeFile(activity.getFilesDir() + "/inprocesspic-" + pet.getPetID()));
+                }
+                catch (Exception e){
+                    Log.d("AdminData-pR", e.getMessage());
+                }
+
+                inprocess.add(pet);
+            }
+
+        }
+        catch (Exception e){
+            Log.d("AdminData-pR", e.getMessage());
+        }
+
+        return inprocess;
+    }
+
+    public static void writeInprocessPetToLocal(Context context, String filename, String desc, String content){
+        //Check if file exists
+        File file = new File(context.getFilesDir() + "/inprocess-" + filename);
+        if (!file.exists()){
+            try{
+                FileOutputStream fileOuputStream = context.openFileOutput("inprocess-" + filename, Context.MODE_PRIVATE);
+            }
+            catch (Exception e){
+                Log.d("UserData-wPTL0", e.getMessage());
+            }
+        }
+        //Create local storage copy of pet profile
+        try (FileOutputStream fileOutputStream = context.openFileOutput( "inprocess-" + filename, Context.MODE_APPEND)) {
+            String data = desc + ":" + content + ";\n";
+            fileOutputStream.write(data.getBytes());
+            fileOutputStream.flush();
+        }
+        catch (Exception e){
+            Log.d("UserData-wPTL1", e.getMessage());
+        }
+    }
+
 }

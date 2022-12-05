@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 
 import com.silong.Adapter.HistoryAdapter;
 import com.silong.Adapter.ProcessAdapter;
+import com.silong.Object.Pet;
 
 public class PetsProcess extends AppCompatActivity {
 
@@ -38,14 +40,7 @@ public class PetsProcess extends AppCompatActivity {
         petsProcessRecycler.setHasFixedSize(true);
         petsProcessRecycler.setLayoutManager(new LinearLayoutManager(PetsProcess.this));
 
-        ProcessData [] processData = new ProcessData[] {
-                new ProcessData("Female Dog", R.drawable.silong_user_app_icon),
-                new ProcessData("Male Cat", R.drawable.silong_user_app_icon),
-                new ProcessData("Female Cat", R.drawable.silong_user_app_icon),
-                new ProcessData("Male Dog", R.drawable.silong_user_app_icon)
-        };
-
-        ProcessAdapter processAdapter = new ProcessAdapter(processData, PetsProcess.this);
+        ProcessAdapter processAdapter = new ProcessAdapter(UserData.getLocalPetsInprocess(PetsProcess.this), PetsProcess.this);
         petsProcessRecycler.setAdapter(processAdapter);
 
     }
@@ -56,8 +51,10 @@ public class PetsProcess extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
+        Intent intent = new Intent(PetsProcess.this, LandingPage.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
 
 }

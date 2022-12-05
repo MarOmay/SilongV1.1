@@ -3,6 +3,7 @@ package com.silong.CustomView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -13,17 +14,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.silong.Object.Pet;
 import com.silong.dev.R;
+
+import java.util.Map;
 
 public class ProcessDialog extends MaterialAlertDialogBuilder {
 
-    ImageView processDialogPic;
-    TextView processDialogId, processDialogType, processDialogColor, processDialogDateReq;
-
-    public ProcessDialog(@NonNull Activity activity, Drawable drawable, String string) {
+    public ProcessDialog(@NonNull Activity activity, Map<String, Object> map) {
 
         super((Context) activity);
         super.setBackground(getContext().getDrawable(R.drawable.dialog_bg_2));
+
+        ImageView processDialogPic;
+        TextView processDialogId, processDialogType, processDialogColor, processDialogDateReq;
 
         LayoutInflater inflater = activity.getLayoutInflater();
         View content = inflater.inflate(R.layout.process_dialog_layout, null);
@@ -33,8 +37,11 @@ public class ProcessDialog extends MaterialAlertDialogBuilder {
         processDialogColor = content.findViewById(R.id.processDialogColor);
         processDialogDateReq = content.findViewById(R.id.processDialogDateReq);
 
-        processDialogPic.setImageDrawable(drawable);
-        processDialogType.setText(string);
+        processDialogPic.setImageBitmap((Bitmap) map.get("pic"));
+        processDialogId.setText(map.get("petID").toString());
+        processDialogType.setText(map.get("genderType").toString());
+        processDialogColor.setText(map.get("color").toString());
+        processDialogDateReq.setText(map.get("age").toString());
 
         super.setView(content);
 

@@ -250,7 +250,7 @@ public class LandingPage extends AppCompatActivity {
                                 }
                                 else {
                                     int status = Integer.parseInt(snap.child("status").getValue().toString());
-                                    if (status >= Timeline.AWAITING_APPROVAL && status <= Timeline.FINISHED){
+                                    if (status >= Timeline.AWAITING_APPROVAL && status <= Timeline.APPOINTMENT_CONFIRMED){
                                         petsInProcess++;
                                         petsProcessCount.setText(String.valueOf(petsInProcess));
                                     }
