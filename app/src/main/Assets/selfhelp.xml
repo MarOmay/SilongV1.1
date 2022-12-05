@@ -82,7 +82,7 @@
             3.Provide registered email address
             4.Tap “Submit”
 
-            If you are logged in and trying to change your password, logout of your account first then follow the instructions above.
+            If you are logged in and trying to change your password, go to "Edit Profile" then tap "Account Security" and select "Reset Password", after you provide a registered email address, tap "Submit".
         </body>
         <tag>forgot</tag>
     </article>
@@ -103,7 +103,7 @@
 
     <article>
         <title>Changing Account Details</title>
-        <body>              Go to the Menu, then tap “Edit Profile” to change your photo, address,  and phone number. Birthday, gender and name can’t be changed.
+        <body>              Go to the Menu, then tap “Edit Profile” and select what detail you want to change.
         </body>
         <tag>details,information</tag>
     </article>
@@ -117,7 +117,7 @@
 
     <article>
         <title>Account Deactivation or Deletion</title>
-        <body>              To deactivate your account temporarily or permanently, simply select "Edit Profile", then tap “Deactivate” or “Delete”. Once deactivated you’ll need admin approval to activate the account again. On the other hand, deleting your account is permanent and can’t be undone.
+        <body>              To deactivate your account temporarily or permanently, simply select "Edit Profile", then select "Account Security" and tap “Deactivate Account” or “Delete Account”. Once deactivated you’ll need admin approval to activate the account again. On the other hand, deleting your account is permanent and can’t be undone.
         </body>
         <tag>remove,removal,delete</tag>
     </article>
