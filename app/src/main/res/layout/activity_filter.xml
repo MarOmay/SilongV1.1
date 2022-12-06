@@ -302,19 +302,19 @@
                 android:background="@color/lightgray" />
 
             <LinearLayout
-                android:onClick="onPressedResetFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Reset Filter"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="60dp"
+                    android:text="RESET FILTER"
+                    style="@style/pinkButton_style"
+                    android:backgroundTint="@color/gray"
+                    android:layout_gravity="center"
+                    android:onClick="onPressedResetFilter"/>
 
             </LinearLayout>
 

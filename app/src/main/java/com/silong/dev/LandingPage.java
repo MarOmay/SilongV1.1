@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,16 +16,13 @@ import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,18 +31,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silong.CustomView.ExitDialog;
 import com.silong.CustomView.HomepageExitDialog;
-import com.silong.CustomView.ImageDialog;
 import com.silong.CustomView.RelaunchNotifier;
 import com.silong.Object.Adoption;
-import com.silong.Object.Pet;
 import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class LandingPage extends AppCompatActivity {
 
-    private LinearLayout adoptionPreview;
+    private LinearLayout adoptionPreview, galleryPreviewHehe;
     private DrawerLayout landingDrawer;
     private TextView headerTitle, usernameTv;
     private ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, avatarImgview, headerPic;
@@ -53,6 +51,12 @@ public class LandingPage extends AppCompatActivity {
     ImageView landingProcessPic;
     TextView landingProcessStatus;
     LinearLayout landingProcessLayout; //i hide nalang tong layout pag walang current process, tas pag meron tsaka lang lalabas.
+
+    //Elements for Gallery Preview
+    RecyclerView previewRecycler;
+    ArrayList<GalleryPreviewModel> galleryPreviewModel;
+    GalleryPreviewAdapter galleryPreviewAdapter;
+
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
@@ -94,14 +98,32 @@ public class LandingPage extends AppCompatActivity {
         petsProcessCount = (TextView) findViewById(R.id.petsProcessCount);
         livesSavedCount = (TextView) findViewById(R.id.livesSavedCount);
 
+        //Gallery Preview
+        previewRecycler = (RecyclerView) findViewById(R.id.previewRecycler);
+        Integer[] galleryPreview = {R.drawable.silong_user_app_icon, R.drawable.silong_user_app_icon, R.drawable.silong_user_app_icon,
+                R.drawable.silong_user_app_icon, R.drawable.silong_user_app_icon};
+        galleryPreviewModel = new ArrayList<>();
+        for (int i=0; i<galleryPreview.length;i++){
+            GalleryPreviewModel previewModel = new GalleryPreviewModel(galleryPreview[i]);
+            galleryPreviewModel.add(previewModel);
+        }
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(LandingPage.this, LinearLayoutManager.HORIZONTAL, false);
+        previewRecycler.setLayoutManager(linearLayoutManager);
+        previewRecycler.setItemAnimator(new DefaultItemAnimator());
+        galleryPreviewAdapter = new GalleryPreviewAdapter(LandingPage.this, galleryPreviewModel);
+        previewRecycler.setAdapter(galleryPreviewAdapter);
+        previewRecycler.setHasFixedSize(true);
+        //
+
         headerPic = (ImageView) findViewById(R.id.headerPic);
 
         adoptionPreview = (LinearLayout) findViewById(R.id.adoptionPreview);
         landingProcessPic = (ImageView) findViewById(R.id.landingProcessPic);
         landingProcessStatus = (TextView) findViewById(R.id.landingProcessStatus);
+        galleryPreviewHehe = (LinearLayout) findViewById(R.id.galleryPreview);
 
         //hide timeline related elements
-        adoptionPreview.setVisibility(View.INVISIBLE);
+        adoptionPreview.setVisibility(View.GONE);
 
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
@@ -246,6 +268,7 @@ public class LandingPage extends AppCompatActivity {
 
     private void showAdoptionPreview(Adoption adoption){
         adoptionPreview.setVisibility(View.VISIBLE);
+        galleryPreviewHehe.setVisibility(View.GONE);
 
         try {
             landingProcessPic.setImageBitmap(BitmapFactory.decodeFile(getFilesDir() + "/adoptionpic-" + adoption.getPetID()));
