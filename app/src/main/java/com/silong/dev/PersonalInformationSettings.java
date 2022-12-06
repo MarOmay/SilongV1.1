@@ -98,8 +98,8 @@ public class PersonalInformationSettings extends AppCompatActivity {
 
             //get displayed info
             Bitmap bitmap = ((BitmapDrawable)newPictureIv.getDrawable()).getBitmap();
-            String firstname = newFnameEt.getText().toString();
-            String lastname = newLnameEt.getText().toString();
+            String firstname = newFnameEt.getText().toString().trim();
+            String lastname = newLnameEt.getText().toString().trim();
             int gender = newGenderEt.getSelectedItem().toString().equals("Male") ? 0 : 1;
             String birthday = newBirthdayEt.getText().toString();
 

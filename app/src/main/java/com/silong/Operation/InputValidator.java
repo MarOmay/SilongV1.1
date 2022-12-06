@@ -10,7 +10,8 @@ public class InputValidator {
     public static boolean checkName(String s){
 
         //Check if s only contains allowed characters
-        Pattern namePattern = Pattern.compile("^[A-Za-z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Za-z][A-Za-z]*)*$");
+        //v1.0 regex - "^[A-Za-z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Za-z][A-Za-z]*)*$"
+        Pattern namePattern = Pattern.compile("[A-Za-z]+([ '-][a-zA-Z]+)*");
         try {
             Matcher matcher = namePattern.matcher(s);
             if (!matcher.matches()){
