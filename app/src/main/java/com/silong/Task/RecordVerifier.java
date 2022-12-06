@@ -38,7 +38,6 @@ public class RecordVerifier extends AsyncTask {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Log.d("DEBUGGER>>>", "Entered loop: " + System.currentTimeMillis() + " - cur: " + UserData.pets.size());
                 /*
                 //check if processing time is more than 30secs
                 if (System.currentTimeMillis()-startTime > 5000){
@@ -50,8 +49,6 @@ public class RecordVerifier extends AsyncTask {
                 }*/
 
                 UserData.populateRecords(activity);
-                Utility.log("RV: UserData.pets.size - " + UserData.pets.size());
-                Utility.log("RV: total - " + total);
                 if (UserData.pets.size() == total){
                     HorizontalProgressBar.petCounterDone = true;
                     HorizontalProgressBar.checkCompletion(activity);

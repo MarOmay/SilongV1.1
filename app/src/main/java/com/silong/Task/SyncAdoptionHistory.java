@@ -72,7 +72,6 @@ public class SyncAdoptionHistory extends AsyncTask {
                             return;*/
 
                         //key is petID
-                        Log.d("DEBUGGER>>>", "SAH: key-" + snap.getKey());
 
                         try{
                             int tempStatus = Integer.parseInt(snap.child("status").getValue().toString());

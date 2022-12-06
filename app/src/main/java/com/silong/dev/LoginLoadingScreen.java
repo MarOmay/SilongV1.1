@@ -52,7 +52,7 @@ public class LoginLoadingScreen extends AppCompatActivity {
             databaseReferenceUser = database.getReference("Users/" + uid);
             user = true;
         } catch (Exception e){
-            Log.d("USERTYPE:", "Not user");
+            Utility.log("LLS: Not User - " + e.getMessage());
         }
 
         //Retrieve data from database
@@ -158,7 +158,6 @@ public class LoginLoadingScreen extends AppCompatActivity {
         adoptionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Utility.log("LLS.dA: Downloading adoption history...");
                 try {
                     String dateRquested = snapshot.child("dateRequested").getValue().toString();
                     String petID = snapshot.child("petID").getValue().toString();

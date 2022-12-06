@@ -176,7 +176,7 @@ public class UserData { //removed: extends User
                     pet.setPhoto(BitmapFactory.decodeFile(activity.getFilesDir() + "/petpic-" + pet.getPetID()));
                 }
                 catch (Exception e){
-                    Log.d("AdminData-pR", e.getMessage());
+                    Utility.log("UserData.pR: " + e.getMessage());
                 }
 
                 pets.add(pet);
@@ -184,7 +184,7 @@ public class UserData { //removed: extends User
 
         }
         catch (Exception e){
-            Log.d("AdminData-pR", e.getMessage());
+            Utility.log("UserData.pR: " + e.getMessage());
         }
     }
 
@@ -206,8 +206,6 @@ public class UserData { //removed: extends User
             //read each account info
             for (File record : adoptions){
                 Adoption adoption = new Adoption();
-
-                Log.d("DEBUGGER>>>", "Adoption file: " + record.getAbsolutePath());
 
                 //Read basic info
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(record));
@@ -237,12 +235,8 @@ public class UserData { //removed: extends User
                     adoption.setPhoto(BitmapFactory.decodeFile(activity.getFilesDir() + "/adoptionpic-" + adoption.getPetID()));
                 }
                 catch (Exception e){
-                    Log.d("AdminData-pA", e.getMessage());
+                    Utility.log("UserData.pA: " + e.getMessage());
                 }
-
-                Log.d("DEBUGGER>>>", "AH " + adoption.getPetID());
-                Log.d("DEBUGGER>>>", adoption.getDateRequested());
-                Log.d("DEBUGGER>>>", "" + adoption.getStatus());
 
                 //check duplicate
                 boolean found = false;
@@ -257,7 +251,7 @@ public class UserData { //removed: extends User
 
         }
         catch (Exception e){
-            Log.d("AdminData-pA", e.getMessage());
+            Utility.log("UserData.pA: " + e.getMessage());
         }
     }
 
@@ -278,7 +272,7 @@ public class UserData { //removed: extends User
                     }
                 }
                 catch (Exception e){
-                    Log.d("DEBUGGER>>>", "Exception occured reading " + file.getAbsolutePath());
+                    Utility.log("UserData.dABI: " + e.getMessage());
                 }
 
                 if (petID.equals(id)){
@@ -300,7 +294,7 @@ public class UserData { //removed: extends User
             }
             return s;
         }catch (Exception e){
-            Log.d("UserData", e.getMessage());
+            Utility.log("UserData.rF: " + e.getMessage());
             return null;
         }
 
@@ -320,13 +314,13 @@ public class UserData { //removed: extends User
                     line = reader.readLine();
                 }
             } catch (IOException e) {
-                Log.d("UserData", e.getMessage());
+                Utility.log("UserData.rF: " + e.getMessage());
             } finally {
                 s = stringBuilder.toString();
             }
         }
         catch (Exception e){
-            Log.d("UserData", "Reading failed: " + dir);
+            Utility.log("UserData.rF: " + e.getMessage());
         }
 
         return s;
@@ -340,7 +334,7 @@ public class UserData { //removed: extends User
                 FileOutputStream fileOuputStream = context.openFileOutput("pet-" + filename, Context.MODE_PRIVATE);
             }
             catch (Exception e){
-                Log.d("UserData-wPTL0", e.getMessage());
+                Utility.log("UserData.wPTL: " + e.getMessage());
             }
         }
         //Create local storage copy of pet profile
@@ -350,7 +344,7 @@ public class UserData { //removed: extends User
             fileOutputStream.flush();
         }
         catch (Exception e){
-            Log.d("UserData-wPTL1", e.getMessage());
+            Utility.log("UserData.wPTL: " + e.getMessage());
         }
     }
 
@@ -382,7 +376,7 @@ public class UserData { //removed: extends User
             bufferedReader.close();
         }
         catch (Exception e){
-            Log.d("UserData-fRFL", e.getMessage());
+            Utility.log("UserData.fRFL: " + e.getMessage());
         }
 
         return pet;
@@ -419,7 +413,7 @@ public class UserData { //removed: extends User
             bufferedReader.close();
         }
         catch (Exception e){
-            Log.d("UserData-fAFL", e.getMessage());
+            Utility.log("UserData.fAFL: " + e.getMessage());
         }
 
         return adoption;
@@ -433,7 +427,7 @@ public class UserData { //removed: extends User
                 FileOutputStream fileOuputStream = context.openFileOutput("adoption-" + filename, Context.MODE_PRIVATE);
             }
             catch (Exception e){
-                Log.d("UserData-wATL0", e.getMessage());
+                Utility.log("UserData.wATL: " + e.getMessage());
             }
         }
         //Create local storage copy of pet profile
@@ -443,7 +437,7 @@ public class UserData { //removed: extends User
             fileOutputStream.flush();
         }
         catch (Exception e){
-            Log.d("UserData-wATL1", e.getMessage());
+            Utility.log("UserData.wATL: " + e.getMessage());
         }
     }
 
@@ -492,7 +486,7 @@ public class UserData { //removed: extends User
                     pet.setPhoto(BitmapFactory.decodeFile(activity.getFilesDir() + "/inprocesspic-" + pet.getPetID()));
                 }
                 catch (Exception e){
-                    Log.d("AdminData-pR", e.getMessage());
+                    Utility.log("UserData.gLTPI: " + e.getMessage());
                 }
 
                 inprocess.add(pet);
@@ -500,7 +494,7 @@ public class UserData { //removed: extends User
 
         }
         catch (Exception e){
-            Log.d("AdminData-pR", e.getMessage());
+            Utility.log("UserData.gLPI: " + e.getMessage());
         }
 
         return inprocess;
@@ -514,7 +508,7 @@ public class UserData { //removed: extends User
                 FileOutputStream fileOuputStream = context.openFileOutput("inprocess-" + filename, Context.MODE_PRIVATE);
             }
             catch (Exception e){
-                Log.d("UserData-wPTL0", e.getMessage());
+                Utility.log("UserData.wIPTL: " + e.getMessage());
             }
         }
         //Create local storage copy of pet profile
@@ -524,7 +518,7 @@ public class UserData { //removed: extends User
             fileOutputStream.flush();
         }
         catch (Exception e){
-            Log.d("UserData-wPTL1", e.getMessage());
+            Utility.log("UserData.wIPTL: " + e.getMessage());
         }
     }
 

@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.silong.Object.Pet;
 
+import com.silong.Operation.Utility;
 import com.silong.dev.HorizontalProgressBar;
 import com.silong.dev.UserData;
 
@@ -53,8 +54,6 @@ public class SyncPetRecord extends AsyncTask {
 
                 keys.add("pet-" + snap.getKey());
 
-                Log.d("DEBUGGER>>>", "SPR: key-" + snap.getKey());
-
                 File file = new File(activity.getFilesDir(), "pet-" + snap.getKey());
 
                 if (file.exists()){
@@ -78,8 +77,6 @@ public class SyncPetRecord extends AsyncTask {
                                 }
 
                                 String lastModified = snapshot.getValue().toString();
-                                Log.d("DEBUGGER>>>", "cur " + tempPet.getLastModified());
-                                Log.d("DEBUGGER>>>", "new " + lastModified);
                                 if (tempPet.getLastModified() != null){
                                     if (!tempPet.getLastModified().equals(lastModified)){
                                         //delete local record, to rewrite new record
@@ -92,7 +89,7 @@ public class SyncPetRecord extends AsyncTask {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
+                                Utility.log("SPR.dIB.oC: " + error.getMessage());
                             }
                         });
                     } //end of else
@@ -132,7 +129,7 @@ public class SyncPetRecord extends AsyncTask {
             UserData.populateRecords(activity);
         }
         catch (Exception e){
-            Log.d("SPR-dIB", e.getMessage());
+            Utility.log("SPR.dIB: " + e.getMessage());
         }
         return null;
     }
@@ -170,7 +167,7 @@ public class SyncPetRecord extends AsyncTask {
                 file.delete();
             }
             catch (Exception e){
-                Log.d("Homepage-cLR", e.getMessage());
+                Utility.log("SPR.cLR: " + e.getMessage());
             }
         }
     }
