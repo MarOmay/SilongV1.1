@@ -198,6 +198,7 @@
 
                             <TextView
                                 android:layout_gravity="end"
+                                android:onClick="onPressedGallery"
                                 android:layout_marginHorizontal="10dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_width="wrap_content"

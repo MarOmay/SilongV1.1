@@ -178,7 +178,6 @@ public class Homepage extends AppCompatActivity {
         UserData.populateAdoptions(Homepage.this);
         if (UserData.adoptionHistory.size() > 0){
             for (Adoption adoption : UserData.adoptionHistory){
-                Utility.log("Homepage: Adoption on Device - PetDI:" + adoption.getPetID() + " Status: " + adoption.getStatus());
                 if (adoption.getStatus() == Timeline.DECLINED ||
                         adoption.getStatus() == Timeline.CANCELLED ||
                         adoption.getStatus() == Timeline.FINISHED)

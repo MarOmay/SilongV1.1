@@ -125,7 +125,6 @@ public class LandingPage extends AppCompatActivity {
         UserData.populateAdoptions(LandingPage.this);
         if (UserData.adoptionHistory.size() > 0){
             for (Adoption adoption : UserData.adoptionHistory){
-                Utility.log("Homepage: Adoption on Device - PetDI:" + adoption.getPetID() + " Status: " + adoption.getStatus());
                 if (adoption.getStatus() == Timeline.DECLINED ||
                         adoption.getStatus() == Timeline.CANCELLED ||
                         adoption.getStatus() == Timeline.FINISHED)
@@ -258,32 +257,32 @@ public class LandingPage extends AppCompatActivity {
 
         switch (adoption.getStatus()){
             case Timeline.SEND_REQUEST:
-                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setTextColor(Color.rgb(83,175,65));
                 landingProcessStatus.setText("REQUEST SENT");
                 break;
             case Timeline.AWAITING_APPROVAL:
-                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setTextColor(Color.rgb(83,175,65));
                 landingProcessStatus.setText("AWAITING APPROVAL");
                 break;
             case Timeline.REQUEST_APPROVED:
-                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setTextColor(Color.rgb(83,175,65));
                 landingProcessStatus.setText("REQUEST APPROVED");
                 break;
             case Timeline.SET_APPOINTMENT:
-                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setTextColor(Color.rgb(83,175,65));
                 landingProcessStatus.setText("SET APPOINTMENT");
                 break;
             case Timeline.APPOINTMENT_CONFIRMED:
-                landingProcessStatus.setTextColor(Color.YELLOW);
+                landingProcessStatus.setTextColor(Color.rgb(83,175,65));
                 landingProcessStatus.setText("APPOINTMENT CONFIRMED");
                 break;
 
             case Timeline.ADOPTION_SUCCESSFUL:
-                landingProcessStatus.setTextColor(Color.GREEN);
+                landingProcessStatus.setTextColor(Color.rgb(83,175,65));
                 landingProcessStatus.setText("ADOPTION SUCCESSFUL");
                 break;
             default:
-                landingProcessStatus.setTextColor(Color.GREEN);
+                landingProcessStatus.setTextColor(Color.rgb(83,175,65));
                 landingProcessStatus.setText("Fetching information...");
                 break;
         }

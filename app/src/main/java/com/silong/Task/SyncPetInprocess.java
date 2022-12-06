@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silong.Operation.ImageProcessor;
 import com.silong.Operation.Utility;
+import com.silong.dev.Timeline;
 import com.silong.dev.UserData;
 
 import java.io.File;
@@ -22,10 +23,11 @@ import java.util.ArrayList;
 public class SyncPetInprocess extends AsyncTask {
 
     private Activity activity;
-    private ArrayList<String> keys = new ArrayList<>();
+    private ArrayList<String> keys;
 
     public SyncPetInprocess(Activity activity) {
         this.activity = activity;
+        this.keys = new ArrayList<>();
     }
 
     @Override
@@ -45,27 +47,24 @@ public class SyncPetInprocess extends AsyncTask {
 
                     if (petID != null && status != null){
 
-                        File data = new File(activity.getFilesDir(), "inprocess-" + petID);
-                        File pict = new File(activity.getFilesDir(), "inprocesspic-" + petID);
+                        File data = new File(activity.getFilesDir(), "inprocess-" + petID.toString());
+                        File pict = new File(activity.getFilesDir(), "inprocesspic-" + petID.toString());
 
                         int instanceStatus = Integer.parseInt(status.toString());
 
-                        if (instanceStatus >= 1 && instanceStatus <= 4){
+                        if (instanceStatus >= Timeline.AWAITING_APPROVAL && instanceStatus <= Timeline.APPOINTMENT_CONFIRMED){
                             if (!data.exists()){
                                 fetchRecordFromCloud(petID.toString());
                             }
-                        }
-                        //delete local copy
-                        else {
-                            if (data.exists()){
-                                data.delete();
-                                pict.delete();
-                            }
+                            keys.add(petID.toString());
                         }
 
                     }
 
                 }
+
+                //delete excess files
+                cleanUp();
 
             }
 
@@ -117,5 +116,37 @@ public class SyncPetInprocess extends AsyncTask {
                 Utility.log("SPIp.fRFC.oC: " + error.getMessage());
             }
         });
+    }
+
+    private void cleanUp(){
+        try {
+            for (File file : activity.getFilesDir().listFiles()){
+
+                if (file.getAbsolutePath().contains("inprocess-")){
+
+                    String petID = file.getAbsolutePath().split("inprocess-")[1];
+
+                    //check if file is still needed
+                    boolean skip = false;
+
+                    for (String s : keys){
+                        if (petID.equals(s)){
+                            skip = true;
+                        }
+                    }
+
+                    //delete if not needed
+                    if (!skip){
+                        File pic = new File(activity.getFilesDir(), "inprocesspic-" + petID);
+                        file.delete();
+                        pic.delete();
+                    }
+
+                }
+            }
+        }
+        catch (Exception e){
+            Utility.log("SPIp.cU: " + e.getMessage());
+        }
     }
 }
