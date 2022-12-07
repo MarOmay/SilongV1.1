@@ -1,7 +1,6 @@
-package com.silong.dev;
+package com.silong.Adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -13,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.silong.Operation.Utility;
+import com.silong.dev.Homepage;
+import com.silong.dev.R;
 
 import java.util.ArrayList;
 

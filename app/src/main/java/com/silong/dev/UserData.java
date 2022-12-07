@@ -56,7 +56,8 @@ public class UserData { //removed: extends User
         //Many other to be added later
 
         for (File file : activity.getFilesDir().listFiles()){
-            if (file.getAbsolutePath().contains("adoption-") || file.getAbsolutePath().contains("adoptionpic-"))
+            String path = file.getAbsolutePath();
+            if (path.contains("adoption-") || path.contains("adoptionpic-") || path.contains("poa-"))
                 file.delete();
         }
 
