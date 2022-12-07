@@ -20,6 +20,7 @@ import com.silong.Operation.Utility;
 import com.silong.Task.AccountStatusChecker;
 import com.silong.dev.AdoptionAgreement;
 
+import com.silong.dev.Homepage;
 import com.silong.dev.R;
 
 
@@ -64,15 +65,15 @@ public class ApplyDialog extends MaterialAlertDialogBuilder {
         super.setPositiveButton(Html.fromHtml("<b>"+"APPLY"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                Homepage.BEGIN_APPLY = true;
                 AccountStatusChecker accountStatusChecker = new AccountStatusChecker(activity);
                 accountStatusChecker.execute();
-
             }
         });
         super.setNegativeButton(Html.fromHtml("<b>"+"CANCEL"+"</b>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //codes here
+                Homepage.BEGIN_APPLY = false;
             }
         });
     }

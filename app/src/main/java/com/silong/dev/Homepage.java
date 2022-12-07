@@ -466,7 +466,6 @@ public class Homepage extends AppCompatActivity {
             return;
         }
         else if (Utility.internetConnection(getApplicationContext())){
-            BEGIN_APPLY = true;
             ApplyDialog applyDialog = new ApplyDialog(Homepage.this);
             applyDialog.show();
 
