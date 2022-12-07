@@ -106,8 +106,10 @@ public class SignUp2 extends AppCompatActivity {
             return;
         }
 
+        String addressLine = etAddress.getText().toString().trim().replace("\n", " ");
+
         //Add additional input to User object
-        Address address = new Address(etAddress.getText().toString(),
+        Address address = new Address(addressLine,
                 spinBarangay.getSelectedItem().toString(),
                 spinMunicipality.getText().toString(),
                 spinProvince.getText().toString(),
