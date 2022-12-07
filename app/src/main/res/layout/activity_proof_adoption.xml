@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/nighty"
+    android:orientation="vertical"
+    tools:context=".ProofAdoption">
+
+    <LinearLayout
+        android:id="@+id/pinkHeader"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/pink"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:weightSum="3">
+
+        <ImageView
+            android:id="@+id/historyBackIv"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.35"
+            android:onClick="back"
+            android:src="@drawable/ic_round_arrow_back_ios_24"
+            app:tint="@color/whitey"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:paddingStart="30dp"
+            android:text="Proof of Adoption"
+            android:textColor="@color/whitey"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.35"
+            android:alpha="0"
+            app:tint="@color/whitey" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/slideViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/proofIndicatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.6"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+</LinearLayout>

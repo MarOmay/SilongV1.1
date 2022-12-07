@@ -211,6 +211,12 @@ public class LandingPage extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void onPressedProof(View view){
+        Utility.animateOnClick(LandingPage.this, view);
+        Intent i = new Intent(LandingPage.this, ProofAdoption.class);
+        startActivity(i);
+    }
+
     public void onPressedHelp(View view){
         Utility.animateOnClick(LandingPage.this, view);
         Intent i = new Intent(LandingPage.this, Help.class);

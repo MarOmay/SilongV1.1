@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.silong.Adapter.ProofPagerAdapter;
 import com.silong.Adapter.SwipeAdapter;
 import com.silong.CustomView.ApplyDialog;
 import com.silong.CustomView.ExitDialog;
@@ -239,6 +240,12 @@ public class Homepage extends AppCompatActivity {
     public void onPressedAdoptionHistory(View view){
         Utility.animateOnClick(Homepage.this, view);
         Intent i = new Intent(Homepage.this, AdoptionHistory.class);
+        startActivity(i);
+    }
+
+    public void onPressedProof(View view){
+        Utility.animateOnClick(Homepage.this, view);
+        Intent i = new Intent(Homepage.this, ProofAdoption.class);
         startActivity(i);
     }
 
