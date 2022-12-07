@@ -29,17 +29,18 @@
                 android:orientation="vertical"
                 android:weightSum="2">
 
-                <LinearLayout
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/swipeRefreshLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.2"
-                    android:orientation="horizontal">
+                    android:layout_marginHorizontal="10dp">
 
                     <com.google.android.material.card.MaterialCardView
-                        style="@style/upperCardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
+                        app:cardCornerRadius="10dp"
                         android:backgroundTint="@color/lightgray">
 
                         <LinearLayout
@@ -197,22 +198,22 @@
                             </LinearLayout>
 
                             <TextView
-                                android:layout_gravity="end"
-                                android:onClick="onPressedGallery"
-                                android:layout_marginHorizontal="10dp"
-                                android:layout_marginTop="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:layout_marginHorizontal="10dp"
+                                android:layout_marginTop="10dp"
+                                android:onClick="onPressedGallery"
                                 android:text="See Pet Gallery >"
-                                android:textColor="@color/pink"
                                 android:textAlignment="textEnd"
-                                android:textSize="18sp"/>
+                                android:textColor="@color/pink"
+                                android:textSize="18sp" />
 
                         </LinearLayout>
 
                     </com.google.android.material.card.MaterialCardView>
 
-                </LinearLayout>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

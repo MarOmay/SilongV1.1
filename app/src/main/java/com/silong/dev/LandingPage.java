@@ -8,6 +8,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 
 public class LandingPage extends AppCompatActivity {
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayout adoptionPreview, galleryPreview;
     private DrawerLayout landingDrawer;
     private TextView headerTitle, usernameTv;
@@ -95,6 +97,9 @@ public class LandingPage extends AppCompatActivity {
         petsAvailableCount = (TextView) findViewById(R.id.petsAvailableCount);
         petsProcessCount = (TextView) findViewById(R.id.petsProcessCount);
         livesSavedCount = (TextView) findViewById(R.id.livesSavedCount);
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(refreshListener);
 
         adoptionPreview = (LinearLayout) findViewById(R.id.adoptionPreview);
         landingProcessPic = (ImageView) findViewById(R.id.landingProcessPic);
@@ -411,6 +416,20 @@ public class LandingPage extends AppCompatActivity {
             catch (Exception e){
                 Utility.log("Homepage.mLR: " + e.getMessage());
             }
+
+        }
+    };
+
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+
+            Intent intent = new Intent(LandingPage.this, HorizontalProgressBar.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+            swipeRefreshLayout.setRefreshing(false);
+            finish();
 
         }
     };
