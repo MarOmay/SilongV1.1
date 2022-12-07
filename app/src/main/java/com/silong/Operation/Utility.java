@@ -1,11 +1,13 @@
 package com.silong.Operation;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,9 +20,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +41,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utility {
+
+    public final static int STORAGE_REQUEST_CODE = 3;
 
     public static final String CLAUSE_SEPARATOR = "#CLAUSE-SEPARATOR#";
 
@@ -150,6 +156,18 @@ public class Utility {
 
     public static void animateOnClick(Context context, View view){
         view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.custom_on_click));
+    }
+
+    public static boolean requestPermission(Activity activity, int requestCode){
+
+        //Check WRITE permissions
+        if(ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(activity.getApplicationContext(), "Silong needs WRITE access to export file.", Toast.LENGTH_LONG).show();
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+            return false;
+        }
+
+        return true;
     }
 
     public void showNotification(Context context, String title, String message) {
