@@ -13,6 +13,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 
 public class LandingPage extends AppCompatActivity {
 
-    private LinearLayout adoptionPreview, galleryPreviewHehe;
+    private LinearLayout adoptionPreview, galleryPreview;
     private DrawerLayout landingDrawer;
     private TextView headerTitle, usernameTv;
     private ImageView filterImgview, messageImgview, menuImgview, closeDrawerBtn, avatarImgview, headerPic;
@@ -53,10 +54,7 @@ public class LandingPage extends AppCompatActivity {
     LinearLayout landingProcessLayout; //i hide nalang tong layout pag walang current process, tas pag meron tsaka lang lalabas.
 
     //Elements for Gallery Preview
-    RecyclerView previewRecycler;
-    ArrayList<GalleryPreviewModel> galleryPreviewModel;
-    GalleryPreviewAdapter galleryPreviewAdapter;
-
+    private RecyclerView previewRecycler;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
@@ -98,32 +96,19 @@ public class LandingPage extends AppCompatActivity {
         petsProcessCount = (TextView) findViewById(R.id.petsProcessCount);
         livesSavedCount = (TextView) findViewById(R.id.livesSavedCount);
 
-        //Gallery Preview
-        previewRecycler = (RecyclerView) findViewById(R.id.previewRecycler);
-        Integer[] galleryPreview = {R.drawable.silong_user_app_icon, R.drawable.silong_user_app_icon, R.drawable.silong_user_app_icon,
-                R.drawable.silong_user_app_icon, R.drawable.silong_user_app_icon};
-        galleryPreviewModel = new ArrayList<>();
-        for (int i=0; i<galleryPreview.length;i++){
-            GalleryPreviewModel previewModel = new GalleryPreviewModel(galleryPreview[i]);
-            galleryPreviewModel.add(previewModel);
-        }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(LandingPage.this, LinearLayoutManager.HORIZONTAL, false);
-        previewRecycler.setLayoutManager(linearLayoutManager);
-        previewRecycler.setItemAnimator(new DefaultItemAnimator());
-        galleryPreviewAdapter = new GalleryPreviewAdapter(LandingPage.this, galleryPreviewModel);
-        previewRecycler.setAdapter(galleryPreviewAdapter);
-        previewRecycler.setHasFixedSize(true);
-        //
-
-        headerPic = (ImageView) findViewById(R.id.headerPic);
-
         adoptionPreview = (LinearLayout) findViewById(R.id.adoptionPreview);
         landingProcessPic = (ImageView) findViewById(R.id.landingProcessPic);
         landingProcessStatus = (TextView) findViewById(R.id.landingProcessStatus);
-        galleryPreviewHehe = (LinearLayout) findViewById(R.id.galleryPreview);
+
+        //Gallery Preview
+        previewRecycler = (RecyclerView) findViewById(R.id.previewRecycler);
+        galleryPreview = (LinearLayout) findViewById(R.id.galleryPreview);
+
+        headerPic = (ImageView) findViewById(R.id.headerPic);
 
         //hide timeline related elements
         adoptionPreview.setVisibility(View.GONE);
+        showGalleryPreview();
 
         avatarImgview = findViewById(R.id.avatarImgview);
         usernameTv = findViewById(R.id.usernameTv);
@@ -154,6 +139,8 @@ public class LandingPage extends AppCompatActivity {
                 else {
                     showAdoptionPreview(adoption);
                     AccountSecuritySettings.FORBID_DEACTIVATION = true;
+
+                    galleryPreview.setVisibility(View.GONE);
                 }
             }
         }
@@ -266,9 +253,28 @@ public class LandingPage extends AppCompatActivity {
         name.setText(UserData.firstName + " " + UserData.lastName);
     }
 
+    private void showGalleryPreview(){
+
+        adoptionPreview.setVisibility(View.GONE);
+        galleryPreview.setVisibility(View.VISIBLE);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(LandingPage.this, LinearLayoutManager.HORIZONTAL, false);
+        previewRecycler.setLayoutManager(linearLayoutManager);
+        previewRecycler.setItemAnimator(new DefaultItemAnimator());
+
+        ArrayList<Bitmap> images = new ArrayList<>();
+        for (int i=0; i < (UserData.pets.size() >= 5 ? 5 : UserData.pets.size()) ; i++){
+            images.add(UserData.pets.get(i).getPhoto());
+        }
+
+        GalleryPreviewAdapter gpa = new GalleryPreviewAdapter(LandingPage.this, images);
+        previewRecycler.setAdapter(gpa);
+        previewRecycler.setHasFixedSize(true);
+    }
+
     private void showAdoptionPreview(Adoption adoption){
         adoptionPreview.setVisibility(View.VISIBLE);
-        galleryPreviewHehe.setVisibility(View.GONE);
+        galleryPreview.setVisibility(View.GONE);
 
         try {
             landingProcessPic.setImageBitmap(BitmapFactory.decodeFile(getFilesDir() + "/adoptionpic-" + adoption.getPetID()));

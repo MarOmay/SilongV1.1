@@ -20,6 +20,7 @@ import com.silong.EnumClass.PetColor;
 import com.silong.EnumClass.PetSize;
 import com.silong.EnumClass.PetType;
 import com.silong.Object.Adoption;
+import com.silong.Operation.Utility;
 
 import java.util.Comparator;
 
@@ -64,7 +65,7 @@ public class AdoptionHistory extends AppCompatActivity {
             }
         }
         catch (Exception e){
-            Log.d("AdopH-lAL", "Failed to sort adoptionHistory");
+            Utility.log("AdoptionHistory.lAL: " + e.getMessage());
         }
 
         try {
@@ -72,8 +73,6 @@ public class AdoptionHistory extends AppCompatActivity {
             HistoryData [] historyData = new HistoryData[UserData.adoptionHistory.size()];
 
             for (Adoption adoption : UserData.adoptionHistory){
-
-                Log.d("DEBUGGER>>>", "AH " + adoption.getDateRequested());
 
                 //translate gender and type
                 String genderType = "";
@@ -126,7 +125,7 @@ public class AdoptionHistory extends AppCompatActivity {
         }
         catch (Exception e){
             Toast.makeText(this, "Can't load adoption history.", Toast.LENGTH_SHORT).show();
-            Log.d("DEBUGGER>>>","@AdoptionHistory-loadAdoptionList: " + e.getMessage());
+            Utility.log("AdoptionHistory.lAL: " + e.getMessage());
         }
 
     }

@@ -295,7 +295,7 @@
 
                     <LinearLayout
                         android:id="@+id/galleryPreview"
-                        android:onClick="onPressedTimeline"
+                        android:onClick="onPressedGallery"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.3"
@@ -318,6 +318,7 @@
                                 android:weightSum="2">
 
                                 <androidx.recyclerview.widget.RecyclerView
+                                    android:onClick="onPressedGallery"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:id="@+id/previewRecycler"

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.silong.Adapter.FaqsAdapter;
 import com.silong.Object.Faqs;
+import com.silong.Operation.Utility;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -121,7 +122,7 @@ public class Help extends AppCompatActivity {
             displayContent();
 
         } catch (Exception e) {
-            Log.d("DEBUGGER>>>", e.getMessage());
+            Utility.log("Help.getData: " + e.getMessage());
         }
 
     }

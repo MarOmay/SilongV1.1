@@ -18,7 +18,6 @@ public class Faqs {
 
     public boolean isInTags(String s){
         for (String st : tags){
-            Utility.log("faqs: " + st);
             if (st.toLowerCase().contains(s.toLowerCase()))
                 return true;
         }

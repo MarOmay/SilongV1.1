@@ -1,6 +1,9 @@
 package com.silong.dev;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +12,18 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.silong.Operation.Utility;
+
 import java.util.ArrayList;
 
 public class GalleryPreviewAdapter extends RecyclerView.Adapter<GalleryPreviewAdapter.ViewHolder> {
 
-    ArrayList<GalleryPreviewModel> galleryPreviewModels;
-    Context context;
+    private ArrayList<Bitmap> images;
+    private Activity activity;
 
-    public GalleryPreviewAdapter(Context context, ArrayList<GalleryPreviewModel> galleryPreviewModels){
-        this.context = context;
-        this.galleryPreviewModels = galleryPreviewModels;
+    public GalleryPreviewAdapter(Activity activity, ArrayList<Bitmap> images){
+        this.activity = activity;
+        this.images = images;
     }
 
     @NonNull
@@ -30,12 +35,25 @@ public class GalleryPreviewAdapter extends RecyclerView.Adapter<GalleryPreviewAd
 
     @Override
     public void onBindViewHolder(@NonNull GalleryPreviewAdapter.ViewHolder holder, int position) {
-        holder.galleryPreviewPic.setImageResource(galleryPreviewModels.get(position).getGalleryPreview());
+        holder.galleryPreviewPic.setImageBitmap(images.get(position));
+
+        holder.galleryPreviewPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Utility.animateOnClick(activity, view);
+                Intent i = new Intent(activity, Homepage.class);
+                activity.startActivity(i);
+                activity.overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
+                activity.finish();
+
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return galleryPreviewModels.size();
+        return images.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
