@@ -233,8 +233,6 @@ public class LandingPage extends AppCompatActivity {
         Utility.animateOnClick(LandingPage.this, view);
         Intent i = new Intent(LandingPage.this, EditProfile.class);
         startActivity(i);
-        EditProfile.FORBID_DEACTIVATION = true;
-        AccountSecuritySettings.FORBID_DEACTIVATION = true;
     }
 
     public void onPressedLogout(View view){
