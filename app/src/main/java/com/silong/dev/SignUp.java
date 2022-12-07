@@ -156,7 +156,7 @@ public class SignUp extends AppCompatActivity {
             return;
         }
 
-        String lname = fieldFname.getText().toString().trim();
+        String lname = fieldLname.getText().toString().trim();
         if (!InputValidator.checkName(lname)) {
             Toast.makeText(getApplicationContext(), "Please check your last name.", Toast.LENGTH_SHORT).show();
             return;
